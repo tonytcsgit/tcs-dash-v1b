@@ -6,14 +6,22 @@
 <title>UTM Content Analysis — TCS</title>
 <link rel="stylesheet" href="styles.css">
 <style>
-/* UTM Analysis specific styles */
+/* UTM Analysis — matches utm_analysis.py output format */
 .utm-controls { background: var(--bg2); border: 1px solid var(--line-dark); border-radius: 14px; padding: 18px 20px; margin-bottom: 20px; }
 .utm-controls-row { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
 .utm-controls label { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; }
-.utm-controls select, .utm-controls input { background: #0b0e13; border: 1px solid var(--line-dark); border-radius: 8px; color: #e8eef5; padding: 8px 12px; font-size: 13px; outline: none; }
-.utm-controls select:focus, .utm-controls input:focus { border-color: var(--accent); }
+.utm-controls select { background: #0b0e13; border: 1px solid var(--line-dark); border-radius: 8px; color: #e8eef5; padding: 8px 12px; font-size: 13px; outline: none; }
+.utm-controls select:focus { border-color: var(--accent); }
 .utm-controls button { background: var(--accent); color: #04302f; font-weight: 700; border: none; border-radius: 8px; padding: 8px 20px; font-size: 13px; cursor: pointer; }
 .utm-controls button:hover { background: var(--accent2); }
+
+.utm-section { margin-bottom: 28px; }
+.utm-section-title { font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--accent); margin: 26px 0 12px; display: flex; align-items: center; gap: 10px; }
+.utm-section-title::after { content: ""; flex: 1; height: 1px; background: var(--line-dark); }
+
+.utm-total { background: var(--bg2); border: 1px solid var(--line-dark); border-radius: 12px; padding: 16px 20px; margin-bottom: 16px; }
+.utm-total .big { font-size: 18px; font-weight: 700; color: #fff; }
+.utm-total .small { font-size: 12px; color: var(--muted); margin-top: 4px; }
 
 .utm-table-wrap { background: var(--panel); color: var(--ink); border-radius: 14px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,.35); margin-top: 6px; }
 .utm-table-wrap .scroll { overflow-x: auto; }
@@ -23,25 +31,37 @@
 .utm-table tbody tr:last-child td { border-bottom: none; }
 .utm-table tbody tr:hover { background: #f0f6f9; }
 .utm-table .num { text-align: right; font-variant-numeric: tabular-nums; }
-.utm-table .script { font-weight: 700; color: var(--ink); }
-.utm-table .family { color: var(--accent); font-weight: 600; }
-.utm-table .cvr-high { color: var(--green); font-weight: 700; }
-.utm-table .cvr-mid { color: #a86a08; font-weight: 600; }
-.utm-table .cvr-low { color: var(--red); font-weight: 600; }
-.utm-table .variations { font-size: 11px; color: var(--ink-soft); max-width: 300px; }
+.utm-table .label { font-weight: 600; color: var(--ink); max-width: 400px; }
+.utm-table .marketer-tag { font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 4px; margin-right: 6px; }
+.utm-table .marketer-jor { background: rgba(50,230,226,.14); color: #0a8a86; }
+.utm-table .marketer-cha { background: rgba(245,165,36,.14); color: #a86a08; }
+.utm-table .marketer-mo { background: rgba(48,164,108,.14); color: #1f7a4d; }
+.utm-table .marketer-unt { background: rgba(138,153,173,.14); color: #5b6b7f; }
 
-.utm-summary { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 20px; }
-.utm-stat { background: var(--bg2); border: 1px solid var(--line-dark); border-radius: 12px; padding: 14px 16px; }
-.utm-stat .l { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; }
-.utm-stat .v { font-size: 24px; font-weight: 700; color: #fff; margin-top: 4px; }
-.utm-stat .d { font-size: 11.5px; margin-top: 3px; color: var(--muted); }
+.cvr-high { color: var(--green); font-weight: 700; }
+.cvr-mid { color: #a86a08; font-weight: 600; }
+.cvr-low { color: var(--red); font-weight: 600; }
+.cvr-target { font-size: 10px; color: var(--muted); margin-left: 4px; }
+
+.flag { font-size: 11px; margin-left: 6px; }
+.flag-green { color: var(--green); }
+.flag-amber { color: var(--amber); }
+.flag-red { color: var(--red); }
+
+.dim-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; margin-top: 12px; }
+.dim-card { background: var(--bg2); border: 1px solid var(--line-dark); border-radius: 10px; padding: 12px 14px; }
+.dim-card h5 { font-size: 11px; color: var(--accent); text-transform: uppercase; letter-spacing: .1em; margin-bottom: 8px; }
+.dim-row { display: flex; justify-content: space-between; font-size: 12px; padding: 4px 0; border-bottom: 1px solid var(--line-dark); }
+.dim-row:last-child { border-bottom: none; }
+.dim-row .v { font-weight: 600; color: #fff; }
+.dim-row .n { color: var(--muted); font-variant-numeric: tabular-nums; }
 
 .loading-utm { text-align: center; color: var(--muted); font-size: 14px; padding: 60px 0; }
 .error-utm { text-align: center; color: var(--red); font-size: 14px; padding: 60px 0; }
 
 @media (max-width: 820px) {
-  .utm-summary { grid-template-columns: repeat(2, 1fr); }
   .utm-controls-row { flex-direction: column; align-items: stretch; }
+  .dim-grid { grid-template-columns: 1fr; }
 }
 </style>
 </head>
@@ -73,7 +93,7 @@
   </header>
 
   <div id="content">
-    <div class="loading-utm">Loading UTM data from BP sheets…</div>
+    <div class="loading-utm">Loading UTM data…</div>
   </div>
 
   <footer id="footer">TCS Internal · UTM Content Analysis · <span class="amber-text">shared-password access</span></footer>
@@ -112,27 +132,9 @@ const AUTH_KEY = "tcs_utm_auth";
   });
 })();
 
-// Data
 let rawData = null;
-let currentTort = "all";
-let currentMinSigns = 3;
-let currentGroupBy = "family"; // "family" or "individual"
-
-const TORTS = [
-  { id: "sma", name: "Social Media Addiction", prefix: "SMA", tab: "Social Media Addiction" },
-  { id: "hm", name: "Hernia Mesh", prefix: "HM", tab: "Hernia Mesh" },
-  { id: "end", name: "Endoscopy", prefix: "END", tab: "Endoscopy" },
-  { id: "pp", name: "PowerPort", prefix: "PP", tab: "PowerPort" },
-  { id: "pqt", name: "Paraquat", prefix: "PQT", tab: "Paraquat" },
-  { id: "sil", name: "Silicosis", prefix: "SIL", tab: "Silicosis" },
-  { id: "jdc", name: "JDC IL", prefix: "JDC", tab: "Juvenile Detention Center - IL" },
-  { id: "talc", name: "Talcum", prefix: "TALC", tab: "Talcum Powder" },
-  { id: "bm", name: "Breast Mesh", prefix: "BM", tab: "Breast Mesh" },
-  { id: "tvm", name: "Transvaginal Mesh", prefix: "TVM", tab: "Transvaginal Mesh" },
-  { id: "chlor", name: "Chlorpyrifos", prefix: "CHLOR", tab: "Chlorpyrifos" }
-];
-
-const NONPAY = ["rejected - failed prequalification", "rejected - wrong number", "rejected - existing contact"];
+let currentTort = "sma";
+let currentWindow = "7d";
 
 function esc(s) {
   return String(s).replace(/[&<>"']/g, (c) => ({
@@ -145,58 +147,51 @@ function fmtPct(v) {
   return Number(v).toFixed(1).replace(/\.0$/, "") + "%";
 }
 
-function extractScriptNumber(label, prefix) {
-  if (!label) return null;
-  // Exclude long numeric-only adSetIds (10+ digits)
-  if (/^\d{10,}$/.test(label.trim())) return null;
-  // Match: PREFIX (number) or PREFIX number or PREFIX(number)
-  const re = new RegExp(prefix + "\\s*\\(?([0-9]{1,3})(?:-[0-9]+)?\\)?", "i");
-  const m = label.match(re);
-  if (m) return m[1];
-  // IT- prefix
-  const re2 = new RegExp(prefix + "\\s*\\(?IT-([0-9]+)", "i");
-  const m2 = label.match(re2);
-  if (m2) return "IT-" + m2[1];
-  return null;
+function cvrClass(v, target) {
+  if (v === null || v === undefined) return "";
+  if (target && v >= target) return "cvr-high";
+  if (v >= 15) return "cvr-high";
+  if (v >= 8) return "cvr-mid";
+  return "cvr-low";
 }
 
-function resolveLabel(row) {
-  // Priority: adSetId (if non-numeric) → UTM_Content → keyword → UTM_Campaign → UTM_Medium → campaignId → (blank)
-  const adset = (row.adSetId || "").trim();
-  if (adset && !/^\d{10,}$/.test(adset)) return adset;
-  const utm = (row.UTM_Content || "").trim();
-  if (utm) return utm;
-  const kw = (row.keyword || "").trim();
-  if (kw) return kw;
-  const camp = (row.UTM_Campaign || "").trim();
-  if (camp) return camp;
-  const med = (row.UTM_Medium || "").trim();
-  if (med) return med;
-  const cid = (row.campaignId || "").trim();
-  if (cid) return cid;
-  return "(blank)";
+function cvrFlag(v, target) {
+  if (v === null || v === undefined) return "";
+  if (target && v >= target) return '<span class="flag flag-green">✅</span>';
+  if (v >= 25) return '<span class="flag flag-green">✅</span>';
+  if (v >= 15) return '<span class="flag flag-amber">⚠️</span>';
+  return '<span class="flag flag-red">🔴</span>';
+}
+
+function marketerTag(m) {
+  const cls = m === "Jordan" ? "marketer-jor" : m === "Charlie" ? "marketer-cha" : m === "Morane" ? "marketer-mo" : "marketer-unt";
+  const short = m === "Jordan" ? "JOR" : m === "Charlie" ? "CHA" : m === "Morane" ? "MO" : "UNT";
+  return `<span class="marketer-tag ${cls}">${short}</span>`;
 }
 
 async function loadData() {
   try {
-    // Load the pre-built dataset (we'll generate this via a build script)
     const r = await fetch("utm_data.json?t=" + Date.now());
-    if (!r.ok) throw new Error("No utm_data.json — run the build script first");
+    if (!r.ok) throw new Error("No utm_data.json — run build_utm_data.py first");
     rawData = await r.json();
     document.getElementById("fresh").innerHTML = 
-      `Data as of <b>${rawData.generated_at}</b> · ${rawData.total_rows.toLocaleString()} rows across ${rawData.torts.length} torts`;
+      `Data as of <b>${rawData.generated_at}</b>`;
     renderControls();
-    renderTable();
+    renderAnalysis();
   } catch (e) {
     document.getElementById("content").innerHTML = 
       `<div class="error-utm">Failed to load data: ${esc(e.message)}<br><br>
-       <small>Run the build script to generate utm_data.json</small></div>`;
+       <small>Run: HOME=/Users/andyoc python3 build_utm_data.py</small></div>`;
   }
 }
 
 function renderControls() {
-  const tortOptions = [`<option value="all">All Torts</option>`].concat(
-    TORTS.map(t => `<option value="${t.id}" ${currentTort === t.id ? "selected" : ""}>${t.name}</option>`)
+  const tortOptions = rawData.torts.map(t => 
+    `<option value="${t.tort_id}" ${currentTort === t.tort_id ? "selected" : ""}>${t.tort_name}</option>`
+  ).join("");
+  
+  const windowOptions = ["7d", "14d", "30d", "Lifetime"].map(w =>
+    `<option value="${w}" ${currentWindow === w ? "selected" : ""}>${w}</option>`
   ).join("");
   
   const html = `
@@ -204,152 +199,125 @@ function renderControls() {
       <div class="utm-controls-row">
         <div>
           <label>Tort</label><br>
-          <select id="filter-tort" onchange="currentTort=this.value; renderTable()">${tortOptions}</select>
+          <select id="filter-tort" onchange="currentTort=this.value; renderAnalysis()">${tortOptions}</select>
         </div>
         <div>
-          <label>Min Signs</label><br>
-          <select id="filter-min" onchange="currentMinSigns=parseInt(this.value); renderTable()">
-            <option value="1" ${currentMinSigns===1?"selected":""}>1+</option>
-            <option value="3" ${currentMinSigns===3?"selected":""}>3+</option>
-            <option value="5" ${currentMinSigns===5?"selected":""}>5+</option>
-            <option value="8" ${currentMinSigns===8?"selected":""}>8+</option>
-          </select>
-        </div>
-        <div>
-          <label>Group By</label><br>
-          <select id="filter-group" onchange="currentGroupBy=this.value; renderTable()">
-            <option value="family" ${currentGroupBy==="family"?"selected":""}>Script Family</option>
-            <option value="individual" ${currentGroupBy==="individual"?"selected":""}>Individual Variant</option>
-          </select>
+          <label>Window</label><br>
+          <select id="filter-window" onchange="currentWindow=this.value; renderAnalysis()">${windowOptions}</select>
         </div>
         <div style="margin-left:auto">
           <button onclick="loadData()">↻ Refresh</button>
         </div>
       </div>
     </div>
-    <div class="utm-summary" id="summary"></div>
-    <div id="table-container"></div>
+    <div id="analysis"></div>
   `;
   document.getElementById("content").innerHTML = html;
 }
 
-function renderTable() {
-  if (!rawData) return;
-  
-  // Filter and aggregate
-  let rows = rawData.rows;
-  if (currentTort !== "all") {
-    rows = rows.filter(r => r.tort_id === currentTort);
+function renderAnalysis() {
+  const tort = rawData.torts.find(t => t.tort_id === currentTort);
+  if (!tort) {
+    document.getElementById("analysis").innerHTML = "<div class='error-utm'>Tort not found</div>";
+    return;
   }
   
-  // Group by script family or individual
-  const groups = {};
-  for (const row of rows) {
-    const label = resolveLabel(row);
-    let key;
-    if (currentGroupBy === "family") {
-      const tort = TORTS.find(t => t.id === row.tort_id);
-      const num = extractScriptNumber(label, tort ? tort.prefix : "");
-      key = num ? `${tort.prefix} ${num}` : label;
-    } else {
-      key = label;
-    }
-    
-    if (!groups[key]) {
-      groups[key] = { 
-        key, 
-        tort: row.tort_name,
-        tort_id: row.tort_id,
-        leads: 0, 
-        payable: 0, 
-        signed: 0, 
-        variations: new Set(),
-        buyers: {}
-      };
-    }
-    const g = groups[key];
-    g.leads++;
-    if (row.payable) g.payable++;
-    if (row.signed) g.signed++;
-    g.variations.add(label);
-    
-    // Track buyer split
-    const buyer = row.buyer || "Unknown";
-    if (!g.buyers[buyer]) g.buyers[buyer] = { leads: 0, payable: 0, signed: 0 };
-    g.buyers[buyer].leads++;
-    if (row.payable) g.buyers[buyer].payable++;
-    if (row.signed) g.buyers[buyer].signed++;
+  const w = tort.windows[currentWindow];
+  if (!w) {
+    document.getElementById("analysis").innerHTML = "<div class='error-utm'>Window not found</div>";
+    return;
   }
   
-  // Convert to array and filter by min signs
-  let items = Object.values(groups).filter(g => g.signed >= currentMinSigns);
+  const target = tort.target_cvr;
+  let html = "";
   
-  // Sort by CVR desc, then signed desc
-  items.sort((a, b) => {
-    const cvrA = a.payable > 0 ? a.signed / a.payable : 0;
-    const cvrB = b.payable > 0 ? b.signed / b.payable : 0;
-    if (cvrB !== cvrA) return cvrB - cvrA;
-    return b.signed - a.signed;
-  });
-  
-  // Summary stats
-  const totalLeads = items.reduce((s, g) => s + g.leads, 0);
-  const totalPayable = items.reduce((s, g) => s + g.payable, 0);
-  const totalSigned = items.reduce((s, g) => s + g.signed, 0);
-  const avgCVR = totalPayable > 0 ? (totalSigned / totalPayable * 100) : 0;
-  
-  document.getElementById("summary").innerHTML = `
-    <div class="utm-stat"><div class="l">Scripts Shown</div><div class="v">${items.length}</div></div>
-    <div class="utm-stat"><div class="l">Total Leads</div><div class="v">${totalLeads.toLocaleString()}</div></div>
-    <div class="utm-stat"><div class="l">Payable</div><div class="v">${totalPayable.toLocaleString()}</div></div>
-    <div class="utm-stat"><div class="l">Signed</div><div class="v">${totalSigned.toLocaleString()}</div><div class="d">${fmtPct(avgCVR)} CVR</div></div>
-  `;
-  
-  // Table
-  const rowsHtml = items.map((g, i) => {
-    const cvr = g.payable > 0 ? (g.signed / g.payable * 100) : 0;
-    const cvrClass = cvr >= 15 ? "cvr-high" : cvr >= 8 ? "cvr-mid" : "cvr-low";
-    const variations = Array.from(g.variations).slice(0, 3).join("; ");
-    const moreVar = g.variations.size > 3 ? ` +${g.variations.size - 3} more` : "";
-    
-    // Buyer breakdown tooltip
-    const buyerStr = Object.entries(g.buyers)
-      .map(([b, d]) => `${b}: ${d.signed}/${d.payable} (${d.payable > 0 ? (d.signed/d.payable*100).toFixed(1) : 0}%)`)
-      .join(" | ");
-    
-    return `<tr>
-      <td class="num">${i + 1}</td>
-      <td class="script">${esc(g.key)}</td>
-      <td>${esc(g.tort)}</td>
-      <td class="num">${g.leads.toLocaleString()}</td>
-      <td class="num">${g.payable.toLocaleString()}</td>
-      <td class="num">${g.signed.toLocaleString()}</td>
-      <td class="num ${cvrClass}">${fmtPct(cvr)}</td>
-      <td class="variations" title="${esc(buyerStr)}">${esc(variations)}${moreVar}</td>
-    </tr>`;
-  }).join("");
-  
-  document.getElementById("table-container").innerHTML = `
-    <div class="utm-table-wrap">
-      <div class="scroll">
-        <table class="utm-table">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Script</th>
-              <th>Tort</th>
-              <th class="num">Leads</th>
-              <th class="num">Payable</th>
-              <th class="num">Signed</th>
-              <th class="num">CVR</th>
-              <th>Variations (hover for buyer split)</th>
-            </tr>
-          </thead>
-          <tbody>${rowsHtml || `<tr><td colspan="8" style="text-align:center;color:var(--muted);padding:40px">No scripts meet the min-signs threshold (${currentMinSigns}+)</td></tr>`}</tbody>
-        </table>
-      </div>
+  // TOTAL
+  html += `<div class="utm-section">
+    <div class="utm-section-title">TOTAL — ${esc(tort.tort_name)} (${esc(w.range)})</div>
+    <div class="utm-total">
+      <div class="big">payable=${w.total.payable.toLocaleString()} signed=${w.total.signed.toLocaleString()} cvr=${fmtPct(w.total.cvr)}</div>
+      ${target ? `<div class="small">Target CVR: ${target}% ${w.total.cvr >= target ? "✅" : "🔴"}</div>` : ""}
     </div>
-  `;
+  </div>`;
+  
+  // MARKETERS
+  if (w.marketers.length) {
+    html += `<div class="utm-section">
+      <div class="utm-section-title">Marketers</div>
+      <div class="utm-table-wrap"><div class="scroll"><table class="utm-table">
+        <thead><tr><th>Marketer</th><th class="num">Payable</th><th class="num">Signed</th><th class="num">CVR</th></tr></thead>
+        <tbody>${w.marketers.map(m => `
+          <tr>
+            <td class="label">${marketerTag(m.name)} ${esc(m.name)}</td>
+            <td class="num">${m.payable.toLocaleString()}</td>
+            <td class="num">${m.signed.toLocaleString()}</td>
+            <td class="num ${cvrClass(m.cvr, target)}">${fmtPct(m.cvr)} ${cvrFlag(m.cvr, target)}</td>
+          </tr>`).join("")}
+        </tbody>
+      </table></div></div>
+    </div>`;
+  }
+  
+  // CONCEPTS
+  if (w.concepts.length) {
+    html += `<div class="utm-section">
+      <div class="utm-section-title">Concepts ${tort.prefix} #</div>
+      <div class="utm-table-wrap"><div class="scroll"><table class="utm-table">
+        <thead><tr><th>Concept</th><th class="num">Payable</th><th class="num">Signed</th><th class="num">CVR</th></tr></thead>
+        <tbody>${w.concepts.map(c => `
+          <tr>
+            <td class="label">${esc(c.concept)}</td>
+            <td class="num">${c.payable.toLocaleString()}</td>
+            <td class="num">${c.signed.toLocaleString()}</td>
+            <td class="num ${cvrClass(c.cvr, target)}">${fmtPct(c.cvr)} ${cvrFlag(c.cvr, target)}</td>
+          </tr>`).join("")}
+        </tbody>
+      </table></div></div>
+    </div>`;
+  }
+  
+  // DIMENSIONS (criteria tokens)
+  const dimOrder = ['hook', 'concept', 'audience', 'visual', 'version', 'suffix', 'format'];
+  const dimNames = {hook: 'Hook', concept: 'Concept', audience: 'Audience', visual: 'Visual', version: 'Version', suffix: 'Suffix', format: 'Format'};
+  let dimHtml = "";
+  for (const dn of dimOrder) {
+    const rows = w.dimensions[dn];
+    if (!rows || !rows.length) continue;
+    dimHtml += `<div class="dim-card">
+      <h5>${dimNames[dn] || dn}</h5>
+      ${rows.map(r => `
+        <div class="dim-row">
+          <span class="v">${esc(r.value)}</span>
+          <span class="n">p=${r.payable} s=${r.signed} ${fmtPct(r.cvr)}</span>
+        </div>`).join("")}
+    </div>`;
+  }
+  if (dimHtml) {
+    html += `<div class="utm-section">
+      <div class="utm-section-title">Criteria Tokens</div>
+      <div class="dim-grid">${dimHtml}</div>
+    </div>`;
+  }
+  
+  // CREATIVES
+  if (w.creatives.length) {
+    html += `<div class="utm-section">
+      <div class="utm-section-title">Creatives (≥5 payable)</div>
+      <div class="utm-table-wrap"><div class="scroll"><table class="utm-table">
+        <thead><tr><th>Creative</th><th class="num">Payable</th><th class="num">Signed</th><th class="num">CVR</th></tr></thead>
+        <tbody>${w.creatives.map(c => `
+          <tr>
+            <td class="label">${marketerTag(c.marketer)} ${esc(c.label)}</td>
+            <td class="num">${c.payable.toLocaleString()}</td>
+            <td class="num">${c.signed.toLocaleString()}</td>
+            <td class="num ${cvrClass(c.cvr, target)}">${fmtPct(c.cvr)} ${cvrFlag(c.cvr, target)}</td>
+          </tr>`).join("")}
+        </tbody>
+      </table></div></div>
+    </div>`;
+  }
+  
+  document.getElementById("analysis").innerHTML = html;
 }
 </script>
 </body>
