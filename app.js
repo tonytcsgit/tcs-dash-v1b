@@ -282,10 +282,8 @@ function showPage(page) {
     return;
   }
   if (page === "utm") {
-    c.innerHTML = renderPlaceholder("UTM Content Analysis",
-      "Script-family + marketer (utm_content) conversion breakdowns.",
-      "UTM content analysis landing here soon.");
-    loadNotes("utm");
+    // UTM Content is now a separate page (utm.html) — redirect
+    window.location.href = "utm.html";
     return;
   }
   c.innerHTML = renderDashboard(_data);
