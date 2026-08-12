@@ -250,14 +250,134 @@ async function submitNote(page) {
   }
 }
 
-function renderPlaceholder(title, sub, note) {
-  const page = title.includes("Meta") ? "meta" : title.includes("YouTube") ? "youtube" : "utm";
-  return `<div class="pagehead">${esc(title)}</div>` +
-    `<div class="pagetitle">${esc(title)}</div>` +
-    `<div class="pagesub">${esc(sub)}</div>` +
-    `<div class="placeholder"><div class="big">${esc(note)}</div>` +
-    `<div class="small">Analysis content is being wired up. Team notes are live below.</div></div>` +
-    renderNotesSection(page, title);
+function renderYouTubePage() {
+  return `<div class="pagehead">YouTube Ads</div>` +
+    `<div class="pagetitle">YouTube Ads</div>` +
+    `<div class="pagesub">SMA / Hernia Mesh YouTube creative + script performance.</div>` +
+    `<div class="placeholder"><div class="big">YouTube ads analysis landing here soon.</div>` +
+    `<div class="small">Creative performance data is being wired up. Task board is live below.</div></div>` +
+    renderTaskBoard("youtube");
+}
+
+function renderTaskBoard(page) {
+  return `<div class="notes-section">
+    <div class="slabel">Task Board — ${esc(page === "youtube" ? "YouTube" : page)}</div>
+    <div class="notes-form card">
+      <div class="notes-form-row">
+        <input type="text" id="task-author-${page}" placeholder="Your name" maxlength="40">
+        <select id="task-kind-${page}">
+          <option value="request">Request</option>
+          <option value="note">Note</option>
+        </select>
+      </div>
+      <textarea id="task-body-${page}" placeholder="Describe the task or request…" rows="2" maxlength="500"></textarea>
+      <button onclick="submitTask('${page}')">Post</button>
+    </div>
+    <div id="tasks-list-${page}" class="tasks-list"><div class="note-empty">Loading tasks…</div></div>
+  </div>`;
+}
+
+async function loadTasks(page) {
+  try {
+    const notes = await sbFetch(`notes?select=*&page=eq.${page}&order=created_at.desc&limit=100`);
+    renderTasks(page, notes);
+  } catch (e) {
+    document.getElementById(`tasks-list-${page}`).innerHTML =
+      `<div class="note-err">Failed to load tasks. Check console.</div>`;
+    console.error("Tasks load error:", e);
+  }
+}
+
+async function submitTask(page) {
+  const authorEl = document.getElementById(`task-author-${page}`);
+  const kindEl = document.getElementById(`task-kind-${page}`);
+  const bodyEl = document.getElementById(`task-body-${page}`);
+  const author = authorEl.value.trim();
+  const kind = kindEl.value;
+  const body = bodyEl.value.trim();
+  if (!author || !body) { alert("Name and text are required."); return; }
+  try {
+    await addNote(page, author, kind, body);
+    bodyEl.value = "";
+    await loadTasks(page);
+  } catch (e) {
+    alert("Failed to post. Check console.");
+    console.error("Task post error:", e);
+  }
+}
+
+async function updateTaskStatus(id, newStatus) {
+  try {
+    await sbFetch(`notes?id=eq.${id}`, {
+      method: "PATCH",
+      body: JSON.stringify({ status: newStatus, updated_at: new Date().toISOString() })
+    });
+    // Reload the current page's tasks
+    const page = document.querySelector(".navitem.active")?.dataset.page || "youtube";
+    await loadTasks(page);
+  } catch (e) {
+    alert("Failed to update status. Check console.");
+    console.error("Status update error:", e);
+  }
+}
+
+function renderTasks(page, notes) {
+  const container = document.getElementById(`tasks-list-${page}`);
+  if (!container) return;
+  
+  // Separate requests (with status) from notes (simple feed)
+  const requests = notes.filter(n => n.kind === "request");
+  const simpleNotes = notes.filter(n => n.kind !== "request");
+  
+  let html = "";
+  
+  // Requests section (task board)
+  if (requests.length) {
+    html += `<div class="tasks-subheader">Requests (${requests.length})</div>`;
+    html += requests.map((n) => {
+      const status = n.status || "open";
+      const statusMeta = {
+        open: { cls: "status-open", label: "OPEN", icon: "🔴" },
+        claimed: { cls: "status-claimed", label: "CLAIMED", icon: "🟡" },
+        done: { cls: "status-done", label: "DONE", icon: "🟢" }
+      }[status] || { cls: "status-open", label: "OPEN", icon: "🔴" };
+      
+      const ts = fmtTs(n.created_at);
+      const updated = n.updated_at && n.updated_at !== n.created_at ? ` · updated ${fmtTs(n.updated_at)}` : "";
+      
+      return `<div class="task-item ${statusMeta.cls}">
+        <div class="task-header">
+          <span class="task-status ${statusMeta.cls}">${statusMeta.icon} ${statusMeta.label}</span>
+          <span class="task-author">${esc(n.author)}</span>
+          <span class="task-ts">${ts}${updated}</span>
+        </div>
+        <div class="task-body">${esc(n.body)}</div>
+        <div class="task-actions">
+          ${status !== "open" ? `<button class="task-btn" onclick="updateTaskStatus(${n.id}, 'open')">↩ Reopen</button>` : ""}
+          ${status !== "claimed" ? `<button class="task-btn" onclick="updateTaskStatus(${n.id}, 'claimed')">🟡 Claim</button>` : ""}
+          ${status !== "done" ? `<button class="task-btn" onclick="updateTaskStatus(${n.id}, 'done')">✅ Done</button>` : ""}
+        </div>
+      </div>`;
+    }).join("");
+  }
+  
+  // Simple notes section
+  if (simpleNotes.length) {
+    html += `<div class="tasks-subheader">Notes (${simpleNotes.length})</div>`;
+    html += simpleNotes.map((n) => {
+      const ts = fmtTs(n.created_at);
+      return `<div class="note-item">
+        <div class="note-meta"><span class="note-author">${esc(n.author)}</span><span class="note-ts">${ts}</span></div>
+        <div class="note-body">${esc(n.body)}</div>
+      </div>`;
+    }).join("");
+  }
+  
+  if (!requests.length && !simpleNotes.length) {
+    html = `<div class="note-empty">No tasks or notes yet. Be the first to add one.</div>`;
+  }
+  
+  container.innerHTML = html;
 }
 
 function showPage(page) {
@@ -275,10 +395,8 @@ function showPage(page) {
     return;
   }
   if (page === "youtube") {
-    c.innerHTML = renderPlaceholder("YouTube Ads Analysis",
-      "SMA / Hernia Mesh YouTube creative + script performance.",
-      "YouTube ads analysis landing here soon.");
-    loadNotes("youtube");
+    c.innerHTML = renderYouTubePage();
+    loadTasks("youtube");
     return;
   }
   if (page === "utm") {

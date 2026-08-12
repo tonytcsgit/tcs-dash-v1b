@@ -218,6 +218,29 @@ footer{margin-top:26px; font-size:11px; color:var(--muted); text-align:center;}
   padding:20px;}
 .note-err{color:var(--red); font-size:13px; text-align:center; padding:20px;}
 
+/* ---------- Task Board (YouTube page) ---------- */
+.tasks-list{display:flex; flex-direction:column; gap:10px; margin-top:14px;}
+.tasks-subheader{font-size:11px; font-weight:700; letter-spacing:.12em; text-transform:uppercase;
+  color:var(--accent); margin:18px 0 8px; padding-bottom:6px; border-bottom:1px solid var(--line-dark);}
+.tasks-subheader:first-child{margin-top:0;}
+.task-item{background:var(--bg2); border:1px solid var(--line-dark); border-radius:10px;
+  padding:14px 16px; border-left:3px solid var(--red);}
+.task-item.status-claimed{border-left-color:var(--amber);}
+.task-item.status-done{border-left-color:var(--green); opacity:.85;}
+.task-header{display:flex; align-items:center; gap:10px; margin-bottom:8px; flex-wrap:wrap;}
+.task-status{font-size:10px; font-weight:800; padding:3px 8px; border-radius:4px; letter-spacing:.05em;}
+.task-status.status-open{background:rgba(229,72,77,.16); color:#ff8589;}
+.task-status.status-claimed{background:rgba(245,165,36,.16); color:#ffc46b;}
+.task-status.status-done{background:rgba(48,164,108,.16); color:#4ade80;}
+.task-author{font-size:12px; font-weight:600; color:#fff;}
+.task-ts{font-size:11px; color:var(--muted); margin-left:auto;}
+.task-body{font-size:13px; color:#d7e0ea; line-height:1.5; margin-bottom:10px;}
+.task-actions{display:flex; gap:8px; flex-wrap:wrap;}
+.task-btn{background:#161c27; border:1px solid var(--line-dark); border-radius:6px;
+  color:#c6d2df; font-size:11px; font-weight:600; padding:5px 12px; cursor:pointer;
+  transition:background .12s, color .12s;}
+.task-btn:hover{background:var(--accent); color:#04302f; border-color:var(--accent);}
+
 /* ---------- Responsive: collapse sidebar ---------- */
 @media (max-width:820px){
   .sidebar{position:static; width:100%; flex-direction:row; flex-wrap:wrap;
