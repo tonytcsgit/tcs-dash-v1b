@@ -1,9 +1,9 @@
 {
   "contract_version": 1,
-  "generated_at": "2026-08-11T23:15:42-04:00",
+  "generated_at": "2026-08-11T23:43:02-04:00",
   "data_freshness": {
-    "leads_spend_sr": "2026-08-11T23:15:42-04:00",
-    "retainers": "2026-08-11T23:15:42-04:00",
+    "leads_spend_sr": "2026-08-11T23:43:02-04:00",
+    "retainers": "2026-08-11T23:43:02-04:00",
     "stale_warnings": [
       "Hernia Mesh spend: stale (last Day 2026-08-08)",
       "PowerPort spend: stale (last Day 2026-07-20)",
@@ -25,7 +25,7 @@
     {
       "tort_or_buyer": "Chlorpyrifos",
       "level": "red",
-      "reason": "Spend $1,139 with 0 payable leads \u2014 burning money",
+      "reason": "Spend $1,144 with 0 payable leads \u2014 burning money",
       "owner": null
     },
     {
@@ -59,7 +59,7 @@
     {
       "tort": "WDC",
       "status": "green",
-      "spend": 12628.831000000002,
+      "spend": 12628.871,
       "revenue": null,
       "margin_pct": null,
       "cpl": 421.0,
@@ -93,10 +93,10 @@
     {
       "tort": "Depo",
       "status": "green",
-      "spend": 7590.8933,
+      "spend": 7633.853299999999,
       "revenue": null,
       "margin_pct": null,
-      "cpl": 152.0,
+      "cpl": 153.0,
       "cost_per_sign": null,
       "payable_leads": 50,
       "signed": null,
@@ -125,6 +125,23 @@
       "note_ts": null
     },
     {
+      "tort": "Chlorpyrifos",
+      "status": "red",
+      "spend": 1143.84,
+      "revenue": null,
+      "margin_pct": null,
+      "cpl": null,
+      "cost_per_sign": null,
+      "payable_leads": 0,
+      "signed": null,
+      "spend_source": "meta",
+      "spend_caveat": "Meta spend (BQ view 403); revenue n/a (non-BP)",
+      "data_ok": true,
+      "note": null,
+      "note_author": null,
+      "note_ts": null
+    },
+    {
       "tort": "Paraquat",
       "status": "green",
       "spend": 1139.8799999999997,
@@ -142,26 +159,9 @@
       "note_ts": null
     },
     {
-      "tort": "Chlorpyrifos",
-      "status": "red",
-      "spend": 1138.79,
-      "revenue": null,
-      "margin_pct": null,
-      "cpl": null,
-      "cost_per_sign": null,
-      "payable_leads": 0,
-      "signed": null,
-      "spend_source": "meta",
-      "spend_caveat": "Meta spend (BQ view 403); revenue n/a (non-BP)",
-      "data_ok": true,
-      "note": null,
-      "note_author": null,
-      "note_ts": null
-    },
-    {
       "tort": "TVM",
       "status": "green",
-      "spend": 399.8669,
+      "spend": 399.8728,
       "revenue": 840,
       "margin_pct": 52.4,
       "cpl": 57.0,
