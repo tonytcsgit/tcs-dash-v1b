@@ -223,8 +223,8 @@ function renderAnalysis() {
   }
   
   const w = tort.windows[currentWindow];
-  if (!w) {
-    document.getElementById("analysis").innerHTML = "<div class='error-utm'>Window not found</div>";
+  if (!w || !w.total) {
+    document.getElementById("analysis").innerHTML = `<div class='error-utm'>No data for ${esc(currentWindow)} window</div>`;
     return;
   }
   
@@ -232,21 +232,25 @@ function renderAnalysis() {
   let html = "";
   
   // TOTAL
+  const totalPayable = w.total.payable || 0;
+  const totalSigned = w.total.signed || 0;
+  const totalCvr = w.total.cvr;
   html += `<div class="utm-section">
-    <div class="utm-section-title">TOTAL — ${esc(tort.tort_name)} (${esc(w.range)})</div>
+    <div class="utm-section-title">TOTAL — ${esc(tort.tort_name)} (${esc(w.range || currentWindow)})</div>
     <div class="utm-total">
-      <div class="big">payable=${w.total.payable.toLocaleString()} signed=${w.total.signed.toLocaleString()} cvr=${fmtPct(w.total.cvr)}</div>
-      ${target ? `<div class="small">Target CVR: ${target}% ${w.total.cvr >= target ? "✅" : "🔴"}</div>` : ""}
+      <div class="big">payable=${totalPayable.toLocaleString()} signed=${totalSigned.toLocaleString()} cvr=${fmtPct(totalCvr)}</div>
+      ${target ? `<div class="small">Target CVR: ${target}% ${totalCvr >= target ? "✅" : "🔴"}</div>` : ""}
     </div>
   </div>`;
   
   // MARKETERS
-  if (w.marketers.length) {
+  const marketers = w.marketers || [];
+  if (marketers.length) {
     html += `<div class="utm-section">
       <div class="utm-section-title">Marketers</div>
       <div class="utm-table-wrap"><div class="scroll"><table class="utm-table">
         <thead><tr><th>Marketer</th><th class="num">Payable</th><th class="num">Signed</th><th class="num">CVR</th></tr></thead>
-        <tbody>${w.marketers.map(m => `
+        <tbody>${marketers.map(m => `
           <tr>
             <td class="label">${marketerTag(m.name)} ${esc(m.name)}</td>
             <td class="num">${m.payable.toLocaleString()}</td>
@@ -259,12 +263,13 @@ function renderAnalysis() {
   }
   
   // CONCEPTS
-  if (w.concepts.length) {
+  const concepts = w.concepts || [];
+  if (concepts.length) {
     html += `<div class="utm-section">
       <div class="utm-section-title">Concepts ${tort.prefix} #</div>
       <div class="utm-table-wrap"><div class="scroll"><table class="utm-table">
         <thead><tr><th>Concept</th><th class="num">Payable</th><th class="num">Signed</th><th class="num">CVR</th></tr></thead>
-        <tbody>${w.concepts.map(c => `
+        <tbody>${concepts.map(c => `
           <tr>
             <td class="label">${esc(c.concept)}</td>
             <td class="num">${c.payable.toLocaleString()}</td>
@@ -277,11 +282,12 @@ function renderAnalysis() {
   }
   
   // DIMENSIONS (criteria tokens)
+  const dimensions = w.dimensions || {};
   const dimOrder = ['hook', 'concept', 'audience', 'visual', 'version', 'suffix', 'format'];
   const dimNames = {hook: 'Hook', concept: 'Concept', audience: 'Audience', visual: 'Visual', version: 'Version', suffix: 'Suffix', format: 'Format'};
   let dimHtml = "";
   for (const dn of dimOrder) {
-    const rows = w.dimensions[dn];
+    const rows = dimensions[dn];
     if (!rows || !rows.length) continue;
     dimHtml += `<div class="dim-card">
       <h5>${dimNames[dn] || dn}</h5>
@@ -300,12 +306,13 @@ function renderAnalysis() {
   }
   
   // CREATIVES
-  if (w.creatives.length) {
+  const creatives = w.creatives || [];
+  if (creatives.length) {
     html += `<div class="utm-section">
       <div class="utm-section-title">Creatives (≥5 payable)</div>
       <div class="utm-table-wrap"><div class="scroll"><table class="utm-table">
         <thead><tr><th>Creative</th><th class="num">Payable</th><th class="num">Signed</th><th class="num">CVR</th></tr></thead>
-        <tbody>${w.creatives.map(c => `
+        <tbody>${creatives.map(c => `
           <tr>
             <td class="label">${marketerTag(c.marketer)} ${esc(c.label)}</td>
             <td class="num">${c.payable.toLocaleString()}</td>
