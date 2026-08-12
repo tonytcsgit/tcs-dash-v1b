@@ -140,7 +140,8 @@ let rawData = null;
 let currentPlatform = "all";
 let currentTort = "all";
 let currentMarketer = "all";
-let currentWindow = "7d";
+let dateFrom = "";
+let dateTo = "";
 let minPayable = 5;
 let minSigned = 1;
 
@@ -221,10 +222,11 @@ function renderControls() {
     `<option value="Untagged" ${currentMarketer === "Untagged" ? "selected" : ""}>Untagged</option>`
   ].join("");
   
-  // Build window options
-  const windowOptions = ["7d", "14d", "30d", "Lifetime"].map(w =>
-    `<option value="${w}" ${currentWindow === w ? "selected" : ""}>${w}</option>`
-  ).join("");
+  // Default date range: last 7 days
+  const today = new Date().toISOString().split('T')[0];
+  const weekAgo = new Date(Date.now() - 6 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
+  if (!dateFrom) dateFrom = weekAgo;
+  if (!dateTo) dateTo = today;
   
   const html = `
     <div class="bp-utm-controls">
@@ -242,8 +244,12 @@ function renderControls() {
           <select id="filter-marketer" onchange="currentMarketer=this.value; renderAnalysis()">${marketerOptions}</select>
         </div>
         <div>
-          <label>Window</label>
-          <select id="filter-window" onchange="currentWindow=this.value; renderAnalysis()">${windowOptions}</select>
+          <label>From</label>
+          <input type="date" id="filter-date-from" value="${dateFrom}" onchange="dateFrom=this.value; renderAnalysis()">
+        </div>
+        <div>
+          <label>To</label>
+          <input type="date" id="filter-date-to" value="${dateTo}" onchange="dateTo=this.value; renderAnalysis()">
         </div>
         <div>
           <label>Min Payable</label>
@@ -264,11 +270,8 @@ function renderControls() {
 }
 
 function renderAnalysis() {
-  // Collect all creatives across torts matching filters
-  let allCreatives = [];
-  let allMarketers = {};
-  let allConcepts = {};
-  let allDimensions = {};
+  // Collect all leads matching filters, then aggregate by creative
+  let creativeMap = {};  // key: platform|marketer|label|tort -> {payable, signed}
   let totalPayable = 0;
   let totalSigned = 0;
   
@@ -277,56 +280,44 @@ function renderAnalysis() {
     
     const target = tort.target_cvr;
     
-    for (const [platform, pdata] of Object.entries(tort.platforms || {})) {
-      if (currentPlatform !== "all" && platform !== currentPlatform) continue;
+    for (const lead of (tort.leads || [])) {
+      // Filter by platform
+      if (currentPlatform !== "all" && lead.platform !== currentPlatform) continue;
       
-      const w = pdata.windows[currentWindow];
-      if (!w || !w.total) continue;
+      // Filter by marketer
+      if (currentMarketer !== "all" && lead.marketer !== currentMarketer) continue;
       
-      // Accumulate totals
-      totalPayable += w.total.payable || 0;
-      totalSigned += w.total.signed || 0;
+      // Filter by date range
+      if (dateFrom && lead.date < dateFrom) continue;
+      if (dateTo && lead.date > dateTo) continue;
       
-      // Accumulate marketers
-      for (const m of (w.marketers || [])) {
-        if (currentMarketer !== "all" && m.name !== currentMarketer) continue;
-        if (!allMarketers[m.name]) allMarketers[m.name] = { payable: 0, signed: 0 };
-        allMarketers[m.name].payable += m.payable;
-        allMarketers[m.name].signed += m.signed;
-      }
-      
-      // Accumulate concepts
-      for (const c of (w.concepts || [])) {
-        if (!allConcepts[c.concept]) allConcepts[c.concept] = { payable: 0, signed: 0 };
-        allConcepts[c.concept].payable += c.payable;
-        allConcepts[c.concept].signed += c.signed;
-      }
-      
-      // Accumulate dimensions
-      for (const [dn, rows] of Object.entries(w.dimensions || {})) {
-        if (!allDimensions[dn]) allDimensions[dn] = {};
-        for (const r of rows) {
-          if (!allDimensions[dn][r.value]) allDimensions[dn][r.value] = { payable: 0, signed: 0 };
-          allDimensions[dn][r.value].payable += r.payable;
-          allDimensions[dn][r.value].signed += r.signed;
-        }
-      }
-      
-      // Accumulate creatives
-      for (const c of (w.creatives || [])) {
-        if (currentMarketer !== "all" && c.marketer !== currentMarketer) continue;
-        if (c.payable < minPayable) continue;
-        if (c.signed < minSigned) continue;
-        allCreatives.push({
-          ...c,
+      // Aggregate by creative
+      const key = `${lead.platform}|${lead.marketer}|${lead.label}|${tort.tort_name}`;
+      if (!creativeMap[key]) {
+        creativeMap[key] = {
+          platform: lead.platform,
+          marketer: lead.marketer,
+          label: lead.label,
           tort_name: tort.tort_name,
-          target_cvr: target
-        });
+          target_cvr: target,
+          payable: 0,
+          signed: 0
+        };
       }
+      creativeMap[key].payable += 1;
+      creativeMap[key].signed += lead.signed;
     }
   }
   
-  // Sort creatives by CVR desc, then signed desc
+  // Convert to array and apply min thresholds
+  let allCreatives = Object.values(creativeMap)
+    .filter(c => c.payable >= minPayable && c.signed >= minSigned)
+    .map(c => ({
+      ...c,
+      cvr: c.payable > 0 ? round(100 * c.signed / c.payable, 1) : null
+    }));
+  
+  // Sort by CVR desc, then signed desc
   allCreatives.sort((a, b) => {
     const cvrA = a.payable > 0 ? a.signed / a.payable : 0;
     const cvrB = b.payable > 0 ? b.signed / b.payable : 0;
@@ -334,109 +325,27 @@ function renderAnalysis() {
     return b.signed - a.signed;
   });
   
-  // Convert marketers to array
-  const marketersArr = Object.entries(allMarketers).map(([name, d]) => ({
-    name,
-    payable: d.payable,
-    signed: d.signed,
-    cvr: d.payable > 0 ? round(100 * d.signed / d.payable, 1) : null
-  })).sort((a, b) => b.payable - a.payable);
-  
-  // Convert concepts to array
-  const conceptsArr = Object.entries(allConcepts).map(([concept, d]) => ({
-    concept,
-    payable: d.payable,
-    signed: d.signed,
-    cvr: d.payable > 0 ? round(100 * d.signed / d.payable, 1) : null
-  })).filter(c => c.payable >= minPayable).sort((a, b) => b.payable - a.payable);
+  // Recalculate totals from filtered creatives
+  totalPayable = allCreatives.reduce((s, c) => s + c.payable, 0);
+  totalSigned = allCreatives.reduce((s, c) => s + c.signed, 0);
+  const totalCvr = totalPayable > 0 ? round(100 * totalSigned / totalPayable, 1) : null;
   
   // Build HTML
   let html = "";
   
   // TOTAL
-  const totalCvr = totalPayable > 0 ? round(100 * totalSigned / totalPayable, 1) : null;
   html += `<div class="bp-utm-section">
-    <div class="bp-utm-section-title">TOTAL — ${currentPlatform === "all" ? "All Platforms" : currentPlatform} — ${currentTort === "all" ? "All Torts" : rawData.torts.find(t => t.tort_id === currentTort)?.tort_name || currentTort} — ${currentWindow}</div>
+    <div class="bp-utm-section-title">TOTAL — ${currentPlatform === "all" ? "All Platforms" : currentPlatform} — ${currentTort === "all" ? "All Torts" : rawData.torts.find(t => t.tort_id === currentTort)?.tort_name || currentTort} — ${dateFrom} to ${dateTo}</div>
     <div class="bp-utm-total">
       <div class="big">payable=${totalPayable.toLocaleString()} signed=${totalSigned.toLocaleString()} cvr=${fmtPct(totalCvr)}</div>
-      <div class="small">Filters: platform=${currentPlatform} · tort=${currentTort} · marketer=${currentMarketer} · window=${currentWindow} · min_payable=${minPayable} · min_signed=${minSigned}</div>
+      <div class="small">Filters: platform=${currentPlatform} · tort=${currentTort} · marketer=${currentMarketer} · dates=${dateFrom}→${dateTo} · min_payable=${minPayable} · min_signed=${minSigned}</div>
     </div>
   </div>`;
-  
-  // MARKETERS
-  if (marketersArr.length) {
-    html += `<div class="bp-utm-section">
-      <div class="bp-utm-section-title">Marketers</div>
-      <div class="bp-utm-table-wrap"><div class="scroll"><table class="bp-utm-table">
-        <thead><tr><th>Marketer</th><th class="num">Payable</th><th class="num">Signed</th><th class="num">CVR</th></tr></thead>
-        <tbody>${marketersArr.map(m => `
-          <tr>
-            <td class="label">${marketerTag(m.name)} ${esc(m.name)}</td>
-            <td class="num">${m.payable.toLocaleString()}</td>
-            <td class="num">${m.signed.toLocaleString()}</td>
-            <td class="num ${cvrClass(m.cvr, null)}">${fmtPct(m.cvr)} ${cvrFlag(m.cvr, null)}</td>
-          </tr>`).join("")}
-        </tbody>
-      </table></div></div>
-    </div>`;
-  }
-  
-  // CONCEPTS
-  if (conceptsArr.length) {
-    html += `<div class="bp-utm-section">
-      <div class="bp-utm-section-title">Concepts</div>
-      <div class="bp-utm-table-wrap"><div class="scroll"><table class="bp-utm-table">
-        <thead><tr><th>Concept</th><th class="num">Payable</th><th class="num">Signed</th><th class="num">CVR</th></tr></thead>
-        <tbody>${conceptsArr.map(c => `
-          <tr>
-            <td class="label">${esc(c.concept)}</td>
-            <td class="num">${c.payable.toLocaleString()}</td>
-            <td class="num">${c.signed.toLocaleString()}</td>
-            <td class="num ${cvrClass(c.cvr, null)}">${fmtPct(c.cvr)} ${cvrFlag(c.cvr, null)}</td>
-          </tr>`).join("")}
-        </tbody>
-      </table></div></div>
-    </div>`;
-  }
-  
-  // DIMENSIONS
-  const dimOrder = ['hook', 'concept', 'audience', 'visual', 'version', 'suffix', 'format'];
-  const dimNames = {hook: 'Hook', concept: 'Concept', audience: 'Audience', visual: 'Visual', version: 'Version', suffix: 'Suffix', format: 'Format'};
-  let dimHtml = "";
-  for (const dn of dimOrder) {
-    const rows = allDimensions[dn];
-    if (!rows) continue;
-    const rowsArr = Object.entries(rows).map(([value, d]) => ({
-      value,
-      payable: d.payable,
-      signed: d.signed,
-      cvr: d.payable > 0 ? round(100 * d.signed / d.payable, 1) : null
-    })).filter(r => r.payable >= 8).sort((a, b) => {
-      const cvrA = a.payable > 0 ? a.signed / a.payable : 0;
-      const cvrB = b.payable > 0 ? b.signed / b.payable : 0;
-      return cvrB - cvrA;
-    });
-    if (!rowsArr.length) continue;
-    dimHtml += `<div class="dim-card">
-      <h5>${dimNames[dn] || dn}</h5>
-      ${rowsArr.map(r => `
-        <div class="dim-row">
-          <span class="v">${esc(r.value)}</span>
-          <span class="n">p=${r.payable} s=${r.signed} ${fmtPct(r.cvr)}</span>
-        </div>`).join("")}
-    </div>`;
-  }
-  if (dimHtml) {
-    html += `<div class="bp-utm-section">
-      <div class="bp-utm-section-title">Criteria Tokens</div>
-      <div class="dim-grid">${dimHtml}</div>
-    </div>`;
-  }
   
   // CREATIVES
   if (allCreatives.length) {
     html += `<div class="bp-utm-section">
-      <div class="bp-utm-section-title">Creatives (≥${minPayable} payable, ≥${minSigned} signed)</div>
+      <div class="bp-utm-section-title">Creatives (${allCreatives.length} matching filters)</div>
       <div class="bp-utm-table-wrap"><div class="scroll"><table class="bp-utm-table">
         <thead><tr><th>Creative</th><th>Tort</th><th class="num">Payable</th><th class="num">Signed</th><th class="num">CVR</th></tr></thead>
         <tbody>${allCreatives.map(c => `

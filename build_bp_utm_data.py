@@ -133,8 +133,8 @@ def dim(tok):
     return ('concept', tok)
 
 
-def analyze_tort(tort, rows, windows):
-    """Run the full breakdown on one tort's rows, segmented by platform."""
+def analyze_tort(tort, rows):
+    """Extract raw lead-level rows for client-side date filtering."""
     idx = {h.lower(): i for i, h in enumerate(rows[0])}
     
     # Find column indices
@@ -159,19 +159,7 @@ def analyze_tort(tort, rows, windows):
     if "status" not in col_map or "created_date" not in col_map:
         return None
     
-    # Initialize per-platform window aggregations
-    def new_window():
-        return {
-            "total": [0, 0],
-            "marketers": collections.defaultdict(lambda: [0, 0]),
-            "concepts": collections.defaultdict(lambda: [0, 0]),
-            "dimensions": collections.defaultdict(lambda: collections.defaultdict(lambda: [0, 0])),
-            "creatives": collections.defaultdict(lambda: [0, 0]),
-        }
-    
-    # Structure: platform -> window_label -> aggregation
-    platforms = ["Meta", "YouTube", "Unknown"]
-    W = {p: {wl: new_window() for wl, _, _ in windows} for p in platforms}
+    leads = []
     
     for r in rows[1:]:
         if len(r) <= col_map["status"]:
@@ -184,6 +172,9 @@ def analyze_tort(tort, rows, windows):
         except ValueError:
             d = None
         
+        if not d:
+            continue
+        
         status = (r[col_map["status"]] or "").strip()
         if status in EXCL:
             continue
@@ -192,109 +183,28 @@ def analyze_tort(tort, rows, windows):
         lab = resolve_label(r, col_map)
         mk = detect_marketer(r, col_map)
         platform = detect_platform(r, col_map)
-        num, ver, toks = extract_tokens(lab, tort["prefix"]) if lab != "(blank)" else (None, None, [])
-        dims = set(dv for dv in (dim(t) for t in toks) if dv)
-        if ver:
-            dims.add(('version', ver))
         
-        for wl, since, until in windows:
-            if until is not None and (d is None or not (since <= d <= until)):
-                continue
-            w = W[platform][wl]
-            w["total"][0] += 1
-            w["total"][1] += sg
-            w["marketers"][mk][0] += 1
-            w["marketers"][mk][1] += sg
-            w["creatives"][(platform, mk, lab)][0] += 1
-            w["creatives"][(platform, mk, lab)][1] += sg
-            if num:
-                w["concepts"][num][0] += 1
-                w["concepts"][num][1] += sg
-            for dn, dv in dims:
-                w["dimensions"][dn][dv][0] += 1
-                w["dimensions"][dn][dv][1] += sg
+        leads.append({
+            "date": d.strftime("%Y-%m-%d"),
+            "platform": platform,
+            "marketer": mk,
+            "label": lab,
+            "signed": sg,
+        })
     
-    # Format output — one entry per platform
-    result = {
+    return {
         "tort_id": tort["id"],
         "tort_name": tort["name"],
         "prefix": tort["prefix"],
         "target_cvr": TARGETS.get(tort["id"]),
-        "platforms": {}
+        "leads": leads,
     }
-    
-    for platform in platforms:
-        platform_data = {"windows": {}}
-        has_data = False
-        
-        for wl, since, until in windows:
-            w = W[platform][wl]
-            rng = f"{since.date()}→{until.date()}" if until else "all dates"
-            
-            if w["total"][0] > 0:
-                has_data = True
-            
-            # Marketers
-            marketers = []
-            for mk, (p, s) in sorted(w["marketers"].items(), key=lambda kv: -kv[1][0]):
-                marketers.append({"name": mk, "payable": p, "signed": s, "cvr": round(100*s/p, 1) if p else None})
-            
-            # Concepts (>=5 payable)
-            concepts = []
-            for num, (p, s) in sorted(w["concepts"].items(), key=lambda kv: -kv[1][0]):
-                if p >= 5:
-                    concepts.append({"concept": f"{tort['prefix']} {num}", "payable": p, "signed": s, "cvr": round(100*s/p, 1) if p else None})
-            
-            # Dimensions
-            dimensions = {}
-            for dn in ('hook', 'concept', 'audience', 'visual', 'version', 'suffix', 'format'):
-                rows_dim = [(k, v) for k, v in w["dimensions"].get(dn, {}).items() if v[0] >= 8]
-                if rows_dim:
-                    dimensions[dn] = [
-                        {"value": k, "payable": v[0], "signed": v[1], "cvr": round(100*v[1]/v[0], 1) if v[0] else None}
-                        for k, v in sorted(rows_dim, key=lambda kv: -(kv[1][1]/kv[1][0]))
-                    ]
-            
-            # Creatives (>=5 payable, <5 bucketed)
-            creatives = []
-            bucket_p, bucket_s = 0, 0
-            for (plat, mk, lab), (p, s) in sorted(w["creatives"].items(), key=lambda kv: -kv[1][0]):
-                if p < 5:
-                    bucket_p += p
-                    bucket_s += s
-                    continue
-                creatives.append({"platform": plat, "marketer": mk, "label": lab, "payable": p, "signed": s, "cvr": round(100*s/p, 1) if p else None})
-            if bucket_p:
-                creatives.append({"platform": platform, "marketer": "—", "label": "(<5-lead bucket)", "payable": bucket_p, "signed": bucket_s, "cvr": round(100*bucket_s/bucket_p, 1) if bucket_p else None})
-            
-            platform_data["windows"][wl] = {
-                "range": rng,
-                "total": {"payable": w["total"][0], "signed": w["total"][1], "cvr": round(100*w["total"][1]/w["total"][0], 1) if w["total"][0] else None},
-                "marketers": marketers,
-                "concepts": concepts,
-                "dimensions": dimensions,
-                "creatives": creatives,
-            }
-        
-        if has_data:
-            result["platforms"][platform] = platform_data
-    
-    return result
 
 
 def main():
     creds = service_account.Credentials.from_service_account_file(
         SA_KEY, scopes=["https://www.googleapis.com/auth/spreadsheets.readonly"])
     sheets = build("sheets", "v4", credentials=creds)
-    
-    # Windows: 7d, 14d, 30d, Lifetime
-    asof = datetime.datetime.now()
-    windows = [
-        ("7d", asof - datetime.timedelta(days=6), asof),
-        ("14d", asof - datetime.timedelta(days=13), asof),
-        ("30d", asof - datetime.timedelta(days=29), asof),
-        ("Lifetime", None, None),
-    ]
     
     torts_out = []
     
@@ -310,13 +220,15 @@ def main():
                 print(f"  {tort['name']}: empty", file=sys.stderr)
                 continue
             
-            analysis = analyze_tort(tort, rows, windows)
+            analysis = analyze_tort(tort, rows)
             if analysis:
                 torts_out.append(analysis)
-                # Print platform summary
-                for plat, pdata in analysis["platforms"].items():
-                    total_7d = pdata["windows"]["7d"]["total"]
-                    print(f"  {tort['name']} [{plat}]: 7d payable={total_7d['payable']} signed={total_7d['signed']} cvr={total_7d['cvr']}%", file=sys.stderr)
+                # Count by platform
+                plat_counts = {}
+                for lead in analysis["leads"]:
+                    p = lead["platform"]
+                    plat_counts[p] = plat_counts.get(p, 0) + 1
+                print(f"  {tort['name']}: {len(analysis['leads'])} leads {plat_counts}", file=sys.stderr)
             
         except Exception as e:
             print(f"  {tort['name']}: ERROR {e}", file=sys.stderr)
