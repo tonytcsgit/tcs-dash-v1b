@@ -159,12 +159,105 @@ function renderDashboard(d) {
     renderBuyers(d.buyers || []);
 }
 
+/* ------------------------------ Supabase notes ------------------------------ */
+const SUPABASE_URL = "https://cvpygpxfqxoywrqnmlaz.supabase.co";
+const SUPABASE_KEY = "sb_publishable_oDb7jM3Vd7WNNfWSewXeCQ_OLU1YXd6";
+
+async function sbFetch(path, opts = {}) {
+  const r = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, {
+    ...opts,
+    headers: {
+      "apikey": SUPABASE_KEY,
+      "Authorization": `Bearer ${SUPABASE_KEY}`,
+      "Content-Type": "application/json",
+      "Prefer": "return=representation",
+      ...(opts.headers || {})
+    }
+  });
+  if (!r.ok) throw new Error(`Supabase ${r.status}`);
+  return r.json();
+}
+
+async function loadNotes(page) {
+  try {
+    const notes = await sbFetch(`notes?select=*&page=eq.${page}&order=created_at.desc&limit=50`);
+    renderNotes(page, notes);
+  } catch (e) {
+    document.getElementById(`notes-list-${page}`).innerHTML =
+      `<div class="note-err">Failed to load notes. Check console.</div>`;
+    console.error("Notes load error:", e);
+  }
+}
+
+async function addNote(page, author, kind, body) {
+  const note = { page, author, kind, body };
+  const result = await sbFetch("notes", { method: "POST", body: JSON.stringify(note) });
+  return result[0];
+}
+
+function renderNotes(page, notes) {
+  const container = document.getElementById(`notes-list-${page}`);
+  if (!container) return;
+  if (!notes.length) {
+    container.innerHTML = `<div class="note-empty">No notes yet. Be the first to add one.</div>`;
+    return;
+  }
+  container.innerHTML = notes.map((n) => {
+    const kindBadge = n.kind === "request"
+      ? `<span class="note-kind req">REQUEST</span>`
+      : `<span class="note-kind">NOTE</span>`;
+    const ts = fmtTs(n.created_at);
+    return `<div class="note-item">
+      <div class="note-meta">${kindBadge}<span class="note-author">${esc(n.author)}</span><span class="note-ts">${ts}</span></div>
+      <div class="note-body">${esc(n.body)}</div>
+    </div>`;
+  }).join("");
+}
+
+function renderNotesSection(page, title) {
+  return `<div class="notes-section">
+    <div class="slabel">Team Notes & Requests — ${esc(title)}</div>
+    <div class="notes-form card">
+      <div class="notes-form-row">
+        <input type="text" id="note-author-${page}" placeholder="Your name" maxlength="40">
+        <select id="note-kind-${page}">
+          <option value="note">Note</option>
+          <option value="request">Request</option>
+        </select>
+      </div>
+      <textarea id="note-body-${page}" placeholder="Add a note or request for the team…" rows="2" maxlength="500"></textarea>
+      <button onclick="submitNote('${page}')">Post</button>
+    </div>
+    <div id="notes-list-${page}" class="notes-list"><div class="note-empty">Loading notes…</div></div>
+  </div>`;
+}
+
+async function submitNote(page) {
+  const authorEl = document.getElementById(`note-author-${page}`);
+  const kindEl = document.getElementById(`note-kind-${page}`);
+  const bodyEl = document.getElementById(`note-body-${page}`);
+  const author = authorEl.value.trim();
+  const kind = kindEl.value;
+  const body = bodyEl.value.trim();
+  if (!author || !body) { alert("Name and note text are required."); return; }
+  try {
+    await addNote(page, author, kind, body);
+    bodyEl.value = "";
+    await loadNotes(page);
+  } catch (e) {
+    alert("Failed to post note. Check console.");
+    console.error("Note post error:", e);
+  }
+}
+
 function renderPlaceholder(title, sub, note) {
+  const page = title.includes("Meta") ? "meta" : title.includes("YouTube") ? "youtube" : "utm";
   return `<div class="pagehead">${esc(title)}</div>` +
     `<div class="pagetitle">${esc(title)}</div>` +
     `<div class="pagesub">${esc(sub)}</div>` +
     `<div class="placeholder"><div class="big">${esc(note)}</div>` +
-    `<div class="small">Analysis + team notes/requests for this page are being wired up (Supabase-backed notes coming next).</div></div>`;
+    `<div class="small">Analysis content is being wired up. Team notes are live below.</div></div>` +
+    renderNotesSection(page, title);
 }
 
 function showPage(page) {
@@ -177,17 +270,23 @@ function showPage(page) {
   if (page === "meta") {
     c.innerHTML = renderPlaceholder("Meta Ads Analysis",
       "Creative / campaign performance across Meta accounts.",
-      "Meta ads analysis landing here soon."); return;
+      "Meta ads analysis landing here soon.");
+    loadNotes("meta");
+    return;
   }
   if (page === "youtube") {
     c.innerHTML = renderPlaceholder("YouTube Ads Analysis",
       "SMA / Hernia Mesh YouTube creative + script performance.",
-      "YouTube ads analysis landing here soon."); return;
+      "YouTube ads analysis landing here soon.");
+    loadNotes("youtube");
+    return;
   }
   if (page === "utm") {
     c.innerHTML = renderPlaceholder("UTM Content Analysis",
       "Script-family + marketer (utm_content) conversion breakdowns.",
-      "UTM content analysis landing here soon."); return;
+      "UTM content analysis landing here soon.");
+    loadNotes("utm");
+    return;
   }
   c.innerHTML = renderDashboard(_data);
 }

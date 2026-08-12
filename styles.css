@@ -187,6 +187,37 @@ footer{margin-top:26px; font-size:11px; color:var(--muted); text-align:center;}
 .placeholder .big{font-size:15px; color:#d7e0ea; font-weight:600; margin-bottom:6px;}
 .placeholder .small{font-size:12.5px; font-style:italic;}
 
+/* ---------- Team Notes & Requests (Supabase) ---------- */
+.notes-section{margin-top:28px;}
+.notes-form{background:var(--bg2); border:1px solid var(--line-dark); border-radius:14px;
+  padding:16px 18px; margin-bottom:14px;}
+.notes-form-row{display:flex; gap:10px; margin-bottom:10px;}
+.notes-form-row input{flex:1; background:#0b0e13; border:1px solid var(--line-dark); border-radius:8px;
+  color:#e8eef5; padding:9px 12px; font-size:13px; outline:none;}
+.notes-form-row input:focus{border-color:var(--accent);}
+.notes-form-row select{background:#0b0e13; border:1px solid var(--line-dark); border-radius:8px;
+  color:#e8eef5; padding:9px 12px; font-size:13px; outline:none; cursor:pointer;}
+.notes-form textarea{width:100%; background:#0b0e13; border:1px solid var(--line-dark); border-radius:8px;
+  color:#e8eef5; padding:9px 12px; font-size:13px; outline:none; resize:vertical;
+  font-family:inherit; margin-bottom:10px;}
+.notes-form textarea:focus{border-color:var(--accent);}
+.notes-form button{background:var(--accent); color:#04302f; font-weight:700; border:none;
+  border-radius:8px; padding:9px 20px; font-size:13px; cursor:pointer;}
+.notes-form button:hover{background:var(--accent2);}
+.notes-list{display:flex; flex-direction:column; gap:10px;}
+.note-item{background:var(--bg2); border:1px solid var(--line-dark); border-radius:10px;
+  padding:12px 14px;}
+.note-meta{display:flex; align-items:center; gap:10px; margin-bottom:6px;}
+.note-kind{font-size:9px; font-weight:800; padding:2px 6px; border-radius:4px;
+  background:rgba(50,230,226,.14); color:var(--accent2); letter-spacing:.06em;}
+.note-kind.req{background:rgba(245,165,36,.16); color:#ffc46b;}
+.note-author{font-size:12px; font-weight:600; color:#fff;}
+.note-ts{font-size:11px; color:var(--muted); margin-left:auto;}
+.note-body{font-size:13px; color:#d7e0ea; line-height:1.5;}
+.note-empty{color:var(--muted); font-size:13px; font-style:italic; text-align:center;
+  padding:20px;}
+.note-err{color:var(--red); font-size:13px; text-align:center; padding:20px;}
+
 /* ---------- Responsive: collapse sidebar ---------- */
 @media (max-width:820px){
   .sidebar{position:static; width:100%; flex-direction:row; flex-wrap:wrap;
