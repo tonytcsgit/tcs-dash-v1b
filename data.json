@@ -1,9 +1,9 @@
 {
   "contract_version": 1,
-  "generated_at": "2026-08-12T14:07:37-04:00",
+  "generated_at": "2026-08-12T15:07:43-04:00",
   "data_freshness": {
-    "leads_spend_sr": "2026-08-12T14:07:37-04:00",
-    "retainers": "2026-08-12T14:07:37-04:00",
+    "leads_spend_sr": "2026-08-12T15:07:43-04:00",
+    "retainers": "2026-08-12T15:07:43-04:00",
     "stale_warnings": [
       "PowerPort spend: stale (last Day 2026-07-20)",
       "Endoscopy spend: stale (last Day 2026-07-14)"
@@ -30,7 +30,7 @@
     {
       "tort_or_buyer": "Chlorpyrifos",
       "level": "red",
-      "reason": "Spend $1,254 with 0 payable leads \u2014 burning money",
+      "reason": "Spend $1,260 with 0 payable leads \u2014 burning money",
       "owner": null
     },
     {
@@ -81,12 +81,12 @@
     {
       "tort": "WDC",
       "status": "green",
-      "spend": 14385.2269,
+      "spend": 14443.3408,
       "revenue": null,
       "margin_pct": null,
-      "cpl": 400.0,
+      "cpl": 390.0,
       "cost_per_sign": null,
-      "payable_leads": 36,
+      "payable_leads": 37,
       "signed": null,
       "spend_source": "meta",
       "spend_caveat": "Meta spend (BQ view 403); revenue n/a (non-BP)",
@@ -98,12 +98,12 @@
     {
       "tort": "Depo",
       "status": "green",
-      "spend": 9965.807,
+      "spend": 10040.0978,
       "revenue": null,
       "margin_pct": null,
-      "cpl": 158.0,
+      "cpl": 157.0,
       "cost_per_sign": null,
-      "payable_leads": 63,
+      "payable_leads": 64,
       "signed": null,
       "spend_source": "meta",
       "spend_caveat": "Meta spend (BQ view 403); revenue n/a (non-BP)",
@@ -149,7 +149,7 @@
     {
       "tort": "Chlorpyrifos",
       "status": "red",
-      "spend": 1253.8,
+      "spend": 1260.2,
       "revenue": null,
       "margin_pct": null,
       "cpl": null,
@@ -166,7 +166,7 @@
     {
       "tort": "TVM",
       "status": "green",
-      "spend": 711.2673,
+      "spend": 711.3145,
       "revenue": 1440,
       "margin_pct": 50.6,
       "cpl": 59.0,
