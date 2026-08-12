@@ -136,20 +136,66 @@ function statusPill(status, labelOverride) {
 }
 
 /* -------------------------------- render -------------------------------- */
+let _data = null;           // cached dashboard data for page re-renders
+let _page = "dashboard";    // current page
+
 function render(data) {
+  _data = data;
   document.getElementById("loading").classList.add("hidden");
   renderHeader(data);
-  const staleNames = (data.data_freshness && data.data_freshness.stale_warnings) || [];
-  document.getElementById("content").innerHTML =
-    renderTopRow(data) +
-    /* renderKpis(data.company || {}) +  // HIDDEN by Andrew Aug 11 2026 */
-    renderTorts(data.torts || [], staleNames) +
-    renderBuyers(data.buyers || []);
+  showPage(_page);
   document.getElementById("footer").innerHTML =
     `TCS Internal · auto-refresh hourly (LP/BP/Meta/SR) · retainers daily · ` +
     `<span class="amber-text">shared-password access</span>` +
     (data.generated_at ? ` · generated ${fmtTs(data.generated_at)}` : "");
 }
+
+/* ---------------- page routing (added Aug 11 2026) ---------------- */
+function renderDashboard(d) {
+  const staleNames = (d.data_freshness && d.data_freshness.stale_warnings) || [];
+  return renderTopRow(d) +
+    /* renderKpis(d.company || {}) +  // HIDDEN by Andrew Aug 11 2026 */
+    renderTorts(d.torts || [], staleNames) +
+    renderBuyers(d.buyers || []);
+}
+
+function renderPlaceholder(title, sub, note) {
+  return `<div class="pagehead">${esc(title)}</div>` +
+    `<div class="pagetitle">${esc(title)}</div>` +
+    `<div class="pagesub">${esc(sub)}</div>` +
+    `<div class="placeholder"><div class="big">${esc(note)}</div>` +
+    `<div class="small">Analysis + team notes/requests for this page are being wired up (Supabase-backed notes coming next).</div></div>`;
+}
+
+function showPage(page) {
+  _page = page;
+  document.querySelectorAll(".navitem").forEach((n) =>
+    n.classList.toggle("active", n.dataset.page === page));
+  const c = document.getElementById("content");
+  if (!_data) return;
+  if (page === "dashboard") { c.innerHTML = renderDashboard(_data); return; }
+  if (page === "meta") {
+    c.innerHTML = renderPlaceholder("Meta Ads Analysis",
+      "Creative / campaign performance across Meta accounts.",
+      "Meta ads analysis landing here soon."); return;
+  }
+  if (page === "youtube") {
+    c.innerHTML = renderPlaceholder("YouTube Ads Analysis",
+      "SMA / Hernia Mesh YouTube creative + script performance.",
+      "YouTube ads analysis landing here soon."); return;
+  }
+  if (page === "utm") {
+    c.innerHTML = renderPlaceholder("UTM Content Analysis",
+      "Script-family + marketer (utm_content) conversion breakdowns.",
+      "UTM content analysis landing here soon."); return;
+  }
+  c.innerHTML = renderDashboard(_data);
+}
+
+document.addEventListener("click", (e) => {
+  const item = e.target.closest(".navitem");
+  if (item && item.dataset.page) showPage(item.dataset.page);
+});
 
 /* header: freshness + stale warnings chip */
 function renderHeader(data) {
