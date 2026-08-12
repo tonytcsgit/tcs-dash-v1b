@@ -62,13 +62,13 @@ def detect_platform(row, idx):
         if p and p not in ("", "{placement}", "{{placement}}", "an", "others"):
             return "Meta"
     
-    # Check Intake_Source suffix
+    # Check Intake_Source for -YT- or -Y suffix, or -FB-/-F suffix
     source_i = idx.get("intake_source")
     if source_i is not None and source_i < len(row):
-        s = (row[source_i] or "").strip()
-        if s.endswith("-Y"):
+        s = (row[source_i] or "").strip().lower()
+        if "-yt-" in s or s.endswith("-y"):
             return "YouTube"
-        if s.endswith("-F"):
+        if "-fb-" in s or s.endswith("-f"):
             return "Meta"
     
     return "Unknown"

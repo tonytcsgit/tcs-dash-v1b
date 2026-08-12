@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BP UTM Content Analysis — TCS</title>
+<link rel="stylesheet" href="styles.css">
+<style>
+/* BP UTM Analysis — 6-filter layout */
+.bp-utm-controls { background: var(--bg2); border: 1px solid var(--line-dark); border-radius: 14px; padding: 18px 20px; margin-bottom: 20px; }
+.bp-utm-controls-row { display: flex; gap: 14px; flex-wrap: wrap; align-items: flex-end; }
+.bp-utm-controls label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; display: block; margin-bottom: 4px; }
+.bp-utm-controls select, .bp-utm-controls input { background: #0b0e13; border: 1px solid var(--line-dark); border-radius: 8px; color: #e8eef5; padding: 8px 12px; font-size: 13px; outline: none; }
+.bp-utm-controls select:focus, .bp-utm-controls input:focus { border-color: var(--accent); }
+.bp-utm-controls button { background: var(--accent); color: #04302f; font-weight: 700; border: none; border-radius: 8px; padding: 8px 20px; font-size: 13px; cursor: pointer; }
+.bp-utm-controls button:hover { background: var(--accent2); }
+.bp-utm-controls .num-input { width: 80px; }
+
+.bp-utm-section { margin-bottom: 28px; }
+.bp-utm-section-title { font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--accent); margin: 26px 0 12px; display: flex; align-items: center; gap: 10px; }
+.bp-utm-section-title::after { content: ""; flex: 1; height: 1px; background: var(--line-dark); }
+
+.bp-utm-total { background: var(--bg2); border: 1px solid var(--line-dark); border-radius: 12px; padding: 16px 20px; margin-bottom: 16px; }
+.bp-utm-total .big { font-size: 18px; font-weight: 700; color: #fff; }
+.bp-utm-total .small { font-size: 12px; color: var(--muted); margin-top: 4px; }
+
+.bp-utm-table-wrap { background: var(--panel); color: var(--ink); border-radius: 14px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,.35); margin-top: 6px; }
+.bp-utm-table-wrap .scroll { overflow-x: auto; }
+.bp-utm-table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+.bp-utm-table thead th { background: var(--panel2); color: var(--ink-soft); text-align: left; font-size: 10.5px; text-transform: uppercase; letter-spacing: .06em; padding: 10px 12px; border-bottom: 1px solid var(--line); }
+.bp-utm-table tbody td { padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: middle; }
+.bp-utm-table tbody tr:last-child td { border-bottom: none; }
+.bp-utm-table tbody tr:hover { background: #f0f6f9; }
+.bp-utm-table .num { text-align: right; font-variant-numeric: tabular-nums; }
+.bp-utm-table .label { font-weight: 600; color: var(--ink); max-width: 400px; }
+.bp-utm-table .marketer-tag { font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 4px; margin-right: 6px; }
+.bp-utm-table .marketer-jor { background: rgba(50,230,226,.14); color: #0a8a86; }
+.bp-utm-table .marketer-cha { background: rgba(245,165,36,.14); color: #a86a08; }
+.bp-utm-table .marketer-mo { background: rgba(48,164,108,.14); color: #1f7a4d; }
+.bp-utm-table .marketer-unt { background: rgba(138,153,173,.14); color: #5b6b7f; }
+.bp-utm-table .platform-tag { font-size: 9px; font-weight: 700; padding: 2px 5px; border-radius: 4px; margin-right: 4px; }
+.bp-utm-table .platform-meta { background: rgba(24,119,242,.14); color: #1877f2; }
+.bp-utm-table .platform-yt { background: rgba(255,0,0,.14); color: #ff0000; }
+
+.cvr-high { color: var(--green); font-weight: 700; }
+.cvr-mid { color: #a86a08; font-weight: 600; }
+.cvr-low { color: var(--red); font-weight: 600; }
+
+.flag { font-size: 11px; margin-left: 6px; }
+.flag-green { color: var(--green); }
+.flag-amber { color: var(--amber); }
+.flag-red { color: var(--red); }
+
+.dim-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; margin-top: 12px; }
+.dim-card { background: var(--bg2); border: 1px solid var(--line-dark); border-radius: 10px; padding: 12px 14px; }
+.dim-card h5 { font-size: 11px; color: var(--accent); text-transform: uppercase; letter-spacing: .1em; margin-bottom: 8px; }
+.dim-row { display: flex; justify-content: space-between; font-size: 12px; padding: 4px 0; border-bottom: 1px solid var(--line-dark); }
+.dim-row:last-child { border-bottom: none; }
+.dim-row .v { font-weight: 600; color: #fff; }
+.dim-row .n { color: var(--muted); font-variant-numeric: tabular-nums; }
+
+.loading-utm { text-align: center; color: var(--muted); font-size: 14px; padding: 60px 0; }
+.error-utm { text-align: center; color: var(--red); font-size: 14px; padding: 60px 0; }
+.empty-utm { text-align: center; color: var(--muted); font-size: 14px; padding: 40px; font-style: italic; }
+
+@media (max-width: 820px) {
+  .bp-utm-controls-row { flex-direction: column; align-items: stretch; }
+  .dim-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- Password gate -->
+<div id="gate" class="gate">
+  <div class="gate-box">
+    <img src="assets/logo.png" alt="Tort Claim Strategies">
+    <div class="gate-sub">BP UTM Content Analysis</div>
+    <form id="gate-form" autocomplete="off">
+      <input type="password" id="gate-pw" placeholder="Team password" autofocus>
+      <button type="submit">Enter</button>
+    </form>
+    <div id="gate-err" class="gate-err hidden">Wrong password.</div>
+  </div>
+</div>
+
+<div id="app" class="wrap hidden">
+  <header>
+    <div class="brand">
+      <img src="assets/logo.png" alt="Tort Claim Strategies">
+      <div class="sub">BP UTM Content Analysis</div>
+    </div>
+    <div style="display:flex;gap:12px;align-items:center">
+      <a href="index.html" style="color:var(--accent);font-size:12px;text-decoration:none;border:1px solid var(--line-dark);padding:6px 12px;border-radius:6px;">← Dashboard</a>
+      <div class="fresh" id="fresh">Loading…</div>
+    </div>
+  </header>
+
+  <div id="content">
+    <div class="loading-utm">Loading BP UTM data…</div>
+  </div>
+
+  <footer id="footer">TCS Internal · BP UTM Content Analysis · <span class="amber-text">shared-password access</span></footer>
+</div>
+
+<script>
+const TCS_DASH_PASSWORD = "tcs";
+const AUTH_KEY = "tcs_bp_utm_auth";
+
+// Password gate
+(function initGate() {
+  const gate = document.getElementById("gate");
+  const app = document.getElementById("app");
+  const form = document.getElementById("gate-form");
+  const pw = document.getElementById("gate-pw");
+  const err = document.getElementById("gate-err");
+
+  function unlock() {
+    gate.classList.add("hidden");
+    app.classList.remove("hidden");
+    loadData();
+  }
+
+  if (sessionStorage.getItem(AUTH_KEY) === "1") { unlock(); return; }
+
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    if (pw.value === TCS_DASH_PASSWORD) {
+      sessionStorage.setItem(AUTH_KEY, "1");
+      unlock();
+    } else {
+      err.classList.remove("hidden");
+      pw.value = "";
+      pw.focus();
+    }
+  });
+})();
+
+let rawData = null;
+let currentPlatform = "all";
+let currentTort = "all";
+let currentMarketer = "all";
+let currentWindow = "7d";
+let minPayable = 5;
+let minSigned = 1;
+
+function esc(s) {
+  return String(s).replace(/[&<>"']/g, (c) => ({
+    "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+  }[c]));
+}
+
+function fmtPct(v) {
+  if (v === null || v === undefined) return "—";
+  return Number(v).toFixed(1).replace(/\.0$/, "") + "%";
+}
+
+function cvrClass(v, target) {
+  if (v === null || v === undefined) return "";
+  if (target && v >= target) return "cvr-high";
+  if (v >= 15) return "cvr-high";
+  if (v >= 8) return "cvr-mid";
+  return "cvr-low";
+}
+
+function cvrFlag(v, target) {
+  if (v === null || v === undefined) return "";
+  if (target && v >= target) return '<span class="flag flag-green">✅</span>';
+  if (v >= 25) return '<span class="flag flag-green">✅</span>';
+  if (v >= 15) return '<span class="flag flag-amber">⚠️</span>';
+  return '<span class="flag flag-red">🔴</span>';
+}
+
+function marketerTag(m) {
+  const cls = m === "Jordan" ? "marketer-jor" : m === "Charlie" ? "marketer-cha" : m === "Morane" ? "marketer-mo" : "marketer-unt";
+  const short = m === "Jordan" ? "JOR" : m === "Charlie" ? "CHA" : m === "Morane" ? "MO" : "UNT";
+  return `<span class="marketer-tag ${cls}">${short}</span>`;
+}
+
+function platformTag(p) {
+  if (p === "Meta") return '<span class="platform-tag platform-meta">M</span>';
+  if (p === "YouTube") return '<span class="platform-tag platform-yt">YT</span>';
+  return '';
+}
+
+async function loadData() {
+  try {
+    const r = await fetch("bp_utm_data.json?t=" + Date.now());
+    if (!r.ok) throw new Error("No bp_utm_data.json — run build_bp_utm_data.py first");
+    rawData = await r.json();
+    document.getElementById("fresh").innerHTML = 
+      `Data as of <b>${rawData.generated_at}</b>`;
+    renderControls();
+    renderAnalysis();
+  } catch (e) {
+    document.getElementById("content").innerHTML = 
+      `<div class="error-utm">Failed to load data: ${esc(e.message)}<br><br>
+       <small>Run: HOME=/Users/andyoc python3 build_bp_utm_data.py</small></div>`;
+  }
+}
+
+function renderControls() {
+  // Build tort options
+  const tortOptions = [`<option value="all">All Torts</option>`].concat(
+    rawData.torts.map(t => `<option value="${t.tort_id}" ${currentTort === t.tort_id ? "selected" : ""}>${t.tort_name}</option>`)
+  ).join("");
+  
+  // Build platform options
+  const platformOptions = [
+    `<option value="all" ${currentPlatform === "all" ? "selected" : ""}>All Platforms</option>`,
+    `<option value="Meta" ${currentPlatform === "Meta" ? "selected" : ""}>Meta</option>`,
+    `<option value="YouTube" ${currentPlatform === "YouTube" ? "selected" : ""}>YouTube</option>`
+  ].join("");
+  
+  // Build marketer options
+  const marketerOptions = [
+    `<option value="all" ${currentMarketer === "all" ? "selected" : ""}>All Marketers</option>`,
+    `<option value="Jordan" ${currentMarketer === "Jordan" ? "selected" : ""}>Jordan</option>`,
+    `<option value="Charlie" ${currentMarketer === "Charlie" ? "selected" : ""}>Charlie</option>`,
+    `<option value="Morane" ${currentMarketer === "Morane" ? "selected" : ""}>Morane</option>`,
+    `<option value="Untagged" ${currentMarketer === "Untagged" ? "selected" : ""}>Untagged</option>`
+  ].join("");
+  
+  // Build window options
+  const windowOptions = ["7d", "14d", "30d", "Lifetime"].map(w =>
+    `<option value="${w}" ${currentWindow === w ? "selected" : ""}>${w}</option>`
+  ).join("");
+  
+  const html = `
+    <div class="bp-utm-controls">
+      <div class="bp-utm-controls-row">
+        <div>
+          <label>Ad Platform</label>
+          <select id="filter-platform" onchange="currentPlatform=this.value; renderAnalysis()">${platformOptions}</select>
+        </div>
+        <div>
+          <label>Tort</label>
+          <select id="filter-tort" onchange="currentTort=this.value; renderAnalysis()">${tortOptions}</select>
+        </div>
+        <div>
+          <label>Marketer</label>
+          <select id="filter-marketer" onchange="currentMarketer=this.value; renderAnalysis()">${marketerOptions}</select>
+        </div>
+        <div>
+          <label>Window</label>
+          <select id="filter-window" onchange="currentWindow=this.value; renderAnalysis()">${windowOptions}</select>
+        </div>
+        <div>
+          <label>Min Payable</label>
+          <input type="number" class="num-input" id="filter-min-payable" value="${minPayable}" min="1" onchange="minPayable=parseInt(this.value)||1; renderAnalysis()">
+        </div>
+        <div>
+          <label>Min Signed</label>
+          <input type="number" class="num-input" id="filter-min-signed" value="${minSigned}" min="0" onchange="minSigned=parseInt(this.value)||0; renderAnalysis()">
+        </div>
+        <div>
+          <button onclick="loadData()">↻ Refresh</button>
+        </div>
+      </div>
+    </div>
+    <div id="analysis"></div>
+  `;
+  document.getElementById("content").innerHTML = html;
+}
+
+function renderAnalysis() {
+  // Collect all creatives across torts matching filters
+  let allCreatives = [];
+  let allMarketers = {};
+  let allConcepts = {};
+  let allDimensions = {};
+  let totalPayable = 0;
+  let totalSigned = 0;
+  
+  for (const tort of rawData.torts) {
+    if (currentTort !== "all" && tort.tort_id !== currentTort) continue;
+    
+    const target = tort.target_cvr;
+    
+    for (const [platform, pdata] of Object.entries(tort.platforms || {})) {
+      if (currentPlatform !== "all" && platform !== currentPlatform) continue;
+      
+      const w = pdata.windows[currentWindow];
+      if (!w || !w.total) continue;
+      
+      // Accumulate totals
+      totalPayable += w.total.payable || 0;
+      totalSigned += w.total.signed || 0;
+      
+      // Accumulate marketers
+      for (const m of (w.marketers || [])) {
+        if (currentMarketer !== "all" && m.name !== currentMarketer) continue;
+        if (!allMarketers[m.name]) allMarketers[m.name] = { payable: 0, signed: 0 };
+        allMarketers[m.name].payable += m.payable;
+        allMarketers[m.name].signed += m.signed;
+      }
+      
+      // Accumulate concepts
+      for (const c of (w.concepts || [])) {
+        if (!allConcepts[c.concept]) allConcepts[c.concept] = { payable: 0, signed: 0 };
+        allConcepts[c.concept].payable += c.payable;
+        allConcepts[c.concept].signed += c.signed;
+      }
+      
+      // Accumulate dimensions
+      for (const [dn, rows] of Object.entries(w.dimensions || {})) {
+        if (!allDimensions[dn]) allDimensions[dn] = {};
+        for (const r of rows) {
+          if (!allDimensions[dn][r.value]) allDimensions[dn][r.value] = { payable: 0, signed: 0 };
+          allDimensions[dn][r.value].payable += r.payable;
+          allDimensions[dn][r.value].signed += r.signed;
+        }
+      }
+      
+      // Accumulate creatives
+      for (const c of (w.creatives || [])) {
+        if (currentMarketer !== "all" && c.marketer !== currentMarketer) continue;
+        if (c.payable < minPayable) continue;
+        if (c.signed < minSigned) continue;
+        allCreatives.push({
+          ...c,
+          tort_name: tort.tort_name,
+          target_cvr: target
+        });
+      }
+    }
+  }
+  
+  // Sort creatives by CVR desc, then signed desc
+  allCreatives.sort((a, b) => {
+    const cvrA = a.payable > 0 ? a.signed / a.payable : 0;
+    const cvrB = b.payable > 0 ? b.signed / b.payable : 0;
+    if (cvrB !== cvrA) return cvrB - cvrA;
+    return b.signed - a.signed;
+  });
+  
+  // Convert marketers to array
+  const marketersArr = Object.entries(allMarketers).map(([name, d]) => ({
+    name,
+    payable: d.payable,
+    signed: d.signed,
+    cvr: d.payable > 0 ? round(100 * d.signed / d.payable, 1) : null
+  })).sort((a, b) => b.payable - a.payable);
+  
+  // Convert concepts to array
+  const conceptsArr = Object.entries(allConcepts).map(([concept, d]) => ({
+    concept,
+    payable: d.payable,
+    signed: d.signed,
+    cvr: d.payable > 0 ? round(100 * d.signed / d.payable, 1) : null
+  })).filter(c => c.payable >= minPayable).sort((a, b) => b.payable - a.payable);
+  
+  // Build HTML
+  let html = "";
+  
+  // TOTAL
+  const totalCvr = totalPayable > 0 ? round(100 * totalSigned / totalPayable, 1) : null;
+  html += `<div class="bp-utm-section">
+    <div class="bp-utm-section-title">TOTAL — ${currentPlatform === "all" ? "All Platforms" : currentPlatform} — ${currentTort === "all" ? "All Torts" : rawData.torts.find(t => t.tort_id === currentTort)?.tort_name || currentTort} — ${currentWindow}</div>
+    <div class="bp-utm-total">
+      <div class="big">payable=${totalPayable.toLocaleString()} signed=${totalSigned.toLocaleString()} cvr=${fmtPct(totalCvr)}</div>
+      <div class="small">Filters: platform=${currentPlatform} · tort=${currentTort} · marketer=${currentMarketer} · window=${currentWindow} · min_payable=${minPayable} · min_signed=${minSigned}</div>
+    </div>
+  </div>`;
+  
+  // MARKETERS
+  if (marketersArr.length) {
+    html += `<div class="bp-utm-section">
+      <div class="bp-utm-section-title">Marketers</div>
+      <div class="bp-utm-table-wrap"><div class="scroll"><table class="bp-utm-table">
+        <thead><tr><th>Marketer</th><th class="num">Payable</th><th class="num">Signed</th><th class="num">CVR</th></tr></thead>
+        <tbody>${marketersArr.map(m => `
+          <tr>
+            <td class="label">${marketerTag(m.name)} ${esc(m.name)}</td>
+            <td class="num">${m.payable.toLocaleString()}</td>
+            <td class="num">${m.signed.toLocaleString()}</td>
+            <td class="num ${cvrClass(m.cvr, null)}">${fmtPct(m.cvr)} ${cvrFlag(m.cvr, null)}</td>
+          </tr>`).join("")}
+        </tbody>
+      </table></div></div>
+    </div>`;
+  }
+  
+  // CONCEPTS
+  if (conceptsArr.length) {
+    html += `<div class="bp-utm-section">
+      <div class="bp-utm-section-title">Concepts</div>
+      <div class="bp-utm-table-wrap"><div class="scroll"><table class="bp-utm-table">
+        <thead><tr><th>Concept</th><th class="num">Payable</th><th class="num">Signed</th><th class="num">CVR</th></tr></thead>
+        <tbody>${conceptsArr.map(c => `
+          <tr>
+            <td class="label">${esc(c.concept)}</td>
+            <td class="num">${c.payable.toLocaleString()}</td>
+            <td class="num">${c.signed.toLocaleString()}</td>
+            <td class="num ${cvrClass(c.cvr, null)}">${fmtPct(c.cvr)} ${cvrFlag(c.cvr, null)}</td>
+          </tr>`).join("")}
+        </tbody>
+      </table></div></div>
+    </div>`;
+  }
+  
+  // DIMENSIONS
+  const dimOrder = ['hook', 'concept', 'audience', 'visual', 'version', 'suffix', 'format'];
+  const dimNames = {hook: 'Hook', concept: 'Concept', audience: 'Audience', visual: 'Visual', version: 'Version', suffix: 'Suffix', format: 'Format'};
+  let dimHtml = "";
+  for (const dn of dimOrder) {
+    const rows = allDimensions[dn];
+    if (!rows) continue;
+    const rowsArr = Object.entries(rows).map(([value, d]) => ({
+      value,
+      payable: d.payable,
+      signed: d.signed,
+      cvr: d.payable > 0 ? round(100 * d.signed / d.payable, 1) : null
+    })).filter(r => r.payable >= 8).sort((a, b) => {
+      const cvrA = a.payable > 0 ? a.signed / a.payable : 0;
+      const cvrB = b.payable > 0 ? b.signed / b.payable : 0;
+      return cvrB - cvrA;
+    });
+    if (!rowsArr.length) continue;
+    dimHtml += `<div class="dim-card">
+      <h5>${dimNames[dn] || dn}</h5>
+      ${rowsArr.map(r => `
+        <div class="dim-row">
+          <span class="v">${esc(r.value)}</span>
+          <span class="n">p=${r.payable} s=${r.signed} ${fmtPct(r.cvr)}</span>
+        </div>`).join("")}
+    </div>`;
+  }
+  if (dimHtml) {
+    html += `<div class="bp-utm-section">
+      <div class="bp-utm-section-title">Criteria Tokens</div>
+      <div class="dim-grid">${dimHtml}</div>
+    </div>`;
+  }
+  
+  // CREATIVES
+  if (allCreatives.length) {
+    html += `<div class="bp-utm-section">
+      <div class="bp-utm-section-title">Creatives (≥${minPayable} payable, ≥${minSigned} signed)</div>
+      <div class="bp-utm-table-wrap"><div class="scroll"><table class="bp-utm-table">
+        <thead><tr><th>Creative</th><th>Tort</th><th class="num">Payable</th><th class="num">Signed</th><th class="num">CVR</th></tr></thead>
+        <tbody>${allCreatives.map(c => `
+          <tr>
+            <td class="label">${platformTag(c.platform)}${marketerTag(c.marketer)} ${esc(c.label)}</td>
+            <td>${esc(c.tort_name)}</td>
+            <td class="num">${c.payable.toLocaleString()}</td>
+            <td class="num">${c.signed.toLocaleString()}</td>
+            <td class="num ${cvrClass(c.cvr, c.target_cvr)}">${fmtPct(c.cvr)} ${cvrFlag(c.cvr, c.target_cvr)}</td>
+          </tr>`).join("")}
+        </tbody>
+      </table></div></div>
+    </div>`;
+  } else {
+    html += `<div class="bp-utm-section">
+      <div class="bp-utm-section-title">Creatives</div>
+      <div class="empty-utm">No creatives match the current filters (min_payable=${minPayable}, min_signed=${minSigned})</div>
+    </div>`;
+  }
+  
+  document.getElementById("analysis").innerHTML = html;
+}
+
+function round(v, d) {
+  const m = Math.pow(10, d);
+  return Math.round(v * m) / m;
+}
+</script>
+</body>
+</html>
