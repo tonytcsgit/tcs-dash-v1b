@@ -142,7 +142,7 @@ function render(data) {
   const staleNames = (data.data_freshness && data.data_freshness.stale_warnings) || [];
   document.getElementById("content").innerHTML =
     renderTopRow(data) +
-    renderKpis(data.company || {}) +
+    /* renderKpis(data.company || {}) +  // HIDDEN by Andrew Aug 11 2026 */
     renderTorts(data.torts || [], staleNames) +
     renderBuyers(data.buyers || []);
   document.getElementById("footer").innerHTML =
