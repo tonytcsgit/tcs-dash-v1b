@@ -1,0 +1,377 @@
+{
+  "contract_version": 1,
+  "generated_at": "2026-08-11T23:15:42-04:00",
+  "data_freshness": {
+    "leads_spend_sr": "2026-08-11T23:15:42-04:00",
+    "retainers": "2026-08-11T23:15:42-04:00",
+    "stale_warnings": [
+      "Hernia Mesh spend: stale (last Day 2026-08-08)",
+      "PowerPort spend: stale (last Day 2026-07-20)",
+      "Endoscopy spend: stale (last Day 2026-07-14)"
+    ]
+  },
+  "company": {
+    "window_label": "Week of Mon Aug 10 \u2014 Day 2 of 7",
+    "spend": 14117.0,
+    "revenue": 50930.0,
+    "gross_profit": 36813.0,
+    "margin_pct": null,
+    "cost_per_sign": 706.0,
+    "payable_leads": 194,
+    "deltas": {},
+    "caveat": "WARNING spend missing/stale for one or more torts \u2014 company margin withheld (would be falsely healthy). Fix the spend source to restore it."
+  },
+  "needs_attention": [
+    {
+      "tort_or_buyer": "Chlorpyrifos",
+      "level": "red",
+      "reason": "Spend $1,139 with 0 payable leads \u2014 burning money",
+      "owner": null
+    },
+    {
+      "tort_or_buyer": "Hernia Mesh",
+      "level": "amber",
+      "reason": "STALE stale (last Day 2026-08-08)",
+      "owner": null
+    },
+    {
+      "tort_or_buyer": "PowerPort",
+      "level": "amber",
+      "reason": "STALE stale (last Day 2026-07-20)",
+      "owner": null
+    },
+    {
+      "tort_or_buyer": "Endoscopy",
+      "level": "amber",
+      "reason": "STALE stale (last Day 2026-07-14)",
+      "owner": null
+    },
+    {
+      "tort_or_buyer": "ILM",
+      "level": "amber",
+      "reason": "Broughton ILM at 94% of weekly cap (45/48)",
+      "owner": null
+    }
+  ],
+  "andrew_priorities": [],
+  "andrew_note": {},
+  "torts": [
+    {
+      "tort": "WDC",
+      "status": "green",
+      "spend": 12628.831000000002,
+      "revenue": null,
+      "margin_pct": null,
+      "cpl": 421.0,
+      "cost_per_sign": null,
+      "payable_leads": 30,
+      "signed": null,
+      "spend_source": "meta",
+      "spend_caveat": "Meta spend (BQ view 403); revenue n/a (non-BP)",
+      "data_ok": true,
+      "note": null,
+      "note_author": null,
+      "note_ts": null
+    },
+    {
+      "tort": "ILM",
+      "status": "green",
+      "spend": 10389.062800000005,
+      "revenue": 30150,
+      "margin_pct": 65.5,
+      "cpl": 231.0,
+      "cost_per_sign": 944.0,
+      "payable_leads": 45,
+      "signed": 11,
+      "spend_source": "bq",
+      "spend_caveat": null,
+      "data_ok": true,
+      "note": null,
+      "note_author": null,
+      "note_ts": null
+    },
+    {
+      "tort": "Depo",
+      "status": "green",
+      "spend": 7590.8933,
+      "revenue": null,
+      "margin_pct": null,
+      "cpl": 152.0,
+      "cost_per_sign": null,
+      "payable_leads": 50,
+      "signed": null,
+      "spend_source": "meta",
+      "spend_caveat": "Meta spend (BQ view 403); revenue n/a (non-BP)",
+      "data_ok": true,
+      "note": null,
+      "note_author": null,
+      "note_ts": null
+    },
+    {
+      "tort": "SMA",
+      "status": "green",
+      "spend": 2188.535406,
+      "revenue": 10170,
+      "margin_pct": 78.5,
+      "cpl": 19.0,
+      "cost_per_sign": 274.0,
+      "payable_leads": 113,
+      "signed": 8,
+      "spend_source": "youtube_manual",
+      "spend_caveat": "YouTube spend (manual, not Meta)",
+      "data_ok": true,
+      "note": null,
+      "note_author": null,
+      "note_ts": null
+    },
+    {
+      "tort": "Paraquat",
+      "status": "green",
+      "spend": 1139.8799999999997,
+      "revenue": 9450,
+      "margin_pct": 87.9,
+      "cpl": 42.0,
+      "cost_per_sign": 1140.0,
+      "payable_leads": 27,
+      "signed": 1,
+      "spend_source": "bq",
+      "spend_caveat": null,
+      "data_ok": true,
+      "note": null,
+      "note_author": null,
+      "note_ts": null
+    },
+    {
+      "tort": "Chlorpyrifos",
+      "status": "red",
+      "spend": 1138.79,
+      "revenue": null,
+      "margin_pct": null,
+      "cpl": null,
+      "cost_per_sign": null,
+      "payable_leads": 0,
+      "signed": null,
+      "spend_source": "meta",
+      "spend_caveat": "Meta spend (BQ view 403); revenue n/a (non-BP)",
+      "data_ok": true,
+      "note": null,
+      "note_author": null,
+      "note_ts": null
+    },
+    {
+      "tort": "TVM",
+      "status": "green",
+      "spend": 399.8669,
+      "revenue": 840,
+      "margin_pct": 52.4,
+      "cpl": 57.0,
+      "cost_per_sign": null,
+      "payable_leads": 7,
+      "signed": 0,
+      "spend_source": "meta_partial",
+      "spend_caveat": "Meta-only spend (partial, no BQ view); Meta partial (23/31 accounts)",
+      "data_ok": true,
+      "note": null,
+      "note_author": null,
+      "note_ts": null
+    },
+    {
+      "tort": "Hernia Mesh",
+      "status": "amber",
+      "spend": null,
+      "revenue": 120,
+      "margin_pct": null,
+      "cpl": null,
+      "cost_per_sign": null,
+      "payable_leads": 1,
+      "signed": 0,
+      "spend_source": "bq",
+      "spend_caveat": "STALE stale (last Day 2026-08-08)",
+      "data_ok": false,
+      "note": null,
+      "note_author": null,
+      "note_ts": null
+    },
+    {
+      "tort": "PowerPort",
+      "status": "amber",
+      "spend": null,
+      "revenue": 200,
+      "margin_pct": null,
+      "cpl": null,
+      "cost_per_sign": null,
+      "payable_leads": 1,
+      "signed": 0,
+      "spend_source": "bq",
+      "spend_caveat": "STALE stale (last Day 2026-07-20)",
+      "data_ok": false,
+      "note": null,
+      "note_author": null,
+      "note_ts": null
+    },
+    {
+      "tort": "Endoscopy",
+      "status": "amber",
+      "spend": null,
+      "revenue": 0,
+      "margin_pct": null,
+      "cpl": null,
+      "cost_per_sign": null,
+      "payable_leads": 0,
+      "signed": 0,
+      "spend_source": "bq",
+      "spend_caveat": "STALE stale (last Day 2026-07-14)",
+      "data_ok": false,
+      "note": null,
+      "note_author": null,
+      "note_ts": null
+    },
+    {
+      "tort": "BM",
+      "status": "amber",
+      "spend": 0.0,
+      "revenue": 0,
+      "margin_pct": null,
+      "cpl": null,
+      "cost_per_sign": null,
+      "payable_leads": 0,
+      "signed": 0,
+      "spend_source": "meta_partial",
+      "spend_caveat": "Meta-only spend (partial, no BQ view); Meta partial (23/31 accounts)",
+      "data_ok": true,
+      "note": null,
+      "note_author": null,
+      "note_ts": null
+    }
+  ],
+  "buyers": [
+    {
+      "buyer": "Broughton",
+      "status": "green",
+      "comment": null,
+      "comment_ts": null,
+      "runway": [
+        {
+          "tort": "ILM",
+          "cap": 48,
+          "cap_unit": "leads/wk",
+          "used": 45,
+          "pct": 94,
+          "est_days_left": 0.1
+        },
+        {
+          "tort": "Hernia Mesh",
+          "cap": 846,
+          "cap_unit": "leads/wk",
+          "used": 1,
+          "pct": 0,
+          "est_days_left": 1690.0
+        },
+        {
+          "tort": "SMA",
+          "cap": 1107,
+          "cap_unit": "leads/wk",
+          "used": 113,
+          "pct": 10,
+          "est_days_left": 17.6
+        },
+        {
+          "tort": "Paraquat",
+          "cap": 35,
+          "cap_unit": "leads/wk",
+          "used": 27,
+          "pct": 77,
+          "est_days_left": 0.6
+        },
+        {
+          "tort": "PowerPort",
+          "cap": 270,
+          "cap_unit": "leads/wk",
+          "used": 1,
+          "pct": 0,
+          "est_days_left": 538.0
+        }
+      ],
+      "active_torts": [
+        "ILM",
+        "Hernia Mesh",
+        "SMA",
+        "Paraquat",
+        "PowerPort",
+        "Endoscopy",
+        "TVM",
+        "BM"
+      ],
+      "upcoming_torts": []
+    },
+    {
+      "buyer": "Pulaski",
+      "status": "green",
+      "comment": null,
+      "comment_ts": null,
+      "runway": [],
+      "active_torts": [],
+      "upcoming_torts": []
+    },
+    {
+      "buyer": "Bryan",
+      "status": "green",
+      "comment": null,
+      "comment_ts": null,
+      "runway": [
+        {
+          "tort": "Depo",
+          "cap": null,
+          "cap_unit": "cases",
+          "used": null,
+          "pct": null,
+          "est_days_left": null
+        }
+      ],
+      "active_torts": [
+        "Depo"
+      ],
+      "upcoming_torts": []
+    },
+    {
+      "buyer": "Wagstaff",
+      "status": "green",
+      "comment": null,
+      "comment_ts": null,
+      "runway": [
+        {
+          "tort": "Chlorpyrifos",
+          "cap": null,
+          "cap_unit": "cases",
+          "used": null,
+          "pct": null,
+          "est_days_left": null
+        }
+      ],
+      "active_torts": [
+        "Chlorpyrifos"
+      ],
+      "upcoming_torts": []
+    },
+    {
+      "buyer": "Parker",
+      "status": "green",
+      "comment": null,
+      "comment_ts": null,
+      "runway": [
+        {
+          "tort": "WDC",
+          "cap": null,
+          "cap_unit": "cases",
+          "used": null,
+          "pct": null,
+          "est_days_left": null
+        }
+      ],
+      "active_torts": [
+        "WDC"
+      ],
+      "upcoming_torts": []
+    }
+  ]
+}

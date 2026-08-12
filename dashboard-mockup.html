@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TCS Command — Internal Dashboard</title>
+<style>
+  :root{
+    --bg:#0b0e13; --bg2:#10141c; --panel:#ffffff; --panel2:#f4f7fa;
+    --ink:#0f1520; --ink-soft:#5b6b7f;
+    --accent:#32e6e2; --accent2:#6CFFF3; --accent-dim:#123;
+    --red:#e5484d; --amber:#f5a524; --green:#30a46c;
+    --line:#e3e9f0; --line-dark:#1c2330;
+    --muted:#8a99ad;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{
+    background:var(--bg); color:#e8eef5;
+    font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, Helvetica, Arial, sans-serif;
+    padding:28px 32px; line-height:1.4;
+  }
+  .wrap{max-width:1240px; margin:0 auto;}
+
+  /* Header */
+  header{display:flex; align-items:center; justify-content:space-between; margin-bottom:22px;}
+  .brand{display:flex; align-items:center; gap:14px;}
+  .brand img{height:44px; width:auto; display:block;}
+  .brand .sub{font-size:12px; color:var(--muted); letter-spacing:.14em; text-transform:uppercase;}
+  .fresh{font-size:12px; color:var(--muted); text-align:right;}
+  .fresh b{color:var(--accent2); font-weight:600;}
+  .fresh .warn{color:var(--amber);}
+
+  /* Section label */
+  .slabel{font-size:12px; letter-spacing:.16em; text-transform:uppercase; color:var(--accent);
+          margin:26px 0 12px; display:flex; align-items:center; gap:10px;}
+  .slabel::after{content:""; flex:1; height:1px; background:var(--line-dark);}
+
+  /* Top row: Needs Attention + Priorities */
+  .toprow{display:grid; grid-template-columns:1.5fr 1fr; gap:18px;}
+  .card{background:var(--bg2); border:1px solid var(--line-dark); border-radius:14px; padding:18px 20px;}
+  .card h3{font-size:13px; color:#fff; margin-bottom:12px; display:flex; align-items:center; gap:8px;}
+  .card h3 .dot{width:8px;height:8px;border-radius:50%;background:var(--red); box-shadow:0 0 8px var(--red);}
+  .card h3 .dot.p{background:var(--accent); box-shadow:0 0 8px var(--accent);}
+
+  .attn{display:flex; flex-direction:column; gap:10px;}
+  .attn .row{display:flex; align-items:center; gap:12px; background:#161c27; border:1px solid var(--line-dark);
+             border-left:3px solid var(--red); border-radius:10px; padding:11px 14px;}
+  .attn .row.amber{border-left-color:var(--amber);}
+  .attn .pill{font-size:10px; font-weight:700; padding:3px 8px; border-radius:20px; white-space:nowrap;}
+  .pill.red{background:rgba(229,72,77,.16); color:#ff8589;}
+  .pill.amber{background:rgba(245,165,36,.16); color:#ffc46b;}
+  .attn .nm{font-weight:600; color:#fff; min-width:120px;}
+  .attn .rs{color:var(--muted); font-size:13px; flex:1;}
+  .attn .own{color:var(--accent2); font-size:12px; white-space:nowrap;}
+
+  .prio{list-style:none; display:flex; flex-direction:column; gap:9px;}
+  .prio li{display:flex; gap:11px; align-items:flex-start; font-size:13.5px; color:#d7e0ea;}
+  .prio .n{flex:none; width:20px;height:20px;border-radius:6px; background:rgba(50,230,226,.14);
+           color:var(--accent2); font-size:11px; font-weight:700; display:flex;align-items:center;justify-content:center;}
+  .prio .andrew{margin-top:12px; padding:11px 13px; background:rgba(50,230,226,.06); border:1px dashed rgba(50,230,226,.3);
+                border-radius:10px; font-size:13px; color:#cfe9e8;}
+  .prio .andrew b{color:var(--accent2);}
+
+  /* KPI strip */
+  .kpis{display:grid; grid-template-columns:repeat(6,1fr); gap:14px; margin-top:6px;}
+  .kpi{background:var(--bg2); border:1px solid var(--line-dark); border-radius:12px; padding:14px 16px;}
+  .kpi .l{font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:.08em;}
+  .kpi .v{font-size:24px; font-weight:700; color:#fff; margin-top:4px;}
+  .kpi .d{font-size:11.5px; margin-top:3px;}
+  .d.up{color:var(--green);} .d.dn{color:var(--red);} .d.fl{color:var(--muted);}
+
+  /* Torts table (light panel on dark) */
+  .tablecard{background:var(--panel); color:var(--ink); border-radius:14px; overflow:hidden;
+             box-shadow:0 10px 30px rgba(0,0,0,.35); margin-top:6px;}
+  table{width:100%; border-collapse:collapse; font-size:13px;}
+  thead th{background:var(--panel2); color:var(--ink-soft); text-align:left; font-size:11px;
+           text-transform:uppercase; letter-spacing:.06em; padding:11px 14px; border-bottom:1px solid var(--line);}
+  tbody td{padding:11px 14px; border-bottom:1px solid var(--line); vertical-align:middle;}
+  tbody tr:last-child td{border-bottom:none;}
+  tbody tr:hover{background:#f0f6f9;}
+  .tort{font-weight:700; color:var(--ink);}
+  .st{display:inline-flex; align-items:center; gap:6px; font-size:11px; font-weight:700; padding:3px 9px; border-radius:20px;}
+  .st .d{width:7px;height:7px;border-radius:50%;}
+  .st.g{background:rgba(48,164,108,.12); color:#1f7a4d;} .st.g .d{background:var(--green);}
+  .st.a{background:rgba(245,165,36,.14); color:#a86a08;} .st.a .d{background:var(--amber);}
+  .st.r{background:rgba(229,72,77,.12); color:#c2252b;} .st.r .d{background:var(--red);}
+  td.num{font-variant-numeric:tabular-nums; text-align:right;}
+  th.num{text-align:right;}
+  .neg{color:var(--red); font-weight:600;} .pos{color:var(--green); font-weight:600;}
+  .note{color:var(--ink-soft); font-size:12px; max-width:210px;}
+  .note .you{color:#0a8a86; font-weight:600;}
+
+  /* Buyers cards */
+  .buyers{display:grid; grid-template-columns:repeat(5,1fr); gap:14px; margin-top:6px;}
+  .buyer{background:var(--panel); color:var(--ink); border-radius:13px; padding:15px 16px;
+         box-shadow:0 8px 22px rgba(0,0,0,.3); border-top:3px solid var(--accent);}
+  .buyer.warn{border-top-color:var(--amber);} .buyer.bad{border-top-color:var(--red);}
+  .buyer h4{font-size:14px; display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;}
+  .buyer .m{display:flex; justify-content:space-between; font-size:12px; padding:4px 0; border-bottom:1px dashed var(--line);}
+  .buyer .m:last-of-type{border:none;}
+  .buyer .m span{color:var(--ink-soft);} .buyer .m b{font-variant-numeric:tabular-nums;}
+  .buyer .bnote{margin-top:9px; font-size:11.5px; color:var(--ink-soft); background:var(--panel2);
+                border-radius:8px; padding:7px 9px;}
+  .buyer .bnote .you{color:#0a8a86; font-weight:600;}
+
+  footer{margin-top:26px; font-size:11px; color:var(--muted); text-align:center;}
+  .sample{position:fixed; top:14px; right:16px; background:var(--amber); color:#000; font-size:10px;
+          font-weight:800; padding:4px 10px; border-radius:6px; letter-spacing:.1em;}
+</style>
+</head>
+<body>
+<div class="sample">SAMPLE DATA — MOCKUP</div>
+<div class="wrap">
+
+  <header>
+    <div class="brand">
+      <img src="logo.png" alt="Tort Claim Strategies">
+      <div class="sub">Internal Command Dashboard</div>
+    </div>
+    <div class="fresh">
+      Data as of <b>Today 9:00 AM EST</b><br>
+      <span class="warn">⚠ Endoscopy spend stale (Jul 14)</span> · Retainers updated daily
+    </div>
+  </header>
+
+  <!-- TOP: Needs Attention + Andrew's Priorities -->
+  <div class="toprow">
+    <div class="card">
+      <h3><span class="dot"></span> Needs Attention</h3>
+      <div class="attn">
+        <div class="row"><span class="pill red">RED</span><span class="nm">ILM</span><span class="rs">Gross margin 4.6% — under 10% floor</span><span class="own">→ Jordan</span></div>
+        <div class="row"><span class="pill red">RED</span><span class="nm">TVM</span><span class="rs">Margin −65% (Meta-only spend, partial) — review cost</span><span class="own">→ Andrew</span></div>
+        <div class="row amber"><span class="pill amber">WATCH</span><span class="nm">PowerPort</span><span class="rs">Stale since Jul 20 — no fresh leads</span><span class="own">→ Charlie</span></div>
+        <div class="row amber"><span class="pill amber">WATCH</span><span class="nm">Endoscopy</span><span class="rs">Spend view stale (Jul 14) — pipeline gap, not real $0</span><span class="own">→ Hermes</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <h3><span class="dot p"></span> Andrew's Tort Priorities</h3>
+      <ul class="prio">
+        <li><span class="n">1</span> Push SMA volume — best margin on the board, feed it.</li>
+        <li><span class="n">2</span> Fix ILM margin or pull spend — it's the biggest drag.</li>
+        <li><span class="n">3</span> Get TVM/BM real spend wired (BQ views) before trusting margins.</li>
+      </ul>
+      <div class="andrew"><b>Andrew 9:00 AM:</b> "Focus this week on ILM margin and getting TVM cost data clean. SMA is carrying us — don't touch it."</div>
+    </div>
+  </div>
+
+  <!-- KPI STRIP -->
+  <div class="slabel">Company — This Week</div>
+  <div class="kpis">
+    <div class="kpi"><div class="l">Ad Spend</div><div class="v">$834K</div><div class="d up">▲ pacing on target</div></div>
+    <div class="kpi"><div class="l">Revenue</div><div class="v">$1.23M</div><div class="d up">▲ 8% WoW</div></div>
+    <div class="kpi"><div class="l">Gross Profit</div><div class="v">$397K</div><div class="d up">▲ margin 32%</div></div>
+    <div class="kpi"><div class="l">Margin</div><div class="v">28.6%</div><div class="d fl">net of YT fee</div></div>
+    <div class="kpi"><div class="l">Cost / Sign</div><div class="v">$1,679</div><div class="d fl">BP blended</div></div>
+    <div class="kpi"><div class="l">Payable Leads</div><div class="v">7,043</div><div class="d up">▲ volume strong</div></div>
+  </div>
+
+  <!-- TORTS TABLE -->
+  <div class="slabel">Torts — Health Board</div>
+  <div class="tablecard">
+    <table>
+      <thead>
+        <tr><th>Status</th><th>Tort</th><th class="num">Spend</th><th class="num">Revenue</th><th class="num">Margin</th><th class="num">CPL</th><th class="num">Cost/Sign</th><th class="num">Leads</th><th class="num">Signs</th><th>Note</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><span class="st g"><span class="d"></span>Good</span></td><td class="tort">SMA</td><td class="num">$261K</td><td class="num">$416K</td><td class="num pos">59.5%</td><td class="num">$90</td><td class="num">$840</td><td class="num">2,898</td><td class="num">311</td><td class="note"><span class="you">Andrew:</span> carrying us — don't touch</td></tr>
+        <tr><td><span class="st g"><span class="d"></span>Good</span></td><td class="tort">Hernia Mesh</td><td class="num">$135K</td><td class="num">$216K</td><td class="num pos">37.7%</td><td class="num">$120</td><td class="num">$1,080</td><td class="num">1,800</td><td class="num">125</td><td class="note">steady</td></tr>
+        <tr><td><span class="st r"><span class="d"></span>Red</span></td><td class="tort">ILM</td><td class="num">$438K</td><td class="num">$459K</td><td class="num neg">4.6%</td><td class="num">$603</td><td class="num">$2,940</td><td class="num">726</td><td class="num">149</td><td class="note"><span class="you">Andrew:</span> fix margin or pull spend</td></tr>
+        <tr><td><span class="st g"><span class="d"></span>Good</span></td><td class="tort">Paraquat</td><td class="num">$115K</td><td class="num">$165K</td><td class="num pos">30.2%</td><td class="num">$350</td><td class="num">$4,792</td><td class="num">470</td><td class="num">24</td><td class="note">no YT</td></tr>
+        <tr><td><span class="st a"><span class="d"></span>Watch</span></td><td class="tort">PowerPort</td><td class="num">$54K</td><td class="num">$76K</td><td class="num pos">29.9%</td><td class="num">$200</td><td class="num">$1,350</td><td class="num">382</td><td class="num">40</td><td class="note">stale Jul 20</td></tr>
+        <tr><td><span class="st a"><span class="d"></span>Watch</span></td><td class="tort">Endoscopy</td><td class="num">$29K</td><td class="num">$49K</td><td class="num pos">41.4%</td><td class="num">$70</td><td class="num">$358</td><td class="num">706</td><td class="num">81</td><td class="note">⚠ spend view stale Jul 14</td></tr>
+        <tr><td><span class="st r"><span class="d"></span>Red</span></td><td class="tort">TVM</td><td class="num">$6.1K</td><td class="num">$7.3K</td><td class="num neg">13.6%</td><td class="num">$120</td><td class="num">$2,033</td><td class="num">61</td><td class="num">3</td><td class="note"><span class="you">Andrew:</span> Meta-only spend, get real cost</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- BUYERS CARDS -->
+  <div class="slabel">Buyers — Health</div>
+  <div class="buyers">
+    <div class="buyer"><h4>Broughton <span class="st g"><span class="d"></span>Good</span></h4>
+      <div class="m"><span>Revenue</span><b>$1.23M</b></div><div class="m"><span>Margin</span><b class="pos">28.6%</b></div><div class="m"><span>Signs</span><b>733</b></div>
+      <div class="bnote"><span class="you">Andrew:</span> main engine, healthy</div></div>
+    <div class="buyer warn"><h4>Pulaski <span class="st a"><span class="d"></span>Watch</span></h4>
+      <div class="m"><span>Retainers</span><b>—</b></div><div class="m"><span>SR keep</span><b>RCP 47%</b></div><div class="m"><span>vs Hochman</span><b>10%</b></div>
+      <div class="bnote"><span class="you">Andrew:</span> RCP carrying Olympus</div></div>
+    <div class="buyer"><h4>Bryan <span class="st g"><span class="d"></span>Good</span></h4>
+      <div class="m"><span>Depo signs</span><b>350</b></div><div class="m"><span>Source</span><b>compliance</b></div><div class="m"><span>YouTube</span><b>~5%</b></div>
+      <div class="bnote">Russ runs day-to-day</div></div>
+    <div class="buyer"><h4>Wagstaff <span class="st g"><span class="d"></span>Good</span></h4>
+      <div class="m"><span>Chlorpyrifos</span><b>12% CVR</b></div><div class="m"><span>Best</span><b>CHLOR 1</b></div><div class="m"><span>Volume</span><b>ramping</b></div>
+      <div class="bnote">new vertical, watch</div></div>
+    <div class="buyer bad"><h4>Parker <span class="st r"><span class="d"></span>Red</span></h4>
+      <div class="m"><span>WDC CVR</span><b>LCC 9.5%</b></div><div class="m"><span>RCP</span><b>10.4%</b></div><div class="m"><span>Issue</span><b>RCP errors 32%</b></div>
+      <div class="bnote"><span class="you">Andrew:</span> RCP burning 1/3 of routed leads</div></div>
+  </div>
+
+  <footer>TCS Internal · auto-refresh hourly (LP/BP/Meta/SR) · retainers daily · <span style="color:var(--amber)">shared-password access</span></footer>
+</div>
+</body>
+</html>

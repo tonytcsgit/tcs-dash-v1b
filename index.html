@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TCS Command — Internal Dashboard</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- Password gate (client-side, shared team password — v1 only, not real auth) -->
+<div id="gate" class="gate">
+  <div class="gate-box">
+    <img src="assets/logo.png" alt="Tort Claim Strategies">
+    <div class="gate-sub">Internal Command Dashboard</div>
+    <form id="gate-form" autocomplete="off">
+      <input type="password" id="gate-pw" placeholder="Team password" autofocus>
+      <button type="submit">Enter</button>
+    </form>
+    <div id="gate-err" class="gate-err hidden">Wrong password.</div>
+  </div>
+</div>
+
+<div id="app" class="wrap hidden">
+  <header>
+    <div class="brand">
+      <img src="assets/logo.png" alt="Tort Claim Strategies">
+      <div class="sub">Internal Command Dashboard</div>
+    </div>
+    <div class="fresh" id="fresh"></div>
+  </header>
+
+  <div id="loading" class="loading">Loading dashboard data…</div>
+  <div id="content"></div>
+
+  <footer id="footer">TCS Internal · auto-refresh hourly (LP/BP/Meta/SR) · retainers daily · <span class="amber-text">shared-password access</span></footer>
+</div>
+
+<div id="refresh-badge" class="refresh-badge hidden">refreshing…</div>
+
+<script src="app.js"></script>
+</body>
+</html>
