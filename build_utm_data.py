@@ -111,7 +111,7 @@ def dim(tok):
     return ('concept', tok)
 
 
-def analyze_tort(tort, rows, windows):
+def analyze_tort(tort, rows, windows, youtube_only=False):
     """Run the full utm_analysis.py-style breakdown on one tort's rows."""
     idx = {h.lower(): i for i, h in enumerate(rows[0])}
     
@@ -126,6 +126,8 @@ def analyze_tort(tort, rows, windows):
         ("utm_campaign", ["utm_campaign", "utm campaign", "campaign"]),
         ("utm_medium", ["utm_medium", "utm medium", "medium"]),
         ("campaignid", ["campaignid", "campaign id", "campaign_id"]),
+        ("placement", ["placement"]),
+        ("intake_source", ["intake_source", "intake source"]),
     ]:
         for k in keys:
             if k in idx:
@@ -134,6 +136,22 @@ def analyze_tort(tort, rows, windows):
     
     if "status" not in col_map or "created_date" not in col_map:
         return None
+    
+    # YouTube filter function
+    def is_youtube(r):
+        if not youtube_only:
+            return True
+        # Check placement column first
+        if "placement" in col_map and col_map["placement"] < len(r):
+            p = (r[col_map["placement"]] or "").strip().lower()
+            if p == "youtube":
+                return True
+        # Check Intake_Source suffix
+        if "intake_source" in col_map and col_map["intake_source"] < len(r):
+            s = (r[col_map["intake_source"]] or "").strip()
+            if s.endswith("-Y"):
+                return True
+        return False
     
     # Initialize window aggregations
     def new_window():
@@ -149,6 +167,10 @@ def analyze_tort(tort, rows, windows):
     
     for r in rows[1:]:
         if len(r) <= col_map["status"]:
+            continue
+        
+        # YouTube filter
+        if not is_youtube(r):
             continue
         
         # Parse date
@@ -246,6 +268,11 @@ def analyze_tort(tort, rows, windows):
 
 
 def main():
+    import argparse
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--youtube-only", action="store_true", help="Filter to YouTube leads only (placement=Youtube or Intake_Source=-Y)")
+    args = ap.parse_args()
+    
     creds = service_account.Credentials.from_service_account_file(
         SA_KEY, scopes=["https://www.googleapis.com/auth/spreadsheets.readonly"])
     sheets = build("sheets", "v4", credentials=creds)
@@ -273,7 +300,7 @@ def main():
                 print(f"  {tort['name']}: empty", file=sys.stderr)
                 continue
             
-            analysis = analyze_tort(tort, rows, windows)
+            analysis = analyze_tort(tort, rows, windows, youtube_only=args.youtube_only)
             if analysis:
                 torts_out.append(analysis)
                 total_7d = analysis["windows"]["7d"]["total"]
@@ -284,13 +311,14 @@ def main():
     
     out = {
         "generated_at": datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=-4))).strftime("%Y-%m-%d %H:%M EST"),
+        "youtube_only": args.youtube_only,
         "torts": torts_out,
     }
     
     with open(OUT_PATH, "w") as f:
         json.dump(out, f)
     
-    print(f"\nWrote {OUT_PATH}: {len(torts_out)} torts", file=sys.stderr)
+    print(f"\nWrote {OUT_PATH}: {len(torts_out)} torts, youtube_only={args.youtube_only}", file=sys.stderr)
 
 
 if __name__ == "__main__":

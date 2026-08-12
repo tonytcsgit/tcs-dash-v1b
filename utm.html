@@ -135,6 +135,7 @@ const AUTH_KEY = "tcs_utm_auth";
 let rawData = null;
 let currentTort = "sma";
 let currentWindow = "7d";
+let currentSource = "youtube"; // "youtube" or "all"
 
 function esc(s) {
   return String(s).replace(/[&<>"']/g, (c) => ({
@@ -186,7 +187,21 @@ async function loadData() {
 }
 
 function renderControls() {
-  const tortOptions = rawData.torts.map(t => 
+  // Filter torts based on source selection
+  let availableTorts = rawData.torts;
+  if (currentSource === "youtube") {
+    // Only show torts with YouTube leads in Lifetime
+    availableTorts = rawData.torts.filter(t => {
+      const lt = t.windows["Lifetime"];
+      return lt && lt.total && lt.total.payable > 0;
+    });
+    // Auto-select first available tort if current is not in list
+    if (!availableTorts.find(t => t.tort_id === currentTort)) {
+      currentTort = availableTorts.length ? availableTorts[0].tort_id : "sma";
+    }
+  }
+  
+  const tortOptions = availableTorts.map(t => 
     `<option value="${t.tort_id}" ${currentTort === t.tort_id ? "selected" : ""}>${t.tort_name}</option>`
   ).join("");
   
@@ -194,9 +209,18 @@ function renderControls() {
     `<option value="${w}" ${currentWindow === w ? "selected" : ""}>${w}</option>`
   ).join("");
   
+  const sourceOptions = [
+    `<option value="youtube" ${currentSource === "youtube" ? "selected" : ""}>YouTube Only</option>`,
+    `<option value="all" ${currentSource === "all" ? "selected" : ""}>All Sources</option>`
+  ].join("");
+  
   const html = `
     <div class="utm-controls">
       <div class="utm-controls-row">
+        <div>
+          <label>Source</label><br>
+          <select id="filter-source" onchange="currentSource=this.value; renderControls(); renderAnalysis()">${sourceOptions}</select>
+        </div>
         <div>
           <label>Tort</label><br>
           <select id="filter-tort" onchange="currentTort=this.value; renderAnalysis()">${tortOptions}</select>
@@ -224,7 +248,13 @@ function renderAnalysis() {
   
   const w = tort.windows[currentWindow];
   if (!w || !w.total) {
-    document.getElementById("analysis").innerHTML = `<div class='error-utm'>No data for ${esc(currentWindow)} window</div>`;
+    document.getElementById("analysis").innerHTML = `<div class='error-utm'>No data for ${esc(tort.tort_name)} in ${esc(currentWindow)} window</div>`;
+    return;
+  }
+  
+  // Check if this tort has any data at all for the selected source
+  if (w.total.payable === 0 && currentSource === "youtube") {
+    document.getElementById("analysis").innerHTML = `<div class='error-utm'>No YouTube leads for ${esc(tort.tort_name)} in ${esc(currentWindow)} window.<br><small>Try selecting "All Sources" or a different tort.</small></div>`;
     return;
   }
   
@@ -235,8 +265,9 @@ function renderAnalysis() {
   const totalPayable = w.total.payable || 0;
   const totalSigned = w.total.signed || 0;
   const totalCvr = w.total.cvr;
+  const sourceLabel = currentSource === "youtube" ? "YouTube" : "All Sources";
   html += `<div class="utm-section">
-    <div class="utm-section-title">TOTAL — ${esc(tort.tort_name)} (${esc(w.range || currentWindow)})</div>
+    <div class="utm-section-title">TOTAL — ${esc(tort.tort_name)} (${esc(w.range || currentWindow)}) — ${sourceLabel}</div>
     <div class="utm-total">
       <div class="big">payable=${totalPayable.toLocaleString()} signed=${totalSigned.toLocaleString()} cvr=${fmtPct(totalCvr)}</div>
       ${target ? `<div class="small">Target CVR: ${target}% ${totalCvr >= target ? "✅" : "🔴"}</div>` : ""}
