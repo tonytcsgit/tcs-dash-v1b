@@ -74,8 +74,20 @@ def detect_platform(row, idx):
     return "Unknown"
 
 
-def resolve_label(row, idx):
-    """Priority: adSetId (non-numeric) → UTM_Content → keyword → UTM_Campaign → UTM_Medium → campaignId → (blank)"""
+def resolve_label(row, idx, platform=None):
+    """Priority for YouTube: adId (creative ID) → adSetId → UTM_Content → keyword → UTM_Campaign → UTM_Medium → campaignId → (blank)
+    Priority for Meta/other: adSetId (non-numeric) → UTM_Content → keyword → UTM_Campaign → UTM_Medium → campaignId → (blank)
+
+    YouTube fix (Aug 2026, per media buyer): adSetId is the AD GROUP id (groups multiple
+    creatives together); adId is the actual per-CREATIVE id. Using adSetId for YouTube rows
+    was silently merging distinct creatives that share an ad group. adId is numeric like
+    adSetId, so it's still surfaced as a bare number (Google Ads creative IDs, not human
+    labels) — but it's the correct level of granularity.
+    """
+    if platform == "YouTube":
+        adid = (row[idx["adid"]] if idx.get("adid") is not None and idx["adid"] < len(row) else "").strip()
+        if adid:
+            return adid
     adset = (row[idx["adsetid"]] if idx.get("adsetid") is not None and idx["adsetid"] < len(row) else "").strip()
     if adset and not is_num(adset):
         return adset
@@ -143,6 +155,7 @@ def analyze_tort(tort, rows):
         ("created_date", ["created_date", "created date", "createddate", "date"]),
         ("status", ["status"]),
         ("adsetid", ["adsetid", "adset id", "ad_set_id"]),
+        ("adid", ["adid", "ad id", "ad_id"]),
         ("utm_content", ["utm_content", "utm content", "content"]),
         ("keyword", ["keyword", "kw"]),
         ("utm_campaign", ["utm_campaign", "utm campaign", "campaign"]),
@@ -180,9 +193,9 @@ def analyze_tort(tort, rows):
             continue
         
         sg = 1 if status == "Signed" else 0
-        lab = resolve_label(r, col_map)
-        mk = detect_marketer(r, col_map)
         platform = detect_platform(r, col_map)
+        lab = resolve_label(r, col_map, platform=platform)
+        mk = detect_marketer(r, col_map)
         
         leads.append({
             "date": d.strftime("%Y-%m-%d"),
