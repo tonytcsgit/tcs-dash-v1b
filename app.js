@@ -230,6 +230,16 @@ async function submitNote(page) {
   }
 }
 
+function renderPlaceholder(title, sub, note) {
+  const page = title.includes("Meta") ? "meta" : title.includes("YouTube") ? "youtube" : "utm";
+  return `<div class="pagehead">${esc(title)}</div>` +
+    `<div class="pagetitle">${esc(title)}</div>` +
+    `<div class="pagesub">${esc(sub)}</div>` +
+    `<div class="placeholder"><div class="big">${esc(note)}</div>` +
+    `<div class="small">Analysis content is being wired up. Team notes are live below.</div></div>` +
+    renderNotesSection(page, title);
+}
+
 function renderYouTubePage() {
   return `<div class="pagehead">YouTube Ads</div>` +
     `<div class="pagetitle">YouTube Ads</div>` +
