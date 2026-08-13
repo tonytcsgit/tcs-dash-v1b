@@ -2,44 +2,24 @@
    TCS Internal Dashboard — front-end renderer (v1)
    Reads data.json (same directory), renders per data-contract.md.
    ----------------------------------------------------------------------------
-   SHARED TEAM PASSWORD — change this constant to rotate the password.
-   (Client-side gate only; obscure-URL + shared-password, internal v1.)
+   PASSWORD GATE REMOVED (Aug 12 2026, per Andrew) — obscure URL only.
+   To re-enable: restore TCS_DASH_PASSWORD const + initGate() form listener,
+   and uncomment the #gate div in index.html.
 ============================================================================ */
-const TCS_DASH_PASSWORD = "tcs";   // <<< CHANGE PASSWORD HERE
 
 const REFRESH_MS = 5 * 60 * 1000;      // re-fetch data.json every 5 minutes
-const AUTH_KEY = "tcs_dash_auth";
 
 let lastData = null;
 let started = false;
 
-/* ---------------------------- password gate ---------------------------- */
+/* ---------------------------- password gate (disabled) ---------------------------- */
 (function initGate() {
   const gate = document.getElementById("gate");
   const app = document.getElementById("app");
-  const form = document.getElementById("gate-form");
-  const pw = document.getElementById("gate-pw");
-  const err = document.getElementById("gate-err");
-
-  function unlock() {
-    gate.classList.add("hidden");
-    app.classList.remove("hidden");
-    startDashboard();
-  }
-
-  if (sessionStorage.getItem(AUTH_KEY) === "1") { unlock(); return; }
-
-  form.addEventListener("submit", (e) => {
-    e.preventDefault();
-    if (pw.value === TCS_DASH_PASSWORD) {
-      sessionStorage.setItem(AUTH_KEY, "1");
-      unlock();
-    } else {
-      err.classList.remove("hidden");
-      pw.value = "";
-      pw.focus();
-    }
-  });
+  // No password — unlock immediately on load.
+  if (gate) gate.classList.add("hidden");
+  if (app) app.classList.remove("hidden");
+  startDashboard();
 })();
 
 /* ------------------------------ data load ------------------------------ */

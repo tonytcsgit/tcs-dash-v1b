@@ -8,20 +8,9 @@
 </head>
 <body>
 
-<!-- Password gate (client-side, shared team password — v1 only, not real auth) -->
-<div id="gate" class="gate">
-  <div class="gate-box">
-    <img src="assets/logo.png" alt="Tort Claim Strategies">
-    <div class="gate-sub">Internal Command Dashboard</div>
-    <form id="gate-form" autocomplete="off">
-      <input type="password" id="gate-pw" placeholder="Team password" autofocus>
-      <button type="submit">Enter</button>
-    </form>
-    <div id="gate-err" class="gate-err hidden">Wrong password.</div>
-  </div>
-</div>
+<!-- Password gate removed (Aug 12 2026, per Andrew) — obscure URL only -->
 
-<div id="app" class="wrap hidden">
+<div id="app" class="wrap">
 
   <!-- Left sidebar nav (added Aug 11 2026) -->
   <nav class="sidebar">
@@ -48,7 +37,7 @@
   <div id="loading" class="loading">Loading dashboard data…</div>
   <div id="content"></div>
 
-  <footer id="footer">TCS Internal · auto-refresh hourly (LP/BP/Meta/SR) · retainers daily · <span class="amber-text">shared-password access</span></footer>
+  <footer id="footer">TCS Internal · auto-refresh hourly (LP/BP/Meta/SR) · retainers daily</footer>
 </div>
 
 <div id="refresh-badge" class="refresh-badge hidden">refreshing…</div>

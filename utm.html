@@ -67,20 +67,9 @@
 </head>
 <body>
 
-<!-- Password gate -->
-<div id="gate" class="gate">
-  <div class="gate-box">
-    <img src="assets/logo.png" alt="Tort Claim Strategies">
-    <div class="gate-sub">UTM Content Analysis</div>
-    <form id="gate-form" autocomplete="off">
-      <input type="password" id="gate-pw" placeholder="Team password" autofocus>
-      <button type="submit">Enter</button>
-    </form>
-    <div id="gate-err" class="gate-err hidden">Wrong password.</div>
-  </div>
-</div>
+<!-- Password gate removed (Aug 12 2026, per Andrew) — obscure URL only -->
 
-<div id="app" class="wrap hidden">
+<div id="app" class="wrap">
   <header>
     <div class="brand">
       <img src="assets/logo.png" alt="Tort Claim Strategies">
@@ -96,41 +85,13 @@
     <div class="loading-utm">Loading UTM data…</div>
   </div>
 
-  <footer id="footer">TCS Internal · UTM Content Analysis · <span class="amber-text">shared-password access</span></footer>
+  <footer id="footer">TCS Internal · UTM Content Analysis</footer>
 </div>
 
 <script>
-const TCS_DASH_PASSWORD = "tcs";
-const AUTH_KEY = "tcs_utm_auth";
-
-// Password gate
-(function initGate() {
-  const gate = document.getElementById("gate");
-  const app = document.getElementById("app");
-  const form = document.getElementById("gate-form");
-  const pw = document.getElementById("gate-pw");
-  const err = document.getElementById("gate-err");
-
-  function unlock() {
-    gate.classList.add("hidden");
-    app.classList.remove("hidden");
-    loadData();
-  }
-
-  if (sessionStorage.getItem(AUTH_KEY) === "1") { unlock(); return; }
-
-  form.addEventListener("submit", (e) => {
-    e.preventDefault();
-    if (pw.value === TCS_DASH_PASSWORD) {
-      sessionStorage.setItem(AUTH_KEY, "1");
-      unlock();
-    } else {
-      err.classList.remove("hidden");
-      pw.value = "";
-      pw.focus();
-    }
-  });
-})();
+// Password gate removed (Aug 12 2026, per Andrew) — obscure URL only.
+// Auto-load data on page open.
+loadData();
 
 let rawData = null;
 let currentTort = "sma";
