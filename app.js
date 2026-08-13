@@ -141,7 +141,7 @@ function renderDashboard(d) {
 
 /* ------------------------------ Supabase notes ------------------------------ */
 const SUPABASE_URL = "https://cvpygpxfqxoywrqnmlaz.supabase.co";
-const SUPABASE_KEY = "sb_publishable_oDb7jM3Vd7WNNfWSewXeCQ_OLU1YXd6";
+const SUPABASE_KEY = "sb_publishable_fnJCr38mrGEDyC_fPcShZQ_nVjtdKNH";
 
 async function sbFetch(path, opts = {}) {
   const r = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, {
