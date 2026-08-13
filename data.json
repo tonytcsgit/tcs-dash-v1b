@@ -1,9 +1,9 @@
 {
   "contract_version": 1,
-  "generated_at": "2026-08-13T18:07:24-04:00",
+  "generated_at": "2026-08-13T19:07:31-04:00",
   "data_freshness": {
-    "leads_spend_sr": "2026-08-13T18:07:24-04:00",
-    "retainers": "2026-08-13T18:07:24-04:00",
+    "leads_spend_sr": "2026-08-13T19:07:31-04:00",
+    "retainers": "2026-08-13T19:07:31-04:00",
     "stale_warnings": [
       "Hernia Mesh spend: stale (last Day 2026-08-11)",
       "PowerPort spend: stale (last Day 2026-07-20)",
@@ -12,9 +12,9 @@
   },
   "company": {
     "window_label": "Week of Mon Aug 10 \u2014 Day 4 of 7",
-    "spend": 45056.0,
+    "spend": 45061.0,
     "revenue": 93580.0,
-    "gross_profit": 48524.0,
+    "gross_profit": 48519.0,
     "margin_pct": null,
     "cost_per_sign": 1073.0,
     "payable_leads": 391,
@@ -25,13 +25,13 @@
     {
       "tort_or_buyer": "TVM",
       "level": "red",
-      "reason": "Gross margin 8.9% \u2014 under 10% floor",
+      "reason": "Gross margin 8.6% \u2014 under 10% floor",
       "owner": null
     },
     {
       "tort_or_buyer": "Chlorpyrifos",
       "level": "red",
-      "reason": "Spend $1,531 with 0 payable leads \u2014 burning money",
+      "reason": "Spend $1,543 with 0 payable leads \u2014 burning money",
       "owner": null
     },
     {
@@ -88,10 +88,10 @@
     {
       "tort": "WDC",
       "status": "green",
-      "spend": 23399.4192,
+      "spend": 24062.7754,
       "revenue": null,
       "margin_pct": null,
-      "cpl": 344.0,
+      "cpl": 354.0,
       "cost_per_sign": null,
       "payable_leads": 68,
       "signed": null,
@@ -105,10 +105,10 @@
     {
       "tort": "Depo",
       "status": "green",
-      "spend": 13107.5453,
+      "spend": 13146.6153,
       "revenue": null,
       "margin_pct": null,
-      "cpl": 177.0,
+      "cpl": 178.0,
       "cost_per_sign": null,
       "payable_leads": 74,
       "signed": null,
@@ -156,10 +156,10 @@
     {
       "tort": "TVM",
       "status": "red",
-      "spend": 1968.4059,
+      "spend": 1973.6259,
       "revenue": 2160,
-      "margin_pct": 8.9,
-      "cpl": 109.0,
+      "margin_pct": 8.6,
+      "cpl": 110.0,
       "cost_per_sign": null,
       "payable_leads": 18,
       "signed": 0,
@@ -173,7 +173,7 @@
     {
       "tort": "Chlorpyrifos",
       "status": "red",
-      "spend": 1531.15,
+      "spend": 1542.8700000000001,
       "revenue": null,
       "margin_pct": null,
       "cpl": null,
