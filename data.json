@@ -1,9 +1,9 @@
 {
   "contract_version": 1,
-  "generated_at": "2026-08-14T18:07:23-04:00",
+  "generated_at": "2026-08-14T19:07:31-04:00",
   "data_freshness": {
-    "leads_spend_sr": "2026-08-14T18:07:23-04:00",
-    "retainers": "2026-08-14T18:07:23-04:00",
+    "leads_spend_sr": "2026-08-14T19:07:31-04:00",
+    "retainers": "2026-08-14T19:07:31-04:00",
     "stale_warnings": [
       "PowerPort spend: stale (last Day 2026-07-20)",
       "Endoscopy spend: stale (last Day 2026-07-14)"
@@ -11,11 +11,11 @@
   },
   "company": {
     "window_label": "Week of Mon Aug 10 \u2014 Day 5 of 7",
-    "spend": 62150.0,
+    "spend": 62211.0,
     "revenue": 119770.0,
-    "gross_profit": 57620.0,
+    "gross_profit": 57559.0,
     "margin_pct": null,
-    "cost_per_sign": 1053.0,
+    "cost_per_sign": 1054.0,
     "payable_leads": 504,
     "deltas": {},
     "caveat": "WARNING spend missing/stale for one or more torts \u2014 company margin withheld (would be falsely healthy). Fix the spend source to restore it."
@@ -24,13 +24,13 @@
     {
       "tort_or_buyer": "TVM",
       "level": "red",
-      "reason": "Gross margin 2.5% \u2014 under 10% floor",
+      "reason": "Gross margin 0.3% \u2014 under 10% floor",
       "owner": null
     },
     {
       "tort_or_buyer": "Chlorpyrifos",
       "level": "red",
-      "reason": "Spend $1,712 with 0 payable leads \u2014 burning money",
+      "reason": "Spend $1,730 with 0 payable leads \u2014 burning money",
       "owner": null
     },
     {
@@ -81,12 +81,12 @@
     {
       "tort": "WDC",
       "status": "green",
-      "spend": 34306.9589,
+      "spend": 34482.23509999999,
       "revenue": null,
       "margin_pct": null,
-      "cpl": 385.0,
+      "cpl": 379.0,
       "cost_per_sign": null,
-      "payable_leads": 89,
+      "payable_leads": 91,
       "signed": null,
       "spend_source": "meta",
       "spend_caveat": "Meta spend (BQ view 403); revenue n/a (non-BP)",
@@ -98,10 +98,10 @@
     {
       "tort": "Depo",
       "status": "green",
-      "spend": 15372.764299999999,
+      "spend": 15419.8643,
       "revenue": null,
       "margin_pct": null,
-      "cpl": 192.0,
+      "cpl": 193.0,
       "cost_per_sign": null,
       "payable_leads": 80,
       "signed": null,
@@ -149,10 +149,10 @@
     {
       "tort": "TVM",
       "status": "red",
-      "spend": 2691.5824999999995,
+      "spend": 2752.4349,
       "revenue": 2760,
-      "margin_pct": 2.5,
-      "cpl": 117.0,
+      "margin_pct": 0.3,
+      "cpl": 120.0,
       "cost_per_sign": null,
       "payable_leads": 23,
       "signed": 0,
@@ -166,7 +166,7 @@
     {
       "tort": "Chlorpyrifos",
       "status": "red",
-      "spend": 1712.3400000000001,
+      "spend": 1730.45,
       "revenue": null,
       "margin_pct": null,
       "cpl": null,
