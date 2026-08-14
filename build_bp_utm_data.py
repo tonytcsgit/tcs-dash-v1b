@@ -16,7 +16,33 @@ from googleapiclient.discovery import build
 
 SA_KEY = "/Users/andyoc/.hermes/gcp-service-account.json"
 SRC_SHEET = "1rnqYRHwbDrgoWjztft__fRt-XGEtsfnDD2MtDt9Wcrw"
+ADMAP_SHEET = "1leAck7Th5qzC1M2crqPkQezRclaVb0b-gZtVPPenI3w"
 OUT_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "bp_utm_data.json")
+
+# Cache for ad ID → name mappings (populated from AdMap_SMA)
+_ad_name_cache = {}
+
+def load_ad_names():
+    """Pull AdMap_SMA from Google Ads script sheet: ad.id → ad.name mapping."""
+    global _ad_name_cache
+    if _ad_name_cache:
+        return _ad_name_cache
+    try:
+        creds = service_account.Credentials.from_service_account_file(
+            SA_KEY, scopes=["https://www.googleapis.com/auth/spreadsheets.readonly"])
+        sheets = build("sheets", "v4", credentials=creds)
+        result = sheets.spreadsheets().values().get(
+            spreadsheetId=ADMAP_SHEET,
+            range="'AdMap_SMA'!A1:B1000"
+        ).execute()
+        rows = result.get('values', [])
+        for r in rows[1:]:  # skip header
+            if len(r) >= 2 and r[0]:
+                _ad_name_cache[r[0].strip()] = r[1].strip()
+        print(f"Loaded {len(_ad_name_cache)} ad name mappings from AdMap_SMA", file=sys.stderr)
+    except Exception as e:
+        print(f"Warning: failed to load AdMap_SMA: {e}", file=sys.stderr)
+    return _ad_name_cache
 
 EXCL = {"Rejected - Failed Prequalification", "Rejected - Wrong Number | Spam | Other", "Rejected - Existing Contact"}
 SKIP_TOKENS = {'mo','jor','cha','char','ah','ma','ahm','ahmed','15','1/5','1_5','1-5','2-5','1',
@@ -83,10 +109,19 @@ def resolve_label(row, idx, platform=None):
     was silently merging distinct creatives that share an ad group. adId is numeric like
     adSetId, so it's still surfaced as a bare number (Google Ads creative IDs, not human
     labels) — but it's the correct level of granularity.
+
+    AdMap_SMA lookup (Aug 13 2026): when we have an adId for YouTube, look up the actual
+    creative name from the Google Ads script sheet (ad.id → ad.name). Falls back to the
+    raw adId if no mapping exists.
     """
     if platform == "YouTube":
         adid = (row[idx["adid"]] if idx.get("adid") is not None and idx["adid"] < len(row) else "").strip()
         if adid:
+            # Try to resolve to actual creative name from AdMap_SMA
+            name_map = load_ad_names()
+            creative_name = name_map.get(adid)
+            if creative_name:
+                return creative_name
             return adid
     adset = (row[idx["adsetid"]] if idx.get("adsetid") is not None and idx["adsetid"] < len(row) else "").strip()
     if adset and not is_num(adset):
