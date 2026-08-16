@@ -1,9 +1,9 @@
 {
   "contract_version": 1,
-  "generated_at": "2026-08-15T21:07:48-04:00",
+  "generated_at": "2026-08-15T22:07:56-04:00",
   "data_freshness": {
-    "leads_spend_sr": "2026-08-15T21:07:48-04:00",
-    "retainers": "2026-08-15T21:07:48-04:00",
+    "leads_spend_sr": "2026-08-15T22:07:56-04:00",
+    "retainers": "2026-08-15T22:07:56-04:00",
     "stale_warnings": [
       "PowerPort spend: stale (last Day 2026-07-20)",
       "Endoscopy spend: stale (last Day 2026-07-14)"
@@ -12,11 +12,11 @@
   "company": {
     "window_label": "Week of Mon Aug 10 \u2014 Day 6 of 7",
     "spend": 78870.0,
-    "revenue": 140050.0,
-    "gross_profit": 61180.0,
+    "revenue": 140400.0,
+    "gross_profit": 61530.0,
     "margin_pct": null,
     "cost_per_sign": 1232.0,
-    "payable_leads": 595,
+    "payable_leads": 596,
     "deltas": {},
     "caveat": "WARNING spend missing/stale for one or more torts \u2014 company margin withheld (would be falsely healthy). Fix the spend source to restore it."
   },
@@ -24,13 +24,13 @@
     {
       "tort_or_buyer": "TVM",
       "level": "red",
-      "reason": "Gross margin -15.2% \u2014 under 10% floor",
+      "reason": "Gross margin -15.3% \u2014 under 10% floor",
       "owner": null
     },
     {
       "tort_or_buyer": "Chlorpyrifos",
       "level": "red",
-      "reason": "Spend $1,910 with 0 payable leads \u2014 burning money",
+      "reason": "Spend $1,913 with 0 payable leads \u2014 burning money",
       "owner": null
     },
     {
@@ -54,7 +54,7 @@
     {
       "tort_or_buyer": "Paraquat",
       "level": "amber",
-      "reason": "Broughton Paraquat at 209% of weekly cap (73/35)",
+      "reason": "Broughton Paraquat at 211% of weekly cap (74/35)",
       "owner": null
     }
   ],
@@ -81,10 +81,10 @@
     {
       "tort": "WDC",
       "status": "green",
-      "spend": 40216.7839,
+      "spend": 40394.9675,
       "revenue": null,
       "margin_pct": null,
-      "cpl": 402.0,
+      "cpl": 404.0,
       "cost_per_sign": null,
       "payable_leads": 100,
       "signed": null,
@@ -98,10 +98,10 @@
     {
       "tort": "Depo",
       "status": "green",
-      "spend": 17732.3108,
+      "spend": 17804.0108,
       "revenue": null,
       "margin_pct": null,
-      "cpl": 177.0,
+      "cpl": 178.0,
       "cost_per_sign": null,
       "payable_leads": 100,
       "signed": null,
@@ -116,11 +116,11 @@
       "tort": "Paraquat",
       "status": "green",
       "spend": 12792.159999999996,
-      "revenue": 25550,
-      "margin_pct": 49.9,
-      "cpl": 175.0,
+      "revenue": 25900,
+      "margin_pct": 50.6,
+      "cpl": 173.0,
       "cost_per_sign": 4264.0,
-      "payable_leads": 73,
+      "payable_leads": 74,
       "signed": 3,
       "spend_source": "bq",
       "spend_caveat": null,
@@ -149,9 +149,9 @@
     {
       "tort": "TVM",
       "status": "red",
-      "spend": 4010.6729,
+      "spend": 4010.9028999999996,
       "revenue": 3480,
-      "margin_pct": -15.2,
+      "margin_pct": -15.3,
       "cpl": 138.0,
       "cost_per_sign": null,
       "payable_leads": 29,
@@ -166,7 +166,7 @@
     {
       "tort": "Chlorpyrifos",
       "status": "red",
-      "spend": 1910.4,
+      "spend": 1913.46,
       "revenue": null,
       "margin_pct": null,
       "cpl": null,
@@ -284,8 +284,8 @@
           "tort": "Paraquat",
           "cap": 35,
           "cap_unit": "leads/wk",
-          "used": 73,
-          "pct": 209,
+          "used": 74,
+          "pct": 211,
           "est_days_left": 0
         },
         {
