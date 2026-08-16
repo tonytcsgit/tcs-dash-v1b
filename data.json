@@ -1,9 +1,9 @@
 {
   "contract_version": 1,
-  "generated_at": "2026-08-16T15:07:08-04:00",
+  "generated_at": "2026-08-16T16:07:15-04:00",
   "data_freshness": {
-    "leads_spend_sr": "2026-08-16T15:07:08-04:00",
-    "retainers": "2026-08-16T15:07:08-04:00",
+    "leads_spend_sr": "2026-08-16T16:07:15-04:00",
+    "retainers": "2026-08-16T16:07:15-04:00",
     "stale_warnings": [
       "ILM spend: stale (last Day 2026-08-14)",
       "Hernia Mesh spend: stale (last Day 2026-08-14)",
@@ -33,7 +33,7 @@
     {
       "tort_or_buyer": "Chlorpyrifos",
       "level": "red",
-      "reason": "Spend $2,011 with 0 payable leads \u2014 burning money",
+      "reason": "Spend $2,017 with 0 payable leads \u2014 burning money",
       "owner": null
     },
     {
@@ -85,10 +85,10 @@
     {
       "tort": "WDC",
       "status": "green",
-      "spend": 45891.3919,
+      "spend": 46179.72260000001,
       "revenue": null,
       "margin_pct": null,
-      "cpl": 459.0,
+      "cpl": 462.0,
       "cost_per_sign": null,
       "payable_leads": 100,
       "signed": null,
@@ -102,7 +102,7 @@
     {
       "tort": "Depo",
       "status": "green",
-      "spend": 19251.358,
+      "spend": 19274.648,
       "revenue": null,
       "margin_pct": null,
       "cpl": 193.0,
@@ -153,7 +153,7 @@
     {
       "tort": "Chlorpyrifos",
       "status": "red",
-      "spend": 2010.9,
+      "spend": 2016.79,
       "revenue": null,
       "margin_pct": null,
       "cpl": null,
