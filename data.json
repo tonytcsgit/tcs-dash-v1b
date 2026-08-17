@@ -1,9 +1,9 @@
 {
   "contract_version": 1,
-  "generated_at": "2026-08-17T08:07:16-04:00",
+  "generated_at": "2026-08-17T09:07:23-04:00",
   "data_freshness": {
-    "leads_spend_sr": "2026-08-17T08:07:16-04:00",
-    "retainers": "2026-08-17T08:07:16-04:00",
+    "leads_spend_sr": "2026-08-17T09:07:23-04:00",
+    "retainers": "2026-08-17T09:07:23-04:00",
     "stale_warnings": [
       "ILM spend: stale (last Day 2026-08-14)",
       "Hernia Mesh spend: stale (last Day 2026-08-14)",
@@ -15,11 +15,11 @@
   "company": {
     "window_label": "Week of Mon Aug 17 \u2014 Day 1 of 7",
     "spend": 0.0,
-    "revenue": 3900.0,
-    "gross_profit": 3900.0,
+    "revenue": 4840.0,
+    "gross_profit": 4840.0,
     "margin_pct": null,
     "cost_per_sign": null,
-    "payable_leads": 17,
+    "payable_leads": 21,
     "deltas": {},
     "caveat": "WARNING spend missing/stale for one or more torts \u2014 company margin withheld (would be falsely healthy). Fix the spend source to restore it."
   },
@@ -27,7 +27,7 @@
     {
       "tort_or_buyer": "Chlorpyrifos",
       "level": "red",
-      "reason": "Spend $92 with 0 payable leads \u2014 burning money",
+      "reason": "Spend $104 with 0 payable leads \u2014 burning money",
       "owner": null
     },
     {
@@ -40,12 +40,6 @@
       "tort_or_buyer": "Hernia Mesh",
       "level": "amber",
       "reason": "STALE stale (last Day 2026-08-14)",
-      "owner": null
-    },
-    {
-      "tort_or_buyer": "SMA",
-      "level": "amber",
-      "reason": "STALE YT spend: stale (last Day 2026-08-15)",
       "owner": null
     },
     {
@@ -73,12 +67,12 @@
     {
       "tort": "WDC",
       "status": "green",
-      "spend": 3117.9583,
+      "spend": 3237.8325000000004,
       "revenue": null,
       "margin_pct": null,
-      "cpl": 520.0,
+      "cpl": 463.0,
       "cost_per_sign": null,
-      "payable_leads": 6,
+      "payable_leads": 7,
       "signed": null,
       "spend_source": "meta",
       "spend_caveat": "Meta spend (BQ view 403); revenue n/a (non-BP)",
@@ -90,12 +84,12 @@
     {
       "tort": "Depo",
       "status": "green",
-      "spend": 702.1993,
+      "spend": 719.8468,
       "revenue": null,
       "margin_pct": null,
-      "cpl": 234.0,
+      "cpl": 180.0,
       "cost_per_sign": null,
-      "payable_leads": 3,
+      "payable_leads": 4,
       "signed": null,
       "spend_source": "meta",
       "spend_caveat": "Meta spend (BQ view 403); revenue n/a (non-BP)",
@@ -107,7 +101,7 @@
     {
       "tort": "Chlorpyrifos",
       "status": "red",
-      "spend": 91.92,
+      "spend": 104.36,
       "revenue": null,
       "margin_pct": null,
       "cpl": null,
@@ -125,11 +119,11 @@
       "tort": "ILM",
       "status": "amber",
       "spend": null,
-      "revenue": 2010,
+      "revenue": 2680,
       "margin_pct": null,
       "cpl": null,
       "cost_per_sign": null,
-      "payable_leads": 3,
+      "payable_leads": 4,
       "signed": 0,
       "spend_source": "bq",
       "spend_caveat": "STALE stale (last Day 2026-08-14)",
@@ -157,17 +151,17 @@
     },
     {
       "tort": "SMA",
-      "status": "amber",
-      "spend": null,
-      "revenue": 990,
-      "margin_pct": null,
+      "status": "green",
+      "spend": 0.0,
+      "revenue": 1260,
+      "margin_pct": 100.0,
       "cpl": null,
       "cost_per_sign": null,
-      "payable_leads": 11,
+      "payable_leads": 14,
       "signed": 0,
       "spend_source": "youtube_manual",
-      "spend_caveat": "STALE YT spend: stale (last Day 2026-08-15)",
-      "data_ok": false,
+      "spend_caveat": "YouTube spend (manual, not Meta)",
+      "data_ok": true,
       "note": null,
       "note_author": null,
       "note_ts": null
@@ -269,9 +263,9 @@
           "tort": "ILM",
           "cap": 48,
           "cap_unit": "leads/wk",
-          "used": 3,
-          "pct": 6,
-          "est_days_left": 15.0
+          "used": 4,
+          "pct": 8,
+          "est_days_left": 11.0
         },
         {
           "tort": "Hernia Mesh",
@@ -285,9 +279,9 @@
           "tort": "SMA",
           "cap": 1107,
           "cap_unit": "leads/wk",
-          "used": 11,
+          "used": 14,
           "pct": 1,
-          "est_days_left": 99.6
+          "est_days_left": 78.1
         },
         {
           "tort": "Paraquat",
