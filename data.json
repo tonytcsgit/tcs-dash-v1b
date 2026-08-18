@@ -1,9 +1,9 @@
 {
   "contract_version": 1,
-  "generated_at": "2026-08-18T01:07:24-04:00",
+  "generated_at": "2026-08-18T02:07:32-04:00",
   "data_freshness": {
-    "leads_spend_sr": "2026-08-18T01:07:24-04:00",
-    "retainers": "2026-08-18T01:07:24-04:00",
+    "leads_spend_sr": "2026-08-18T02:07:32-04:00",
+    "retainers": "2026-08-18T02:07:32-04:00",
     "stale_warnings": [
       "ILM spend: stale (last Day 2026-08-14)",
       "Hernia Mesh spend: stale (last Day 2026-08-14)",
@@ -15,11 +15,11 @@
   "company": {
     "window_label": "Week of Mon Aug 17 \u2014 Day 2 of 7",
     "spend": 0.0,
-    "revenue": 29630.0,
-    "gross_profit": 29630.0,
+    "revenue": 27430.0,
+    "gross_profit": 27430.0,
     "margin_pct": null,
     "cost_per_sign": 0.0,
-    "payable_leads": 140,
+    "payable_leads": 129,
     "deltas": {},
     "caveat": "WARNING spend missing/stale for one or more torts \u2014 company margin withheld (would be falsely healthy). Fix the spend source to restore it."
   },
@@ -27,7 +27,7 @@
     {
       "tort_or_buyer": "Chlorpyrifos",
       "level": "red",
-      "reason": "Spend $434 with 0 payable leads \u2014 burning money",
+      "reason": "Spend $453 with 0 payable leads \u2014 burning money",
       "owner": null
     },
     {
@@ -73,12 +73,12 @@
     {
       "tort": "WDC",
       "status": "green",
-      "spend": 8585.5309,
+      "spend": 8848.2385,
       "revenue": null,
       "margin_pct": null,
-      "cpl": 343.0,
+      "cpl": 340.0,
       "cost_per_sign": null,
-      "payable_leads": 25,
+      "payable_leads": 26,
       "signed": null,
       "spend_source": "meta",
       "spend_caveat": "Meta spend (BQ view 403); revenue n/a (non-BP)",
@@ -90,10 +90,10 @@
     {
       "tort": "Depo",
       "status": "green",
-      "spend": 1609.0792999999999,
+      "spend": 1650.3451,
       "revenue": null,
       "margin_pct": null,
-      "cpl": 115.0,
+      "cpl": 118.0,
       "cost_per_sign": null,
       "payable_leads": 14,
       "signed": null,
@@ -107,7 +107,7 @@
     {
       "tort": "Chlorpyrifos",
       "status": "red",
-      "spend": 433.95,
+      "spend": 452.52,
       "revenue": null,
       "margin_pct": null,
       "cpl": null,
@@ -193,11 +193,11 @@
       "tort": "PowerPort",
       "status": "amber",
       "spend": null,
-      "revenue": 2200,
+      "revenue": 0,
       "margin_pct": null,
       "cpl": null,
       "cost_per_sign": null,
-      "payable_leads": 11,
+      "payable_leads": 0,
       "signed": 0,
       "spend_source": "bq",
       "spend_caveat": "STALE stale (last Day 2026-07-20)",
@@ -301,9 +301,9 @@
           "tort": "PowerPort",
           "cap": 270,
           "cap_unit": "leads/wk",
-          "used": 11,
-          "pct": 4,
-          "est_days_left": 47.1
+          "used": 0,
+          "pct": 0,
+          "est_days_left": null
         }
       ],
       "active_torts": [
