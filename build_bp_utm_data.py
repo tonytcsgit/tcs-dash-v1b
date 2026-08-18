@@ -117,11 +117,10 @@ def resolve_label(row, idx, platform=None):
     if platform == "YouTube":
         adid = (row[idx["adid"]] if idx.get("adid") is not None and idx["adid"] < len(row) else "").strip()
         if adid:
-            # Try to resolve to actual creative name from AdMap_SMA
-            name_map = load_ad_names()
-            creative_name = name_map.get(adid)
-            if creative_name:
-                return creative_name
+            # Andrew wants RAW adId (numbers starting with 8), not Google Ads ad names.
+            # AdMap_SMA lookup removed Aug 17 2026 — it was mapping some adIds to names
+            # like "Ad 1" / "SMA 9 h1..." while leaving others as raw IDs, causing
+            # inconsistent display. Always show the raw adId for YouTube.
             return adid
     adset = (row[idx["adsetid"]] if idx.get("adsetid") is not None and idx["adsetid"] < len(row) else "").strip()
     if adset and not is_num(adset):
