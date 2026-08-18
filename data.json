@@ -1,9 +1,9 @@
 {
   "contract_version": 1,
-  "generated_at": "2026-08-17T20:07:47-04:00",
+  "generated_at": "2026-08-17T21:07:54-04:00",
   "data_freshness": {
-    "leads_spend_sr": "2026-08-17T20:07:47-04:00",
-    "retainers": "2026-08-17T20:07:47-04:00",
+    "leads_spend_sr": "2026-08-17T21:07:54-04:00",
+    "retainers": "2026-08-17T21:07:54-04:00",
     "stale_warnings": [
       "ILM spend: stale (last Day 2026-08-14)",
       "Hernia Mesh spend: stale (last Day 2026-08-14)",
@@ -15,11 +15,11 @@
   "company": {
     "window_label": "Week of Mon Aug 17 \u2014 Day 1 of 7",
     "spend": 0.0,
-    "revenue": 18190.0,
-    "gross_profit": 18190.0,
+    "revenue": 24130.0,
+    "gross_profit": 24130.0,
     "margin_pct": null,
     "cost_per_sign": 0.0,
-    "payable_leads": 96,
+    "payable_leads": 117,
     "deltas": {},
     "caveat": "WARNING spend missing/stale for one or more torts \u2014 company margin withheld (would be falsely healthy). Fix the spend source to restore it."
   },
@@ -27,7 +27,7 @@
     {
       "tort_or_buyer": "Chlorpyrifos",
       "level": "red",
-      "reason": "Spend $335 with 0 payable leads \u2014 burning money",
+      "reason": "Spend $355 with 0 payable leads \u2014 burning money",
       "owner": null
     },
     {
@@ -67,10 +67,10 @@
     {
       "tort": "WDC",
       "status": "green",
-      "spend": 5840.3804,
+      "spend": 6117.3004,
       "revenue": null,
       "margin_pct": null,
-      "cpl": 265.0,
+      "cpl": 278.0,
       "cost_per_sign": null,
       "payable_leads": 22,
       "signed": null,
@@ -84,10 +84,10 @@
     {
       "tort": "Depo",
       "status": "green",
-      "spend": 1000.7071,
+      "spend": 1024.1970999999999,
       "revenue": null,
       "margin_pct": null,
-      "cpl": 111.0,
+      "cpl": 114.0,
       "cost_per_sign": null,
       "payable_leads": 9,
       "signed": null,
@@ -101,7 +101,7 @@
     {
       "tort": "Chlorpyrifos",
       "status": "red",
-      "spend": 334.63,
+      "spend": 355.15,
       "revenue": null,
       "margin_pct": null,
       "cpl": null,
@@ -119,11 +119,11 @@
       "tort": "ILM",
       "status": "amber",
       "spend": null,
-      "revenue": 8040,
+      "revenue": 11390,
       "margin_pct": null,
       "cpl": null,
       "cost_per_sign": null,
-      "payable_leads": 12,
+      "payable_leads": 17,
       "signed": 0,
       "spend_source": "bq",
       "spend_caveat": "STALE stale (last Day 2026-08-14)",
@@ -153,12 +153,12 @@
       "tort": "SMA",
       "status": "green",
       "spend": 0.0,
-      "revenue": 6300,
+      "revenue": 7290,
       "margin_pct": 100.0,
       "cpl": null,
       "cost_per_sign": null,
-      "payable_leads": 70,
-      "signed": 8,
+      "payable_leads": 81,
+      "signed": 10,
       "spend_source": "youtube_manual",
       "spend_caveat": "YouTube spend (manual, not Meta)",
       "data_ok": true,
@@ -170,11 +170,11 @@
       "tort": "Paraquat",
       "status": "amber",
       "spend": null,
-      "revenue": 2450,
+      "revenue": 3850,
       "margin_pct": null,
       "cpl": null,
       "cost_per_sign": null,
-      "payable_leads": 7,
+      "payable_leads": 11,
       "signed": 1,
       "spend_source": "bq",
       "spend_caveat": "STALE stale (last Day 2026-08-14)",
@@ -187,11 +187,11 @@
       "tort": "PowerPort",
       "status": "amber",
       "spend": null,
-      "revenue": 1400,
+      "revenue": 1600,
       "margin_pct": null,
       "cpl": null,
       "cost_per_sign": null,
-      "payable_leads": 7,
+      "payable_leads": 8,
       "signed": 0,
       "spend_source": "bq",
       "spend_caveat": "STALE stale (last Day 2026-07-20)",
@@ -263,9 +263,9 @@
           "tort": "ILM",
           "cap": 48,
           "cap_unit": "leads/wk",
-          "used": 12,
-          "pct": 25,
-          "est_days_left": 3.0
+          "used": 17,
+          "pct": 35,
+          "est_days_left": 1.8
         },
         {
           "tort": "Hernia Mesh",
@@ -279,25 +279,25 @@
           "tort": "SMA",
           "cap": 1107,
           "cap_unit": "leads/wk",
-          "used": 70,
-          "pct": 6,
-          "est_days_left": 14.8
+          "used": 81,
+          "pct": 7,
+          "est_days_left": 12.7
         },
         {
           "tort": "Paraquat",
           "cap": 35,
           "cap_unit": "leads/wk",
-          "used": 7,
-          "pct": 20,
-          "est_days_left": 4.0
+          "used": 11,
+          "pct": 31,
+          "est_days_left": 2.2
         },
         {
           "tort": "PowerPort",
           "cap": 270,
           "cap_unit": "leads/wk",
-          "used": 7,
+          "used": 8,
           "pct": 3,
-          "est_days_left": 37.6
+          "est_days_left": 32.8
         }
       ],
       "active_torts": [
