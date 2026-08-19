@@ -1,9 +1,9 @@
 {
   "contract_version": 1,
-  "generated_at": "2026-08-19T13:07:09-04:00",
+  "generated_at": "2026-08-19T14:07:16-04:00",
   "data_freshness": {
-    "leads_spend_sr": "2026-08-19T13:07:09-04:00",
-    "retainers": "2026-08-19T13:07:09-04:00",
+    "leads_spend_sr": "2026-08-19T14:07:16-04:00",
+    "retainers": "2026-08-19T14:07:16-04:00",
     "stale_warnings": [
       "Endoscopy spend: stale (last Day 2026-07-14)"
     ]
@@ -23,7 +23,7 @@
     {
       "tort_or_buyer": "Chlorpyrifos",
       "level": "red",
-      "reason": "Spend $1,102 with 0 payable leads \u2014 burning money",
+      "reason": "Spend $1,131 with 0 payable leads \u2014 burning money",
       "owner": null
     },
     {
@@ -43,6 +43,23 @@
   "andrew_note": {},
   "torts": [
     {
+      "tort": "WDC",
+      "status": "green",
+      "spend": 15964.2572,
+      "revenue": null,
+      "margin_pct": null,
+      "cpl": 319.0,
+      "cost_per_sign": null,
+      "payable_leads": 50,
+      "signed": null,
+      "spend_source": "meta",
+      "spend_caveat": "Meta spend (BQ view 403); revenue n/a (non-BP)",
+      "data_ok": true,
+      "note": null,
+      "note_author": null,
+      "note_ts": null
+    },
+    {
       "tort": "ILM",
       "status": "amber",
       "spend": 15816.068200000012,
@@ -54,23 +71,6 @@
       "signed": 3,
       "spend_source": "bq",
       "spend_caveat": null,
-      "data_ok": true,
-      "note": null,
-      "note_author": null,
-      "note_ts": null
-    },
-    {
-      "tort": "WDC",
-      "status": "green",
-      "spend": 15727.7611,
-      "revenue": null,
-      "margin_pct": null,
-      "cpl": 321.0,
-      "cost_per_sign": null,
-      "payable_leads": 49,
-      "signed": null,
-      "spend_source": "meta",
-      "spend_caveat": "Meta spend (BQ view 403); revenue n/a (non-BP)",
       "data_ok": true,
       "note": null,
       "note_author": null,
@@ -147,7 +147,7 @@
     {
       "tort": "Chlorpyrifos",
       "status": "red",
-      "spend": 1102.02,
+      "spend": 1130.8600000000001,
       "revenue": null,
       "margin_pct": null,
       "cpl": null,
