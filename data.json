@@ -1,9 +1,9 @@
 {
   "contract_version": 1,
-  "generated_at": "2026-08-19T00:28:37-04:00",
+  "generated_at": "2026-08-19T01:07:41-04:00",
   "data_freshness": {
-    "leads_spend_sr": "2026-08-19T00:28:37-04:00",
-    "retainers": "2026-08-19T00:28:37-04:00",
+    "leads_spend_sr": "2026-08-19T01:07:41-04:00",
+    "retainers": "2026-08-19T01:07:41-04:00",
     "stale_warnings": [
       "ILM: sheet read err <HttpError 403 when requesting https://sheets.googleapis.com",
       "ILM spend: stale (last Day 2026-08-17)",
@@ -35,7 +35,7 @@
     {
       "tort_or_buyer": "Chlorpyrifos",
       "level": "red",
-      "reason": "Spend $867 with 0 payable leads \u2014 burning money",
+      "reason": "Spend $878 with 0 payable leads \u2014 burning money",
       "owner": null
     },
     {
@@ -93,10 +93,10 @@
     {
       "tort": "WDC",
       "status": "green",
-      "spend": 13536.4097,
+      "spend": 13716.671100000001,
       "revenue": null,
       "margin_pct": null,
-      "cpl": 308.0,
+      "cpl": 312.0,
       "cost_per_sign": null,
       "payable_leads": 44,
       "signed": null,
@@ -127,7 +127,7 @@
     {
       "tort": "Chlorpyrifos",
       "status": "red",
-      "spend": 866.98,
+      "spend": 878.43,
       "revenue": null,
       "margin_pct": null,
       "cpl": null,
