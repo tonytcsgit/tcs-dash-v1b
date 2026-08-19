@@ -1,9 +1,9 @@
 {
   "contract_version": 1,
-  "generated_at": "2026-08-19T16:07:32-04:00",
+  "generated_at": "2026-08-19T17:07:40-04:00",
   "data_freshness": {
-    "leads_spend_sr": "2026-08-19T16:07:32-04:00",
-    "retainers": "2026-08-19T16:07:32-04:00",
+    "leads_spend_sr": "2026-08-19T17:07:40-04:00",
+    "retainers": "2026-08-19T17:07:40-04:00",
     "stale_warnings": [
       "Endoscopy spend: stale (last Day 2026-07-14)"
     ]
@@ -23,7 +23,7 @@
     {
       "tort_or_buyer": "Chlorpyrifos",
       "level": "red",
-      "reason": "Spend $1,186 with 0 payable leads \u2014 burning money",
+      "reason": "Spend $1,210 with 0 payable leads \u2014 burning money",
       "owner": null
     },
     {
@@ -45,12 +45,12 @@
     {
       "tort": "WDC",
       "status": "green",
-      "spend": 16439.3238,
+      "spend": 16675.2112,
       "revenue": null,
       "margin_pct": null,
-      "cpl": 316.0,
+      "cpl": 315.0,
       "cost_per_sign": null,
-      "payable_leads": 52,
+      "payable_leads": 53,
       "signed": null,
       "spend_source": "meta",
       "spend_caveat": "Meta spend (BQ view 403); revenue n/a (non-BP)",
@@ -147,7 +147,7 @@
     {
       "tort": "Chlorpyrifos",
       "status": "red",
-      "spend": 1185.59,
+      "spend": 1210.04,
       "revenue": null,
       "margin_pct": null,
       "cpl": null,
@@ -206,7 +206,7 @@
       "payable_leads": 0,
       "signed": 0,
       "spend_source": "meta_partial",
-      "spend_caveat": "Meta-only spend (partial, no BQ view); Meta partial (25/33 accounts)",
+      "spend_caveat": "Meta-only spend (partial, no BQ view); Meta partial (37/45 accounts)",
       "data_ok": true,
       "note": null,
       "note_author": null,
@@ -223,7 +223,7 @@
       "payable_leads": 0,
       "signed": 0,
       "spend_source": "meta_partial",
-      "spend_caveat": "Meta-only spend (partial, no BQ view); Meta partial (25/33 accounts)",
+      "spend_caveat": "Meta-only spend (partial, no BQ view); Meta partial (37/45 accounts)",
       "data_ok": true,
       "note": null,
       "note_author": null,
