@@ -1,9 +1,9 @@
 {
   "contract_version": 1,
-  "generated_at": "2026-08-19T21:07:09-04:00",
+  "generated_at": "2026-08-19T22:07:16-04:00",
   "data_freshness": {
-    "leads_spend_sr": "2026-08-19T21:07:09-04:00",
-    "retainers": "2026-08-19T21:07:09-04:00",
+    "leads_spend_sr": "2026-08-19T22:07:16-04:00",
+    "retainers": "2026-08-19T22:07:16-04:00",
     "stale_warnings": [
       "Endoscopy spend: stale (last Day 2026-07-14)"
     ]
@@ -11,11 +11,11 @@
   "company": {
     "window_label": "Week of Mon Aug 17 \u2014 Day 3 of 7",
     "spend": 29067.0,
-    "revenue": 82100.0,
-    "gross_profit": 53033.0,
+    "revenue": 84180.0,
+    "gross_profit": 55113.0,
     "margin_pct": null,
     "cost_per_sign": 632.0,
-    "payable_leads": 554,
+    "payable_leads": 573,
     "deltas": {},
     "caveat": "WARNING spend missing/stale for one or more torts \u2014 company margin withheld (would be falsely healthy). Fix the spend source to restore it."
   },
@@ -23,7 +23,7 @@
     {
       "tort_or_buyer": "Chlorpyrifos",
       "level": "red",
-      "reason": "Spend $1,307 with 0 payable leads \u2014 burning money",
+      "reason": "Spend $1,337 with 0 payable leads \u2014 burning money",
       "owner": null
     },
     {
@@ -35,7 +35,7 @@
     {
       "tort_or_buyer": "Paraquat",
       "level": "amber",
-      "reason": "Broughton Paraquat at 97% of weekly cap (34/35)",
+      "reason": "Broughton Paraquat at 100% of weekly cap (35/35)",
       "owner": null
     }
   ],
@@ -45,10 +45,10 @@
     {
       "tort": "WDC",
       "status": "green",
-      "spend": 17643.8767,
+      "spend": 17824.7867,
       "revenue": null,
       "margin_pct": null,
-      "cpl": 315.0,
+      "cpl": 318.0,
       "cost_per_sign": null,
       "payable_leads": 56,
       "signed": null,
@@ -80,11 +80,11 @@
       "tort": "SMA",
       "status": "green",
       "spend": 7592.135418,
-      "revenue": 39060,
-      "margin_pct": 80.6,
+      "revenue": 40590,
+      "margin_pct": 81.3,
       "cpl": 17.0,
       "cost_per_sign": 200.0,
-      "payable_leads": 434,
+      "payable_leads": 451,
       "signed": 38,
       "spend_source": "youtube_manual",
       "spend_caveat": "YouTube spend (manual, not Meta)",
@@ -97,11 +97,11 @@
       "tort": "Paraquat",
       "status": "green",
       "spend": 3571.8499999999985,
-      "revenue": 11900,
-      "margin_pct": 70.0,
-      "cpl": 105.0,
+      "revenue": 12250,
+      "margin_pct": 70.8,
+      "cpl": 102.0,
       "cost_per_sign": 3572.0,
-      "payable_leads": 34,
+      "payable_leads": 35,
       "signed": 1,
       "spend_source": "bq",
       "spend_caveat": null,
@@ -131,11 +131,11 @@
       "tort": "PowerPort",
       "status": "green",
       "spend": 1741.1550000000002,
-      "revenue": 6800,
-      "margin_pct": 74.4,
-      "cpl": 51.0,
+      "revenue": 7000,
+      "margin_pct": 75.1,
+      "cpl": 50.0,
       "cost_per_sign": 580.0,
-      "payable_leads": 34,
+      "payable_leads": 35,
       "signed": 3,
       "spend_source": "bq",
       "spend_caveat": null,
@@ -147,7 +147,7 @@
     {
       "tort": "Chlorpyrifos",
       "status": "red",
-      "spend": 1306.86,
+      "spend": 1336.53,
       "revenue": null,
       "margin_pct": null,
       "cpl": null,
@@ -257,25 +257,25 @@
           "tort": "SMA",
           "cap": 1107,
           "cap_unit": "leads/wk",
-          "used": 434,
-          "pct": 39,
-          "est_days_left": 4.7
+          "used": 451,
+          "pct": 41,
+          "est_days_left": 4.4
         },
         {
           "tort": "Paraquat",
           "cap": 35,
           "cap_unit": "leads/wk",
-          "used": 34,
-          "pct": 97,
-          "est_days_left": 0.1
+          "used": 35,
+          "pct": 100,
+          "est_days_left": 0
         },
         {
           "tort": "PowerPort",
           "cap": 270,
           "cap_unit": "leads/wk",
-          "used": 34,
+          "used": 35,
           "pct": 13,
-          "est_days_left": 20.8
+          "est_days_left": 20.1
         }
       ],
       "active_torts": [
