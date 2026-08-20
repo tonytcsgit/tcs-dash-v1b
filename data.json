@@ -1,9 +1,9 @@
 {
   "contract_version": 1,
-  "generated_at": "2026-08-20T04:07:03-04:00",
+  "generated_at": "2026-08-20T05:07:11-04:00",
   "data_freshness": {
-    "leads_spend_sr": "2026-08-20T04:07:03-04:00",
-    "retainers": "2026-08-20T04:07:03-04:00",
+    "leads_spend_sr": "2026-08-20T05:07:11-04:00",
+    "retainers": "2026-08-20T05:07:11-04:00",
     "stale_warnings": [
       "ILM spend: stale (last Day 2026-08-18)",
       "Hernia Mesh spend: stale (last Day 2026-08-18)",
@@ -15,11 +15,11 @@
   "company": {
     "window_label": "Week of Mon Aug 17 \u2014 Day 4 of 7",
     "spend": 0.0,
-    "revenue": 92020.0,
-    "gross_profit": 92020.0,
+    "revenue": 92740.0,
+    "gross_profit": 92740.0,
     "margin_pct": null,
     "cost_per_sign": 0.0,
-    "payable_leads": 622,
+    "payable_leads": 630,
     "deltas": {},
     "caveat": "WARNING spend missing/stale for one or more torts \u2014 company margin withheld (would be falsely healthy). Fix the spend source to restore it."
   },
@@ -27,7 +27,7 @@
     {
       "tort_or_buyer": "Chlorpyrifos",
       "level": "red",
-      "reason": "Spend $1,466 with 0 payable leads \u2014 burning money",
+      "reason": "Spend $1,478 with 0 payable leads \u2014 burning money",
       "owner": null
     },
     {
@@ -79,10 +79,10 @@
     {
       "tort": "WDC",
       "status": "green",
-      "spend": 20802.41,
+      "spend": 20975.5652,
       "revenue": null,
       "margin_pct": null,
-      "cpl": 315.0,
+      "cpl": 318.0,
       "cost_per_sign": null,
       "payable_leads": 66,
       "signed": null,
@@ -113,7 +113,7 @@
     {
       "tort": "Chlorpyrifos",
       "status": "red",
-      "spend": 1465.92,
+      "spend": 1477.8200000000002,
       "revenue": null,
       "margin_pct": null,
       "cpl": null,
@@ -165,11 +165,11 @@
       "tort": "SMA",
       "status": "amber",
       "spend": null,
-      "revenue": 44100,
+      "revenue": 44820,
       "margin_pct": null,
       "cpl": null,
       "cost_per_sign": null,
-      "payable_leads": 490,
+      "payable_leads": 498,
       "signed": 41,
       "spend_source": "youtube_manual",
       "spend_caveat": "STALE YT spend: stale (last Day 2026-08-18)",
@@ -291,9 +291,9 @@
           "tort": "SMA",
           "cap": 1107,
           "cap_unit": "leads/wk",
-          "used": 490,
-          "pct": 44,
-          "est_days_left": 5.0
+          "used": 498,
+          "pct": 45,
+          "est_days_left": 4.9
         },
         {
           "tort": "Paraquat",
