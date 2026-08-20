@@ -1,9 +1,9 @@
 {
   "contract_version": 1,
-  "generated_at": "2026-08-20T00:07:32-04:00",
+  "generated_at": "2026-08-20T01:07:40-04:00",
   "data_freshness": {
-    "leads_spend_sr": "2026-08-20T00:07:32-04:00",
-    "retainers": "2026-08-20T00:07:32-04:00",
+    "leads_spend_sr": "2026-08-20T01:07:40-04:00",
+    "retainers": "2026-08-20T01:07:40-04:00",
     "stale_warnings": [
       "ILM spend: stale (last Day 2026-08-18)",
       "Hernia Mesh spend: stale (last Day 2026-08-18)",
@@ -15,11 +15,11 @@
   "company": {
     "window_label": "Week of Mon Aug 17 \u2014 Day 4 of 7",
     "spend": 0.0,
-    "revenue": 88000.0,
-    "gross_profit": 88000.0,
+    "revenue": 88740.0,
+    "gross_profit": 88740.0,
     "margin_pct": null,
     "cost_per_sign": 0.0,
-    "payable_leads": 592,
+    "payable_leads": 599,
     "deltas": {},
     "caveat": "WARNING spend missing/stale for one or more torts \u2014 company margin withheld (would be falsely healthy). Fix the spend source to restore it."
   },
@@ -27,7 +27,7 @@
     {
       "tort_or_buyer": "Chlorpyrifos",
       "level": "red",
-      "reason": "Spend $1,391 with 0 payable leads \u2014 burning money",
+      "reason": "Spend $1,417 with 0 payable leads \u2014 burning money",
       "owner": null
     },
     {
@@ -79,12 +79,12 @@
     {
       "tort": "WDC",
       "status": "green",
-      "spend": 19627.3912,
+      "spend": 19972.5459,
       "revenue": null,
       "margin_pct": null,
-      "cpl": 317.0,
+      "cpl": 312.0,
       "cost_per_sign": null,
-      "payable_leads": 62,
+      "payable_leads": 64,
       "signed": null,
       "spend_source": "meta",
       "spend_caveat": "Meta spend (BQ view 403); revenue n/a (non-BP)",
@@ -113,7 +113,7 @@
     {
       "tort": "Chlorpyrifos",
       "status": "red",
-      "spend": 1391.2400000000002,
+      "spend": 1417.0700000000002,
       "revenue": null,
       "margin_pct": null,
       "cpl": null,
@@ -165,11 +165,11 @@
       "tort": "SMA",
       "status": "amber",
       "spend": null,
-      "revenue": 41850,
+      "revenue": 42390,
       "margin_pct": null,
       "cpl": null,
       "cost_per_sign": null,
-      "payable_leads": 465,
+      "payable_leads": 471,
       "signed": 39,
       "spend_source": "youtube_manual",
       "spend_caveat": "STALE YT spend: stale (last Day 2026-08-18)",
@@ -199,11 +199,11 @@
       "tort": "PowerPort",
       "status": "amber",
       "spend": null,
-      "revenue": 7200,
+      "revenue": 7400,
       "margin_pct": null,
       "cpl": null,
       "cost_per_sign": null,
-      "payable_leads": 36,
+      "payable_leads": 37,
       "signed": 3,
       "spend_source": "bq",
       "spend_caveat": "STALE stale (last Day 2026-08-18)",
@@ -240,7 +240,7 @@
       "payable_leads": 0,
       "signed": 0,
       "spend_source": "meta_partial",
-      "spend_caveat": "Meta-only spend (partial, no BQ view); Meta partial (34/39 accounts)",
+      "spend_caveat": "Meta-only spend (partial, no BQ view); Meta partial (35/40 accounts)",
       "data_ok": true,
       "note": null,
       "note_author": null,
@@ -257,7 +257,7 @@
       "payable_leads": 0,
       "signed": 0,
       "spend_source": "meta_partial",
-      "spend_caveat": "Meta-only spend (partial, no BQ view); Meta partial (34/39 accounts)",
+      "spend_caveat": "Meta-only spend (partial, no BQ view); Meta partial (35/40 accounts)",
       "data_ok": true,
       "note": null,
       "note_author": null,
@@ -291,9 +291,9 @@
           "tort": "SMA",
           "cap": 1107,
           "cap_unit": "leads/wk",
-          "used": 465,
-          "pct": 42,
-          "est_days_left": 5.5
+          "used": 471,
+          "pct": 43,
+          "est_days_left": 5.4
         },
         {
           "tort": "Paraquat",
@@ -307,9 +307,9 @@
           "tort": "PowerPort",
           "cap": 270,
           "cap_unit": "leads/wk",
-          "used": 36,
-          "pct": 13,
-          "est_days_left": 26.0
+          "used": 37,
+          "pct": 14,
+          "est_days_left": 25.2
         }
       ],
       "active_torts": [
