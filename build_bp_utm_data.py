@@ -135,6 +135,30 @@ def resolve_label(row, idx, platform=None):
     return adset if adset else (camp if camp else "(blank)")
 
 
+def resolve_campaign(row, idx, platform=None):
+    """Campaign-level label (coarser than resolve_label's creative-level label).
+
+    Media buyer wants a campaign/CBO-level rollup at times (budget/pacing decisions)
+    vs. the creative-level `label` (kill-list decisions). Fallback chain:
+    utm_campaign -> raw campaignId (whatever format: numeric Meta ID or literal
+    campaign name like "DD- A Paraquat Morane H&P CBO") -> adSetId -> (blank).
+
+    YouTube leads have no utm_campaign — they fall through to the raw numeric
+    Google Ads campaignId, same "show raw ID" precedent as YouTube creatives
+    (Andrew, Aug 17 2026). Do not try to prettify it.
+    """
+    camp = (row[idx["utm_campaign"]] if idx.get("utm_campaign") is not None and idx["utm_campaign"] < len(row) else "").strip()
+    if camp:
+        return camp
+    cid = (row[idx["campaignid"]] if idx.get("campaignid") is not None and idx["campaignid"] < len(row) else "").strip()
+    if cid:
+        return cid
+    adset = (row[idx["adsetid"]] if idx.get("adsetid") is not None and idx["adsetid"] < len(row) else "").strip()
+    if adset:
+        return adset
+    return "(blank)"
+
+
 def detect_marketer(row, idx):
     """Detect marketer from all tag-bearing cells."""
     t = " ".join(
@@ -229,6 +253,7 @@ def analyze_tort(tort, rows):
         sg = 1 if status == "Signed" else 0
         platform = detect_platform(r, col_map)
         lab = resolve_label(r, col_map, platform=platform)
+        camp = resolve_campaign(r, col_map, platform=platform)
         mk = detect_marketer(r, col_map)
         
         leads.append({
@@ -236,6 +261,7 @@ def analyze_tort(tort, rows):
             "platform": platform,
             "marketer": mk,
             "label": lab,
+            "campaign": camp,
             "signed": sg,
         })
     

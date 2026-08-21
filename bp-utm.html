@@ -105,6 +105,7 @@ let dateFrom = "";
 let dateTo = "";
 let minPayable = 5;
 let minSigned = 1;
+let viewBy = "creative"; // "creative" | "campaign"
 
 function esc(s) {
   return String(s).replace(/[&<>"']/g, (c) => ({
@@ -193,6 +194,13 @@ function renderControls() {
     <div class="bp-utm-controls">
       <div class="bp-utm-controls-row">
         <div>
+          <label>View By</label>
+          <select id="filter-viewby" onchange="viewBy=this.value; renderAnalysis()">
+            <option value="creative" ${viewBy === "creative" ? "selected" : ""}>Creative</option>
+            <option value="campaign" ${viewBy === "campaign" ? "selected" : ""}>Campaign</option>
+          </select>
+        </div>
+        <div>
           <label>Ad Platform</label>
           <select id="filter-platform" onchange="currentPlatform=this.value; renderAnalysis()">${platformOptions}</select>
         </div>
@@ -231,8 +239,8 @@ function renderControls() {
 }
 
 function renderAnalysis() {
-  // Collect all leads matching filters, then aggregate by creative
-  let creativeMap = {};  // key: platform|marketer|label|tort -> {payable, signed}
+  // Collect all leads matching filters, then aggregate by creative or campaign (viewBy)
+  let creativeMap = {};  // key: platform|marketer|grainValue|tort -> {payable, signed}
   let totalPayable = 0;
   let totalSigned = 0;
   
@@ -252,13 +260,14 @@ function renderAnalysis() {
       if (dateFrom && lead.date < dateFrom) continue;
       if (dateTo && lead.date > dateTo) continue;
       
-      // Aggregate by creative
-      const key = `${lead.platform}|${lead.marketer}|${lead.label}|${tort.tort_name}`;
+      // Aggregate by creative (label) or campaign, per viewBy toggle
+      const grainValue = viewBy === "campaign" ? (lead.campaign || "(blank)") : lead.label;
+      const key = `${lead.platform}|${lead.marketer}|${grainValue}|${tort.tort_name}`;
       if (!creativeMap[key]) {
         creativeMap[key] = {
           platform: lead.platform,
           marketer: lead.marketer,
-          label: lead.label,
+          label: grainValue,
           tort_name: tort.tort_name,
           target_cvr: target,
           payable: 0,
@@ -303,12 +312,14 @@ function renderAnalysis() {
     </div>
   </div>`;
   
-  // CREATIVES
+  // CREATIVES / CAMPAIGNS
+  const grainLabel = viewBy === "campaign" ? "Campaigns" : "Creatives";
+  const grainColHeader = viewBy === "campaign" ? "Campaign" : "Creative";
   if (allCreatives.length) {
     html += `<div class="bp-utm-section">
-      <div class="bp-utm-section-title">Creatives (${allCreatives.length} matching filters)</div>
+      <div class="bp-utm-section-title">${grainLabel} (${allCreatives.length} matching filters)</div>
       <div class="bp-utm-table-wrap"><div class="scroll"><table class="bp-utm-table">
-        <thead><tr><th>Creative</th><th>Tort</th><th class="num">Payable</th><th class="num">Signed</th><th class="num">CVR</th></tr></thead>
+        <thead><tr><th>${grainColHeader}</th><th>Tort</th><th class="num">Payable</th><th class="num">Signed</th><th class="num">CVR</th></tr></thead>
         <tbody>${allCreatives.map(c => `
           <tr>
             <td class="label">${platformTag(c.platform)}${marketerTag(c.marketer)} ${esc(c.label)}</td>
@@ -322,8 +333,8 @@ function renderAnalysis() {
     </div>`;
   } else {
     html += `<div class="bp-utm-section">
-      <div class="bp-utm-section-title">Creatives</div>
-      <div class="empty-utm">No creatives match the current filters (min_payable=${minPayable}, min_signed=${minSigned})</div>
+      <div class="bp-utm-section-title">${grainLabel}</div>
+      <div class="empty-utm">No ${grainLabel.toLowerCase()} match the current filters (min_payable=${minPayable}, min_signed=${minSigned})</div>
     </div>`;
   }
   
