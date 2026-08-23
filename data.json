@@ -1,9 +1,9 @@
 {
   "contract_version": 1,
-  "generated_at": "2026-08-23T11:07:19-04:00",
+  "generated_at": "2026-08-23T12:07:26-04:00",
   "data_freshness": {
-    "leads_spend_sr": "2026-08-23T11:07:19-04:00",
-    "retainers": "2026-08-23T11:07:19-04:00",
+    "leads_spend_sr": "2026-08-23T12:07:26-04:00",
+    "retainers": "2026-08-23T12:07:26-04:00",
     "stale_warnings": [
       "ILM spend: stale (last Day 2026-08-21)",
       "Hernia Mesh spend: stale (last Day 2026-08-21)",
@@ -14,12 +14,12 @@
   },
   "company": {
     "window_label": "Week of Mon Aug 17 \u2014 Day 7 of 7",
-    "spend": 31931.0,
-    "revenue": 194960.0,
-    "gross_profit": 163029.0,
+    "spend": 31928.0,
+    "revenue": 196880.0,
+    "gross_profit": 164952.0,
     "margin_pct": null,
     "cost_per_sign": 307.0,
-    "payable_leads": 1380,
+    "payable_leads": 1392,
     "deltas": {},
     "caveat": "WARNING spend missing/stale for one or more torts \u2014 company margin withheld (would be falsely healthy). Fix the spend source to restore it."
   },
@@ -27,7 +27,7 @@
     {
       "tort_or_buyer": "Chlorpyrifos",
       "level": "red",
-      "reason": "Spend $3,602 with 0 payable leads \u2014 burning money",
+      "reason": "Spend $3,661 with 0 payable leads \u2014 burning money",
       "owner": null
     },
     {
@@ -63,19 +63,19 @@
     {
       "tort_or_buyer": "ILM",
       "level": "amber",
-      "reason": "Broughton ILM at 146% of weekly cap (70/48)",
+      "reason": "Broughton ILM at 148% of weekly cap (71/48)",
       "owner": null
     },
     {
       "tort_or_buyer": "SMA",
       "level": "amber",
-      "reason": "Broughton SMA at 98% of weekly cap (1087/1107)",
+      "reason": "Broughton SMA at 99% of weekly cap (1097/1107)",
       "owner": null
     },
     {
       "tort_or_buyer": "Paraquat",
       "level": "amber",
-      "reason": "Broughton Paraquat at 229% of weekly cap (80/35)",
+      "reason": "Broughton Paraquat at 231% of weekly cap (81/35)",
       "owner": null
     }
   ],
@@ -85,10 +85,10 @@
     {
       "tort": "WDC",
       "status": "green",
-      "spend": 47504.4022,
+      "spend": 47883.6559,
       "revenue": null,
       "margin_pct": null,
-      "cpl": 475.0,
+      "cpl": 479.0,
       "cost_per_sign": null,
       "payable_leads": 100,
       "signed": null,
@@ -102,12 +102,12 @@
     {
       "tort": "SMA",
       "status": "green",
-      "spend": 31930.756681,
-      "revenue": 97830,
-      "margin_pct": 67.4,
+      "spend": 31927.790144,
+      "revenue": 98730,
+      "margin_pct": 67.7,
       "cpl": 29.0,
       "cost_per_sign": 371.0,
-      "payable_leads": 1087,
+      "payable_leads": 1097,
       "signed": 86,
       "spend_source": "youtube_manual",
       "spend_caveat": "YouTube spend (manual, not Meta)",
@@ -119,7 +119,7 @@
     {
       "tort": "Chlorpyrifos",
       "status": "red",
-      "spend": 3602.1600000000003,
+      "spend": 3660.7500000000005,
       "revenue": null,
       "margin_pct": null,
       "cpl": null,
@@ -154,11 +154,11 @@
       "tort": "ILM",
       "status": "amber",
       "spend": null,
-      "revenue": 46900,
+      "revenue": 47570,
       "margin_pct": null,
       "cpl": null,
       "cost_per_sign": null,
-      "payable_leads": 70,
+      "payable_leads": 71,
       "signed": 5,
       "spend_source": "bq",
       "spend_caveat": "STALE stale (last Day 2026-08-21)",
@@ -188,11 +188,11 @@
       "tort": "Paraquat",
       "status": "amber",
       "spend": null,
-      "revenue": 28000,
+      "revenue": 28350,
       "margin_pct": null,
       "cpl": null,
       "cost_per_sign": null,
-      "payable_leads": 80,
+      "payable_leads": 81,
       "signed": 1,
       "spend_source": "bq",
       "spend_caveat": "STALE stale (last Day 2026-08-21)",
@@ -281,8 +281,8 @@
           "tort": "ILM",
           "cap": 48,
           "cap_unit": "leads/wk",
-          "used": 70,
-          "pct": 146,
+          "used": 71,
+          "pct": 148,
           "est_days_left": 0
         },
         {
@@ -297,16 +297,16 @@
           "tort": "SMA",
           "cap": 1107,
           "cap_unit": "leads/wk",
-          "used": 1087,
-          "pct": 98,
+          "used": 1097,
+          "pct": 99,
           "est_days_left": 0.1
         },
         {
           "tort": "Paraquat",
           "cap": 35,
           "cap_unit": "leads/wk",
-          "used": 80,
-          "pct": 229,
+          "used": 81,
+          "pct": 231,
           "est_days_left": 0
         },
         {
