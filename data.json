@@ -1,35 +1,32 @@
 {
   "contract_version": 1,
-  "generated_at": "2026-08-24T05:07:28-04:00",
+  "generated_at": "2026-08-24T06:07:36-04:00",
   "data_freshness": {
-    "leads_spend_sr": "2026-08-24T05:07:28-04:00",
-    "retainers": "2026-08-24T05:07:28-04:00",
+    "leads_spend_sr": "2026-08-24T06:07:36-04:00",
+    "retainers": "2026-08-24T06:07:36-04:00",
     "stale_warnings": [
       "ILM spend: stale (last Day 2026-08-22)",
       "Hernia Mesh spend: stale (last Day 2026-08-22)",
       "Paraquat spend: stale (last Day 2026-08-22)",
       "PowerPort spend: stale (last Day 2026-08-22)",
-      "Endoscopy spend: stale (last Day 2026-07-14)"
+      "Endoscopy spend: stale (last Day 2026-07-14)",
+      "WDC leads: HTTP Error 429: Too Many Requests",
+      "Chlorpyrifos leads: HTTP Error 429: Too Many Requests",
+      "Depo leads: HTTP Error 429: Too Many Requests"
     ]
   },
   "company": {
     "window_label": "Week of Mon Aug 24 \u2014 Day 1 of 7",
     "spend": 0.0,
-    "revenue": 670.0,
-    "gross_profit": 670.0,
+    "revenue": 1020.0,
+    "gross_profit": 1020.0,
     "margin_pct": null,
     "cost_per_sign": null,
-    "payable_leads": 1,
+    "payable_leads": 2,
     "deltas": {},
     "caveat": "WARNING spend missing/stale for one or more torts \u2014 company margin withheld (would be falsely healthy). Fix the spend source to restore it."
   },
   "needs_attention": [
-    {
-      "tort_or_buyer": "Chlorpyrifos",
-      "level": "red",
-      "reason": "Spend $109 with 0 payable leads \u2014 burning money",
-      "owner": null
-    },
     {
       "tort_or_buyer": "ILM",
       "level": "amber",
@@ -65,6 +62,24 @@
       "level": "amber",
       "reason": "STALE stale (last Day 2026-07-14)",
       "owner": null
+    },
+    {
+      "tort_or_buyer": "WDC",
+      "level": "amber",
+      "reason": "non-BP data gap",
+      "owner": null
+    },
+    {
+      "tort_or_buyer": "Chlorpyrifos",
+      "level": "amber",
+      "reason": "non-BP data gap",
+      "owner": null
+    },
+    {
+      "tort_or_buyer": "Depo",
+      "level": "amber",
+      "reason": "non-BP data gap",
+      "owner": null
     }
   ],
   "andrew_priorities": [],
@@ -72,34 +87,34 @@
   "torts": [
     {
       "tort": "WDC",
-      "status": "green",
-      "spend": 3339.3487,
+      "status": "amber",
+      "spend": 3561.3722,
       "revenue": null,
       "margin_pct": null,
-      "cpl": 239.0,
+      "cpl": null,
       "cost_per_sign": null,
-      "payable_leads": 14,
+      "payable_leads": null,
       "signed": null,
       "spend_source": "meta",
       "spend_caveat": "Meta spend (BQ view 403); revenue n/a (non-BP)",
-      "data_ok": true,
+      "data_ok": false,
       "note": null,
       "note_author": null,
       "note_ts": null
     },
     {
       "tort": "Chlorpyrifos",
-      "status": "red",
-      "spend": 109.13,
+      "status": "amber",
+      "spend": 137.36,
       "revenue": null,
       "margin_pct": null,
       "cpl": null,
       "cost_per_sign": null,
-      "payable_leads": 0,
+      "payable_leads": null,
       "signed": null,
       "spend_source": "meta",
       "spend_caveat": "Meta spend (BQ view 403); revenue n/a (non-BP)",
-      "data_ok": true,
+      "data_ok": false,
       "note": null,
       "note_author": null,
       "note_ts": null
@@ -159,11 +174,11 @@
       "tort": "Paraquat",
       "status": "amber",
       "spend": null,
-      "revenue": 0,
+      "revenue": 350,
       "margin_pct": null,
       "cpl": null,
       "cost_per_sign": null,
-      "payable_leads": 0,
+      "payable_leads": 1,
       "signed": 0,
       "spend_source": "bq",
       "spend_caveat": "STALE stale (last Day 2026-08-22)",
@@ -242,17 +257,17 @@
     },
     {
       "tort": "Depo",
-      "status": "green",
+      "status": "amber",
       "spend": 0.0,
       "revenue": null,
       "margin_pct": null,
       "cpl": null,
       "cost_per_sign": null,
-      "payable_leads": 0,
+      "payable_leads": null,
       "signed": null,
       "spend_source": "meta",
       "spend_caveat": "Meta spend (BQ view 403); revenue n/a (non-BP)",
-      "data_ok": true,
+      "data_ok": false,
       "note": null,
       "note_author": null,
       "note_ts": null
@@ -293,9 +308,9 @@
           "tort": "Paraquat",
           "cap": 35,
           "cap_unit": "leads/wk",
-          "used": 0,
-          "pct": 0,
-          "est_days_left": null
+          "used": 1,
+          "pct": 3,
+          "est_days_left": 34.0
         },
         {
           "tort": "PowerPort",
