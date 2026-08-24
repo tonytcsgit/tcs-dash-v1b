@@ -1,9 +1,9 @@
 {
   "contract_version": 1,
-  "generated_at": "2026-08-24T14:07:34-04:00",
+  "generated_at": "2026-08-24T15:07:41-04:00",
   "data_freshness": {
-    "leads_spend_sr": "2026-08-24T14:07:34-04:00",
-    "retainers": "2026-08-24T14:07:34-04:00",
+    "leads_spend_sr": "2026-08-24T15:07:41-04:00",
+    "retainers": "2026-08-24T15:07:41-04:00",
     "stale_warnings": [
       "Hernia Mesh spend: stale (last Day 2026-08-22)",
       "Endoscopy spend: stale (last Day 2026-07-14)"
@@ -12,11 +12,11 @@
   "company": {
     "window_label": "Week of Mon Aug 24 \u2014 Day 1 of 7",
     "spend": 0.0,
-    "revenue": 4200.0,
-    "gross_profit": 4200.0,
+    "revenue": 4290.0,
+    "gross_profit": 4290.0,
     "margin_pct": null,
     "cost_per_sign": 0.0,
-    "payable_leads": 10,
+    "payable_leads": 11,
     "deltas": {},
     "caveat": "WARNING spend missing/stale for one or more torts \u2014 company margin withheld (would be falsely healthy). Fix the spend source to restore it."
   },
@@ -24,7 +24,7 @@
     {
       "tort_or_buyer": "Chlorpyrifos",
       "level": "red",
-      "reason": "Spend $417 with 0 payable leads \u2014 burning money",
+      "reason": "Spend $453 with 0 payable leads \u2014 burning money",
       "owner": null
     },
     {
@@ -46,12 +46,12 @@
     {
       "tort": "WDC",
       "status": "green",
-      "spend": 5028.8784000000005,
+      "spend": 5303.5184,
       "revenue": null,
       "margin_pct": null,
-      "cpl": 251.0,
+      "cpl": 253.0,
       "cost_per_sign": null,
-      "payable_leads": 20,
+      "payable_leads": 21,
       "signed": null,
       "spend_source": "meta",
       "spend_caveat": "Meta spend (BQ view 403); revenue n/a (non-BP)",
@@ -63,7 +63,7 @@
     {
       "tort": "Chlorpyrifos",
       "status": "red",
-      "spend": 417.28000000000003,
+      "spend": 453.46,
       "revenue": null,
       "margin_pct": null,
       "cpl": null,
@@ -115,11 +115,11 @@
       "tort": "SMA",
       "status": "green",
       "spend": 0.0,
-      "revenue": 90,
+      "revenue": 180,
       "margin_pct": 100.0,
       "cpl": null,
       "cost_per_sign": null,
-      "payable_leads": 1,
+      "payable_leads": 2,
       "signed": 1,
       "spend_source": "youtube_manual",
       "spend_caveat": "YouTube spend (manual, not Meta)",
@@ -258,9 +258,9 @@
           "tort": "SMA",
           "cap": 1107,
           "cap_unit": "leads/wk",
-          "used": 1,
+          "used": 2,
           "pct": 0,
-          "est_days_left": 1106.0
+          "est_days_left": 552.5
         },
         {
           "tort": "Paraquat",
