@@ -1,18 +1,15 @@
 {
   "contract_version": 1,
-  "generated_at": "2026-08-24T06:07:36-04:00",
+  "generated_at": "2026-08-24T07:07:43-04:00",
   "data_freshness": {
-    "leads_spend_sr": "2026-08-24T06:07:36-04:00",
-    "retainers": "2026-08-24T06:07:36-04:00",
+    "leads_spend_sr": "2026-08-24T07:07:43-04:00",
+    "retainers": "2026-08-24T07:07:43-04:00",
     "stale_warnings": [
       "ILM spend: stale (last Day 2026-08-22)",
       "Hernia Mesh spend: stale (last Day 2026-08-22)",
       "Paraquat spend: stale (last Day 2026-08-22)",
       "PowerPort spend: stale (last Day 2026-08-22)",
-      "Endoscopy spend: stale (last Day 2026-07-14)",
-      "WDC leads: HTTP Error 429: Too Many Requests",
-      "Chlorpyrifos leads: HTTP Error 429: Too Many Requests",
-      "Depo leads: HTTP Error 429: Too Many Requests"
+      "Endoscopy spend: stale (last Day 2026-07-14)"
     ]
   },
   "company": {
@@ -27,6 +24,12 @@
     "caveat": "WARNING spend missing/stale for one or more torts \u2014 company margin withheld (would be falsely healthy). Fix the spend source to restore it."
   },
   "needs_attention": [
+    {
+      "tort_or_buyer": "Chlorpyrifos",
+      "level": "red",
+      "reason": "Spend $156 with 0 payable leads \u2014 burning money",
+      "owner": null
+    },
     {
       "tort_or_buyer": "ILM",
       "level": "amber",
@@ -62,24 +65,6 @@
       "level": "amber",
       "reason": "STALE stale (last Day 2026-07-14)",
       "owner": null
-    },
-    {
-      "tort_or_buyer": "WDC",
-      "level": "amber",
-      "reason": "non-BP data gap",
-      "owner": null
-    },
-    {
-      "tort_or_buyer": "Chlorpyrifos",
-      "level": "amber",
-      "reason": "non-BP data gap",
-      "owner": null
-    },
-    {
-      "tort_or_buyer": "Depo",
-      "level": "amber",
-      "reason": "non-BP data gap",
-      "owner": null
     }
   ],
   "andrew_priorities": [],
@@ -87,34 +72,34 @@
   "torts": [
     {
       "tort": "WDC",
-      "status": "amber",
-      "spend": 3561.3722,
+      "status": "green",
+      "spend": 3769.9388000000004,
       "revenue": null,
       "margin_pct": null,
-      "cpl": null,
+      "cpl": 269.0,
       "cost_per_sign": null,
-      "payable_leads": null,
+      "payable_leads": 14,
       "signed": null,
       "spend_source": "meta",
       "spend_caveat": "Meta spend (BQ view 403); revenue n/a (non-BP)",
-      "data_ok": false,
+      "data_ok": true,
       "note": null,
       "note_author": null,
       "note_ts": null
     },
     {
       "tort": "Chlorpyrifos",
-      "status": "amber",
-      "spend": 137.36,
+      "status": "red",
+      "spend": 156.11000000000004,
       "revenue": null,
       "margin_pct": null,
       "cpl": null,
       "cost_per_sign": null,
-      "payable_leads": null,
+      "payable_leads": 0,
       "signed": null,
       "spend_source": "meta",
       "spend_caveat": "Meta spend (BQ view 403); revenue n/a (non-BP)",
-      "data_ok": false,
+      "data_ok": true,
       "note": null,
       "note_author": null,
       "note_ts": null
@@ -257,17 +242,17 @@
     },
     {
       "tort": "Depo",
-      "status": "amber",
+      "status": "green",
       "spend": 0.0,
       "revenue": null,
       "margin_pct": null,
       "cpl": null,
       "cost_per_sign": null,
-      "payable_leads": null,
+      "payable_leads": 0,
       "signed": null,
       "spend_source": "meta",
       "spend_caveat": "Meta spend (BQ view 403); revenue n/a (non-BP)",
-      "data_ok": false,
+      "data_ok": true,
       "note": null,
       "note_author": null,
       "note_ts": null
