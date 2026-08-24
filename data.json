@@ -1,9 +1,9 @@
 {
   "contract_version": 1,
-  "generated_at": "2026-08-23T22:07:37-04:00",
+  "generated_at": "2026-08-23T23:07:44-04:00",
   "data_freshness": {
-    "leads_spend_sr": "2026-08-23T22:07:37-04:00",
-    "retainers": "2026-08-23T22:07:37-04:00",
+    "leads_spend_sr": "2026-08-23T23:07:44-04:00",
+    "retainers": "2026-08-23T23:07:44-04:00",
     "stale_warnings": [
       "Endoscopy spend: stale (last Day 2026-07-14)"
     ]
@@ -11,11 +11,11 @@
   "company": {
     "window_label": "Week of Mon Aug 17 \u2014 Day 7 of 7",
     "spend": 95669.0,
-    "revenue": 203480.0,
-    "gross_profit": 107811.0,
+    "revenue": 204150.0,
+    "gross_profit": 108481.0,
     "margin_pct": null,
     "cost_per_sign": 878.0,
-    "payable_leads": 1419,
+    "payable_leads": 1420,
     "deltas": {},
     "caveat": "WARNING spend missing/stale for one or more torts \u2014 company margin withheld (would be falsely healthy). Fix the spend source to restore it."
   },
@@ -23,7 +23,7 @@
     {
       "tort_or_buyer": "Chlorpyrifos",
       "level": "red",
-      "reason": "Spend $4,149 with 0 payable leads \u2014 burning money",
+      "reason": "Spend $4,187 with 0 payable leads \u2014 burning money",
       "owner": null
     },
     {
@@ -35,7 +35,7 @@
     {
       "tort_or_buyer": "ILM",
       "level": "amber",
-      "reason": "Broughton ILM at 156% of weekly cap (75/48)",
+      "reason": "Broughton ILM at 158% of weekly cap (76/48)",
       "owner": null
     },
     {
@@ -57,10 +57,10 @@
     {
       "tort": "WDC",
       "status": "green",
-      "spend": 51029.924199999994,
+      "spend": 51314.7942,
       "revenue": null,
       "margin_pct": null,
-      "cpl": 510.0,
+      "cpl": 513.0,
       "cost_per_sign": null,
       "payable_leads": 100,
       "signed": null,
@@ -74,12 +74,12 @@
     {
       "tort": "ILM",
       "status": "amber",
-      "spend": 42619.22260000002,
-      "revenue": 50250,
-      "margin_pct": 15.2,
-      "cpl": 568.0,
+      "spend": 42619.22260000003,
+      "revenue": 50920,
+      "margin_pct": 16.3,
+      "cpl": 561.0,
       "cost_per_sign": 7103.0,
-      "payable_leads": 75,
+      "payable_leads": 76,
       "signed": 6,
       "spend_source": "bq",
       "spend_caveat": null,
@@ -142,7 +142,7 @@
     {
       "tort": "Chlorpyrifos",
       "status": "red",
-      "spend": 4148.9,
+      "spend": 4187.01,
       "revenue": null,
       "margin_pct": null,
       "cpl": null,
@@ -253,8 +253,8 @@
           "tort": "ILM",
           "cap": 48,
           "cap_unit": "leads/wk",
-          "used": 75,
-          "pct": 156,
+          "used": 76,
+          "pct": 158,
           "est_days_left": 0
         },
         {
