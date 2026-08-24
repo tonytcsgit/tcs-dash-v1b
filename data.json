@@ -1,9 +1,9 @@
 {
   "contract_version": 1,
-  "generated_at": "2026-08-24T19:07:11-04:00",
+  "generated_at": "2026-08-24T19:26:03-04:00",
   "data_freshness": {
-    "leads_spend_sr": "2026-08-24T19:07:11-04:00",
-    "retainers": "2026-08-24T19:07:11-04:00",
+    "leads_spend_sr": "2026-08-24T19:26:03-04:00",
+    "retainers": "2026-08-24T19:26:03-04:00",
     "stale_warnings": [
       "Hernia Mesh spend: stale (last Day 2026-08-22)",
       "Endoscopy spend: stale (last Day 2026-07-14)"
@@ -24,7 +24,7 @@
     {
       "tort_or_buyer": "Chlorpyrifos",
       "level": "red",
-      "reason": "Spend $535 with 0 payable leads \u2014 burning money",
+      "reason": "Spend $546 with 0 payable leads \u2014 burning money",
       "owner": null
     },
     {
@@ -40,18 +40,39 @@
       "owner": null
     }
   ],
-  "andrew_priorities": [],
+  "andrew_priorities": [
+    {
+      "n": 1,
+      "text": "CAW \u2014 YT Shorts"
+    },
+    {
+      "n": 2,
+      "text": "Paraquat \u2014 higher converting ads needed"
+    },
+    {
+      "n": 3,
+      "text": "SMA \u2014 Pulaski targeting"
+    },
+    {
+      "n": 4,
+      "text": "HM \u2014 YT Shorts"
+    },
+    {
+      "n": 5,
+      "text": "Rhode Island \u2014 Pulaski"
+    }
+  ],
   "andrew_note": {},
   "torts": [
     {
       "tort": "WDC",
       "status": "green",
-      "spend": 6486.8895,
+      "spend": 6591.0095,
       "revenue": null,
       "margin_pct": null,
-      "cpl": 240.0,
+      "cpl": 235.0,
       "cost_per_sign": null,
-      "payable_leads": 27,
+      "payable_leads": 28,
       "signed": null,
       "spend_source": "meta",
       "spend_caveat": "Meta spend (BQ view 403); revenue n/a (non-BP)",
@@ -63,7 +84,7 @@
     {
       "tort": "Chlorpyrifos",
       "status": "red",
-      "spend": 534.8599999999999,
+      "spend": 545.7099999999999,
       "revenue": null,
       "margin_pct": null,
       "cpl": null,
