@@ -1,9 +1,9 @@
 {
   "contract_version": 1,
-  "generated_at": "2026-08-25T13:07:17-04:00",
+  "generated_at": "2026-08-25T14:07:25-04:00",
   "data_freshness": {
-    "leads_spend_sr": "2026-08-25T13:07:17-04:00",
-    "retainers": "2026-08-25T13:07:17-04:00",
+    "leads_spend_sr": "2026-08-25T14:07:25-04:00",
+    "retainers": "2026-08-25T14:07:25-04:00",
     "stale_warnings": [
       "Hernia Mesh spend: stale (last Day 2026-08-22)",
       "PowerPort spend: stale (last Day 2026-08-23)",
@@ -13,19 +13,25 @@
   "company": {
     "window_label": "Week of Mon Aug 24 \u2014 Day 2 of 7",
     "spend": 9998.0,
-    "revenue": 17700.0,
-    "gross_profit": 7702.0,
+    "revenue": 6840.0,
+    "gross_profit": -3158.0,
     "margin_pct": null,
     "cost_per_sign": 9998.0,
-    "payable_leads": 38,
+    "payable_leads": 24,
     "deltas": {},
     "caveat": "WARNING spend missing/stale for one or more torts \u2014 company margin withheld (would be falsely healthy). Fix the spend source to restore it."
   },
   "needs_attention": [
     {
+      "tort_or_buyer": "ILM",
+      "level": "red",
+      "reason": "Spend with zero payable leads",
+      "owner": null
+    },
+    {
       "tort_or_buyer": "Chlorpyrifos",
       "level": "red",
-      "reason": "Spend $1,139 with 0 payable leads \u2014 burning money",
+      "reason": "Spend $1,179 with 0 payable leads \u2014 burning money",
       "owner": null
     },
     {
@@ -80,10 +86,10 @@
     {
       "tort": "WDC",
       "status": "green",
-      "spend": 15408.1815,
+      "spend": 15762.787,
       "revenue": null,
       "margin_pct": null,
-      "cpl": 296.0,
+      "cpl": 303.0,
       "cost_per_sign": null,
       "payable_leads": 52,
       "signed": null,
@@ -96,13 +102,13 @@
     },
     {
       "tort": "ILM",
-      "status": "green",
+      "status": "red",
       "spend": 8268.820000000003,
-      "revenue": 11390,
-      "margin_pct": 27.4,
-      "cpl": 486.0,
+      "revenue": 0,
+      "margin_pct": null,
+      "cpl": null,
       "cost_per_sign": null,
-      "payable_leads": 17,
+      "payable_leads": 0,
       "signed": 0,
       "spend_source": "bq",
       "spend_caveat": null,
@@ -115,11 +121,11 @@
       "tort": "Paraquat",
       "status": "green",
       "spend": 1729.2199999999996,
-      "revenue": 5950,
-      "margin_pct": 70.9,
-      "cpl": 102.0,
+      "revenue": 6300,
+      "margin_pct": 72.6,
+      "cpl": 96.0,
       "cost_per_sign": null,
-      "payable_leads": 17,
+      "payable_leads": 18,
       "signed": 0,
       "spend_source": "bq",
       "spend_caveat": null,
@@ -131,7 +137,7 @@
     {
       "tort": "Chlorpyrifos",
       "status": "red",
-      "spend": 1138.55,
+      "spend": 1179.1799999999998,
       "revenue": null,
       "margin_pct": null,
       "cpl": null,
@@ -166,11 +172,11 @@
       "tort": "SMA",
       "status": "amber",
       "spend": null,
-      "revenue": 360,
+      "revenue": 540,
       "margin_pct": null,
       "cpl": null,
       "cost_per_sign": null,
-      "payable_leads": 4,
+      "payable_leads": 6,
       "signed": 1,
       "spend_source": "youtube_manual",
       "spend_caveat": "STALE YT spend: stale (last Day 2026-08-23)",
@@ -276,9 +282,9 @@
           "tort": "ILM",
           "cap": 48,
           "cap_unit": "leads/wk",
-          "used": 17,
-          "pct": 35,
-          "est_days_left": 3.6
+          "used": 0,
+          "pct": 0,
+          "est_days_left": null
         },
         {
           "tort": "Hernia Mesh",
@@ -292,17 +298,17 @@
           "tort": "SMA",
           "cap": 1107,
           "cap_unit": "leads/wk",
-          "used": 4,
-          "pct": 0,
-          "est_days_left": 551.5
+          "used": 6,
+          "pct": 1,
+          "est_days_left": 367.0
         },
         {
           "tort": "Paraquat",
           "cap": 35,
           "cap_unit": "leads/wk",
-          "used": 17,
-          "pct": 49,
-          "est_days_left": 2.1
+          "used": 18,
+          "pct": 51,
+          "est_days_left": 1.9
         },
         {
           "tort": "PowerPort",
