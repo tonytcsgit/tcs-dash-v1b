@@ -1,9 +1,9 @@
 {
   "contract_version": 1,
-  "generated_at": "2026-08-25T08:07:47-04:00",
+  "generated_at": "2026-08-25T09:07:55-04:00",
   "data_freshness": {
-    "leads_spend_sr": "2026-08-25T08:07:47-04:00",
-    "retainers": "2026-08-25T08:07:47-04:00",
+    "leads_spend_sr": "2026-08-25T09:07:55-04:00",
+    "retainers": "2026-08-25T09:07:55-04:00",
     "stale_warnings": [
       "ILM spend: stale (last Day 2026-08-23)",
       "Hernia Mesh spend: stale (last Day 2026-08-22)",
@@ -15,11 +15,11 @@
   "company": {
     "window_label": "Week of Mon Aug 24 \u2014 Day 2 of 7",
     "spend": 0.0,
-    "revenue": 15800.0,
-    "gross_profit": 15800.0,
+    "revenue": 16500.0,
+    "gross_profit": 16500.0,
     "margin_pct": null,
     "cost_per_sign": 0.0,
-    "payable_leads": 32,
+    "payable_leads": 34,
     "deltas": {},
     "caveat": "WARNING spend missing/stale for one or more torts \u2014 company margin withheld (would be falsely healthy). Fix the spend source to restore it."
   },
@@ -27,7 +27,7 @@
     {
       "tort_or_buyer": "Chlorpyrifos",
       "level": "red",
-      "reason": "Spend $951 with 0 payable leads \u2014 burning money",
+      "reason": "Spend $982 with 0 payable leads \u2014 burning money",
       "owner": null
     },
     {
@@ -94,12 +94,12 @@
     {
       "tort": "WDC",
       "status": "green",
-      "spend": 13915.0008,
+      "spend": 14124.6459,
       "revenue": null,
       "margin_pct": null,
-      "cpl": 303.0,
+      "cpl": 294.0,
       "cost_per_sign": null,
-      "payable_leads": 46,
+      "payable_leads": 48,
       "signed": null,
       "spend_source": "meta",
       "spend_caveat": "Meta spend (BQ view 403); revenue n/a (non-BP)",
@@ -111,7 +111,7 @@
     {
       "tort": "Chlorpyrifos",
       "status": "red",
-      "spend": 951.2300000000001,
+      "spend": 981.5,
       "revenue": null,
       "margin_pct": null,
       "cpl": null,
@@ -180,11 +180,11 @@
       "tort": "Paraquat",
       "status": "amber",
       "spend": null,
-      "revenue": 4900,
+      "revenue": 5600,
       "margin_pct": null,
       "cpl": null,
       "cost_per_sign": null,
-      "payable_leads": 14,
+      "payable_leads": 16,
       "signed": 0,
       "spend_source": "bq",
       "spend_caveat": "STALE stale (last Day 2026-08-23)",
@@ -314,9 +314,9 @@
           "tort": "Paraquat",
           "cap": 35,
           "cap_unit": "leads/wk",
-          "used": 14,
-          "pct": 40,
-          "est_days_left": 3.0
+          "used": 16,
+          "pct": 46,
+          "est_days_left": 2.4
         },
         {
           "tort": "PowerPort",
