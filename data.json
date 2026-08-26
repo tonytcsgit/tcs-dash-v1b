@@ -1,23 +1,18 @@
 {
   "contract_version": 1,
-  "generated_at": "2026-08-26T01:07:42-04:00",
+  "generated_at": "2026-08-26T02:07:49-04:00",
   "data_freshness": {
-    "leads_spend_sr": "2026-08-26T01:07:42-04:00",
-    "retainers": "2026-08-26T01:07:42-04:00",
+    "leads_spend_sr": "2026-08-26T02:07:49-04:00",
+    "retainers": "2026-08-26T02:07:49-04:00",
     "stale_warnings": [
-      "ILM: tab broken (no Status header)",
       "ILM spend: stale (last Day 2026-08-24)",
-      "Hernia Mesh: tab broken (no Status header)",
       "Hernia Mesh spend: stale (last Day 2026-08-22)",
-      "SMA: tab broken (no Status header)",
-      "Paraquat: tab broken (no Status header)",
       "Paraquat spend: stale (last Day 2026-08-24)",
-      "PowerPort: tab broken (no Status header)",
       "PowerPort spend: stale (last Day 2026-08-23)",
-      "Endoscopy: tab broken (no Status header)",
       "Endoscopy spend: stale (last Day 2026-07-14)",
-      "TVM: tab broken (no Status header)",
-      "BM: tab broken (no Status header)"
+      "WDC leads: <urlopen error [Errno 8] nodename nor servname provided, or not known>",
+      "Chlorpyrifos leads: <urlopen error [Errno 8] nodename nor servname provided, or not known>",
+      "Depo leads: <urlopen error [Errno 8] nodename nor servname provided, or not known>"
     ]
   },
   "company": {
@@ -32,12 +27,6 @@
     "caveat": "WARNING spend missing/stale for one or more torts \u2014 company margin withheld (would be falsely healthy). Fix the spend source to restore it."
   },
   "needs_attention": [
-    {
-      "tort_or_buyer": "Chlorpyrifos",
-      "level": "red",
-      "reason": "Spend $1,490 with 0 payable leads \u2014 burning money",
-      "owner": null
-    },
     {
       "tort_or_buyer": "ILM",
       "level": "amber",
@@ -75,15 +64,21 @@
       "owner": null
     },
     {
-      "tort_or_buyer": "TVM",
+      "tort_or_buyer": "WDC",
       "level": "amber",
-      "reason": "Meta-only spend (partial, no BQ view); Meta partial (35/40 accounts)",
+      "reason": "non-BP data gap",
       "owner": null
     },
     {
-      "tort_or_buyer": "BM",
+      "tort_or_buyer": "Chlorpyrifos",
       "level": "amber",
-      "reason": "Meta-only spend (partial, no BQ view); Meta partial (35/40 accounts)",
+      "reason": "non-BP data gap",
+      "owner": null
+    },
+    {
+      "tort_or_buyer": "Depo",
+      "level": "amber",
+      "reason": "non-BP data gap",
       "owner": null
     }
   ],
@@ -113,34 +108,34 @@
   "torts": [
     {
       "tort": "WDC",
-      "status": "green",
-      "spend": 23053.4768,
+      "status": "amber",
+      "spend": 23627.1109,
       "revenue": null,
       "margin_pct": null,
-      "cpl": 325.0,
+      "cpl": null,
       "cost_per_sign": null,
-      "payable_leads": 71,
+      "payable_leads": null,
       "signed": null,
       "spend_source": "meta",
       "spend_caveat": "Meta spend (BQ view 403); revenue n/a (non-BP)",
-      "data_ok": true,
+      "data_ok": false,
       "note": null,
       "note_author": null,
       "note_ts": null
     },
     {
       "tort": "Chlorpyrifos",
-      "status": "red",
-      "spend": 1490.36,
+      "status": "amber",
+      "spend": 1505.5800000000002,
       "revenue": null,
       "margin_pct": null,
       "cpl": null,
       "cost_per_sign": null,
-      "payable_leads": 0,
+      "payable_leads": null,
       "signed": null,
       "spend_source": "meta",
       "spend_caveat": "Meta spend (BQ view 403); revenue n/a (non-BP)",
-      "data_ok": true,
+      "data_ok": false,
       "note": null,
       "note_author": null,
       "note_ts": null
@@ -259,7 +254,7 @@
       "signed": 0,
       "spend_source": "meta_partial",
       "spend_caveat": "Meta-only spend (partial, no BQ view); Meta partial (35/40 accounts)",
-      "data_ok": false,
+      "data_ok": true,
       "note": null,
       "note_author": null,
       "note_ts": null
@@ -276,24 +271,24 @@
       "signed": 0,
       "spend_source": "meta_partial",
       "spend_caveat": "Meta-only spend (partial, no BQ view); Meta partial (35/40 accounts)",
-      "data_ok": false,
+      "data_ok": true,
       "note": null,
       "note_author": null,
       "note_ts": null
     },
     {
       "tort": "Depo",
-      "status": "green",
+      "status": "amber",
       "spend": 0.0,
       "revenue": null,
       "margin_pct": null,
       "cpl": null,
       "cost_per_sign": null,
-      "payable_leads": 0,
+      "payable_leads": null,
       "signed": null,
       "spend_source": "meta",
       "spend_caveat": "Meta spend (BQ view 403); revenue n/a (non-BP)",
-      "data_ok": true,
+      "data_ok": false,
       "note": null,
       "note_author": null,
       "note_ts": null
