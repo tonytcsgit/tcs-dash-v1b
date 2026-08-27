@@ -1,9 +1,9 @@
 {
   "contract_version": 1,
-  "generated_at": "2026-08-27T03:07:13-04:00",
+  "generated_at": "2026-08-27T04:07:21-04:00",
   "data_freshness": {
-    "leads_spend_sr": "2026-08-27T03:07:13-04:00",
-    "retainers": "2026-08-27T03:07:13-04:00",
+    "leads_spend_sr": "2026-08-27T04:07:21-04:00",
+    "retainers": "2026-08-27T04:07:21-04:00",
     "stale_warnings": [
       "ILM spend: stale (last Day 2026-08-25)",
       "Hernia Mesh spend: stale (last Day 2026-08-22)",
@@ -15,11 +15,11 @@
   "company": {
     "window_label": "Week of Mon Aug 24 \u2014 Day 4 of 7",
     "spend": 0.0,
-    "revenue": 52440.0,
-    "gross_profit": 52440.0,
+    "revenue": 53640.0,
+    "gross_profit": 53640.0,
     "margin_pct": null,
     "cost_per_sign": 0.0,
-    "payable_leads": 227,
+    "payable_leads": 231,
     "deltas": {},
     "caveat": "WARNING spend missing/stale for one or more torts \u2014 company margin withheld (would be falsely healthy). Fix the spend source to restore it."
   },
@@ -27,7 +27,7 @@
     {
       "tort_or_buyer": "Chlorpyrifos",
       "level": "red",
-      "reason": "Spend $2,016 with 0 payable leads \u2014 burning money",
+      "reason": "Spend $2,028 with 0 payable leads \u2014 burning money",
       "owner": null
     },
     {
@@ -69,7 +69,7 @@
     {
       "tort_or_buyer": "ILM",
       "level": "amber",
-      "reason": "Broughton ILM at 94% of weekly cap (45/48)",
+      "reason": "Broughton ILM at 96% of weekly cap (46/48)",
       "owner": null
     }
   ],
@@ -100,10 +100,10 @@
     {
       "tort": "WDC",
       "status": "green",
-      "spend": 35759.3125,
+      "spend": 36175.3765,
       "revenue": null,
       "margin_pct": null,
-      "cpl": 358.0,
+      "cpl": 362.0,
       "cost_per_sign": null,
       "payable_leads": 100,
       "signed": null,
@@ -117,7 +117,7 @@
     {
       "tort": "Chlorpyrifos",
       "status": "red",
-      "spend": 2015.7999999999997,
+      "spend": 2028.5,
       "revenue": null,
       "margin_pct": null,
       "cpl": null,
@@ -135,11 +135,11 @@
       "tort": "ILM",
       "status": "amber",
       "spend": null,
-      "revenue": 30150,
+      "revenue": 30820,
       "margin_pct": null,
       "cpl": null,
       "cost_per_sign": null,
-      "payable_leads": 45,
+      "payable_leads": 46,
       "signed": 5,
       "spend_source": "bq",
       "spend_caveat": "STALE stale (last Day 2026-08-25)",
@@ -169,11 +169,11 @@
       "tort": "SMA",
       "status": "amber",
       "spend": null,
-      "revenue": 13770,
+      "revenue": 13950,
       "margin_pct": null,
       "cpl": null,
       "cost_per_sign": null,
-      "payable_leads": 153,
+      "payable_leads": 155,
       "signed": 10,
       "spend_source": "youtube_manual",
       "spend_caveat": "STALE YT spend: stale (last Day 2026-08-25)",
@@ -186,11 +186,11 @@
       "tort": "Paraquat",
       "status": "amber",
       "spend": null,
-      "revenue": 7700,
+      "revenue": 8050,
       "margin_pct": null,
       "cpl": null,
       "cost_per_sign": null,
-      "payable_leads": 22,
+      "payable_leads": 23,
       "signed": 0,
       "spend_source": "bq",
       "spend_caveat": "STALE stale (last Day 2026-08-25)",
@@ -296,9 +296,9 @@
           "tort": "ILM",
           "cap": 48,
           "cap_unit": "leads/wk",
-          "used": 45,
-          "pct": 94,
-          "est_days_left": 0.3
+          "used": 46,
+          "pct": 96,
+          "est_days_left": 0.2
         },
         {
           "tort": "Hernia Mesh",
@@ -312,17 +312,17 @@
           "tort": "SMA",
           "cap": 1107,
           "cap_unit": "leads/wk",
-          "used": 153,
+          "used": 155,
           "pct": 14,
-          "est_days_left": 24.9
+          "est_days_left": 24.6
         },
         {
           "tort": "Paraquat",
           "cap": 35,
           "cap_unit": "leads/wk",
-          "used": 22,
-          "pct": 63,
-          "est_days_left": 2.4
+          "used": 23,
+          "pct": 66,
+          "est_days_left": 2.1
         },
         {
           "tort": "PowerPort",
