@@ -1,9 +1,9 @@
 {
   "contract_version": 1,
-  "generated_at": "2026-08-28T06:07:32-04:00",
+  "generated_at": "2026-08-28T07:07:40-04:00",
   "data_freshness": {
-    "leads_spend_sr": "2026-08-28T06:07:32-04:00",
-    "retainers": "2026-08-28T06:07:32-04:00",
+    "leads_spend_sr": "2026-08-28T07:07:40-04:00",
+    "retainers": "2026-08-28T07:07:40-04:00",
     "stale_warnings": [
       "ILM spend: stale (last Day 2026-08-26)",
       "Hernia Mesh spend: stale (last Day 2026-08-26)",
@@ -15,11 +15,11 @@
   "company": {
     "window_label": "Week of Mon Aug 24 \u2014 Day 5 of 7",
     "spend": 0.0,
-    "revenue": 77680.0,
-    "gross_profit": 77680.0,
+    "revenue": 78350.0,
+    "gross_profit": 78350.0,
     "margin_pct": null,
     "cost_per_sign": 0.0,
-    "payable_leads": 326,
+    "payable_leads": 327,
     "deltas": {},
     "caveat": "WARNING spend missing/stale for one or more torts \u2014 company margin withheld (would be falsely healthy). Fix the spend source to restore it."
   },
@@ -27,7 +27,7 @@
     {
       "tort_or_buyer": "Chlorpyrifos",
       "level": "red",
-      "reason": "Spend $2,530 with 0 payable leads \u2014 burning money",
+      "reason": "Spend $2,538 with 0 payable leads \u2014 burning money",
       "owner": null
     },
     {
@@ -69,7 +69,7 @@
     {
       "tort_or_buyer": "ILM",
       "level": "amber",
-      "reason": "Broughton ILM at 146% of weekly cap (70/48)",
+      "reason": "Broughton ILM at 148% of weekly cap (71/48)",
       "owner": null
     }
   ],
@@ -100,10 +100,10 @@
     {
       "tort": "WDC",
       "status": "green",
-      "spend": 52086.6864,
+      "spend": 52335.8408,
       "revenue": null,
       "margin_pct": null,
-      "cpl": 521.0,
+      "cpl": 523.0,
       "cost_per_sign": null,
       "payable_leads": 100,
       "signed": null,
@@ -117,7 +117,7 @@
     {
       "tort": "Chlorpyrifos",
       "status": "red",
-      "spend": 2529.6299999999997,
+      "spend": 2538.0499999999997,
       "revenue": null,
       "margin_pct": null,
       "cpl": null,
@@ -135,11 +135,11 @@
       "tort": "ILM",
       "status": "amber",
       "spend": null,
-      "revenue": 46900,
+      "revenue": 47570,
       "margin_pct": null,
       "cpl": null,
       "cost_per_sign": null,
-      "payable_leads": 70,
+      "payable_leads": 71,
       "signed": 7,
       "spend_source": "bq",
       "spend_caveat": "STALE stale (last Day 2026-08-26)",
@@ -296,8 +296,8 @@
           "tort": "ILM",
           "cap": 48,
           "cap_unit": "leads/wk",
-          "used": 70,
-          "pct": 146,
+          "used": 71,
+          "pct": 148,
           "est_days_left": 0
         },
         {
