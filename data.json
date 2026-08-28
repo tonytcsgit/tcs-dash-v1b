@@ -1,9 +1,9 @@
 {
   "contract_version": 1,
-  "generated_at": "2026-08-28T16:07:46-04:00",
+  "generated_at": "2026-08-28T17:07:53-04:00",
   "data_freshness": {
-    "leads_spend_sr": "2026-08-28T16:07:46-04:00",
-    "retainers": "2026-08-28T16:07:46-04:00",
+    "leads_spend_sr": "2026-08-28T17:07:53-04:00",
+    "retainers": "2026-08-28T17:07:53-04:00",
     "stale_warnings": [
       "PowerPort spend: stale (last Day 2026-08-23)",
       "Endoscopy spend: stale (last Day 2026-07-14)"
@@ -24,7 +24,7 @@
     {
       "tort_or_buyer": "Chlorpyrifos",
       "level": "red",
-      "reason": "Spend $2,733 with 0 payable leads \u2014 burning money",
+      "reason": "Spend $2,750 with 0 payable leads \u2014 burning money",
       "owner": null
     },
     {
@@ -79,10 +79,10 @@
     {
       "tort": "WDC",
       "status": "green",
-      "spend": 55871.8448,
+      "spend": 56319.086699999985,
       "revenue": null,
       "margin_pct": null,
-      "cpl": 559.0,
+      "cpl": 563.0,
       "cost_per_sign": null,
       "payable_leads": 100,
       "signed": null,
@@ -147,7 +147,7 @@
     {
       "tort": "Chlorpyrifos",
       "status": "red",
-      "spend": 2733.2999999999997,
+      "spend": 2749.6,
       "revenue": null,
       "margin_pct": null,
       "cpl": null,
