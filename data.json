@@ -1,9 +1,9 @@
 {
   "contract_version": 1,
-  "generated_at": "2026-08-27T22:07:34-04:00",
+  "generated_at": "2026-08-27T23:07:41-04:00",
   "data_freshness": {
-    "leads_spend_sr": "2026-08-27T22:07:34-04:00",
-    "retainers": "2026-08-27T22:07:34-04:00",
+    "leads_spend_sr": "2026-08-27T23:07:41-04:00",
+    "retainers": "2026-08-27T23:07:41-04:00",
     "stale_warnings": [
       "Paraquat spend: stale (last Day 2026-08-25)",
       "PowerPort spend: stale (last Day 2026-08-23)",
@@ -13,11 +13,11 @@
   "company": {
     "window_label": "Week of Mon Aug 24 \u2014 Day 4 of 7",
     "spend": 29454.0,
-    "revenue": 69110.0,
-    "gross_profit": 39656.0,
+    "revenue": 70990.0,
+    "gross_profit": 41536.0,
     "margin_pct": null,
     "cost_per_sign": 1473.0,
-    "payable_leads": 293,
+    "payable_leads": 300,
     "deltas": {},
     "caveat": "WARNING spend missing/stale for one or more torts \u2014 company margin withheld (would be falsely healthy). Fix the spend source to restore it."
   },
@@ -25,7 +25,7 @@
     {
       "tort_or_buyer": "Chlorpyrifos",
       "level": "red",
-      "reason": "Spend $2,392 with 0 payable leads \u2014 burning money",
+      "reason": "Spend $2,418 with 0 payable leads \u2014 burning money",
       "owner": null
     },
     {
@@ -49,7 +49,7 @@
     {
       "tort_or_buyer": "ILM",
       "level": "amber",
-      "reason": "Broughton ILM at 127% of weekly cap (61/48)",
+      "reason": "Broughton ILM at 131% of weekly cap (63/48)",
       "owner": null
     }
   ],
@@ -80,10 +80,10 @@
     {
       "tort": "WDC",
       "status": "green",
-      "spend": 44174.8833,
+      "spend": 44753.006700000005,
       "revenue": null,
       "margin_pct": null,
-      "cpl": 442.0,
+      "cpl": 448.0,
       "cost_per_sign": null,
       "payable_leads": 100,
       "signed": null,
@@ -98,11 +98,11 @@
       "tort": "ILM",
       "status": "green",
       "spend": 25108.990000000013,
-      "revenue": 40870,
-      "margin_pct": 38.6,
-      "cpl": 412.0,
+      "revenue": 42210,
+      "margin_pct": 40.5,
+      "cpl": 399.0,
       "cost_per_sign": 3587.0,
-      "payable_leads": 61,
+      "payable_leads": 63,
       "signed": 7,
       "spend_source": "bq",
       "spend_caveat": null,
@@ -115,11 +115,11 @@
       "tort": "SMA",
       "status": "green",
       "spend": 4204.241892,
-      "revenue": 17370,
-      "margin_pct": 75.8,
+      "revenue": 17550,
+      "margin_pct": 76.0,
       "cpl": 22.0,
       "cost_per_sign": 350.0,
-      "payable_leads": 193,
+      "payable_leads": 195,
       "signed": 12,
       "spend_source": "youtube_manual",
       "spend_caveat": "YouTube spend (manual, not Meta)",
@@ -131,7 +131,7 @@
     {
       "tort": "Chlorpyrifos",
       "status": "red",
-      "spend": 2392.39,
+      "spend": 2417.77,
       "revenue": null,
       "margin_pct": null,
       "cpl": null,
@@ -149,11 +149,11 @@
       "tort": "Hernia Mesh",
       "status": "green",
       "spend": 141.04999999999998,
-      "revenue": 1320,
-      "margin_pct": 89.3,
-      "cpl": 13.0,
+      "revenue": 1680,
+      "margin_pct": 91.6,
+      "cpl": 10.0,
       "cost_per_sign": null,
-      "payable_leads": 11,
+      "payable_leads": 14,
       "signed": 0,
       "spend_source": "bq",
       "spend_caveat": null,
@@ -276,25 +276,25 @@
           "tort": "ILM",
           "cap": 48,
           "cap_unit": "leads/wk",
-          "used": 61,
-          "pct": 127,
+          "used": 63,
+          "pct": 131,
           "est_days_left": 0
         },
         {
           "tort": "Hernia Mesh",
           "cap": 846,
           "cap_unit": "leads/wk",
-          "used": 11,
-          "pct": 1,
-          "est_days_left": 303.6
+          "used": 14,
+          "pct": 2,
+          "est_days_left": 237.7
         },
         {
           "tort": "SMA",
           "cap": 1107,
           "cap_unit": "leads/wk",
-          "used": 193,
-          "pct": 17,
-          "est_days_left": 18.9
+          "used": 195,
+          "pct": 18,
+          "est_days_left": 18.7
         },
         {
           "tort": "Paraquat",
