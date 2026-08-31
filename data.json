@@ -1,9 +1,9 @@
 {
   "contract_version": 1,
-  "generated_at": "2026-08-30T21:58:54-04:00",
+  "generated_at": "2026-08-30T22:07:54-04:00",
   "data_freshness": {
-    "leads_spend_sr": "2026-08-30T21:58:54-04:00",
-    "retainers": "2026-08-30T21:58:54-04:00",
+    "leads_spend_sr": "2026-08-30T22:07:54-04:00",
+    "retainers": "2026-08-30T22:07:54-04:00",
     "stale_warnings": [
       "PowerPort spend: stale (last Day 2026-08-23)",
       "Endoscopy spend: stale (last Day 2026-07-14)"
@@ -12,11 +12,11 @@
   "company": {
     "window_label": "Week of Mon Aug 24 \u2014 Day 7 of 7",
     "spend": 66341.0,
-    "revenue": 138580.0,
-    "gross_profit": 72239.0,
+    "revenue": 139460.0,
+    "gross_profit": 73119.0,
     "margin_pct": null,
     "cost_per_sign": 1895.0,
-    "payable_leads": 543,
+    "payable_leads": 546,
     "deltas": {},
     "caveat": "WARNING spend missing/stale for one or more torts \u2014 company margin withheld (would be falsely healthy). Fix the spend source to restore it."
   },
@@ -24,7 +24,7 @@
     {
       "tort_or_buyer": "Chlorpyrifos",
       "level": "red",
-      "reason": "Spend $3,753 with 0 payable leads \u2014 burning money",
+      "reason": "Spend $3,754 with 0 payable leads \u2014 burning money",
       "owner": null
     },
     {
@@ -42,7 +42,7 @@
     {
       "tort_or_buyer": "ILM",
       "level": "amber",
-      "reason": "Broughton ILM at 265% of weekly cap (127/48)",
+      "reason": "Broughton ILM at 267% of weekly cap (128/48)",
       "owner": null
     },
     {
@@ -79,10 +79,10 @@
     {
       "tort": "WDC",
       "status": "green",
-      "spend": 90519.72529999999,
+      "spend": 90626.0571,
       "revenue": null,
       "margin_pct": null,
-      "cpl": 905.0,
+      "cpl": 906.0,
       "cost_per_sign": null,
       "payable_leads": 100,
       "signed": null,
@@ -97,11 +97,11 @@
       "tort": "ILM",
       "status": "green",
       "spend": 48594.77000000003,
-      "revenue": 85090,
-      "margin_pct": 42.9,
-      "cpl": 383.0,
+      "revenue": 85760,
+      "margin_pct": 43.3,
+      "cpl": 380.0,
       "cost_per_sign": 3738.0,
-      "payable_leads": 127,
+      "payable_leads": 128,
       "signed": 13,
       "spend_source": "bq",
       "spend_caveat": null,
@@ -131,11 +131,11 @@
       "tort": "SMA",
       "status": "green",
       "spend": 7767.613963,
-      "revenue": 27720,
-      "margin_pct": 72.0,
+      "revenue": 27810,
+      "margin_pct": 72.1,
       "cpl": 25.0,
       "cost_per_sign": 432.0,
-      "payable_leads": 308,
+      "payable_leads": 309,
       "signed": 18,
       "spend_source": "youtube_manual",
       "spend_caveat": "YouTube spend (manual, not Meta)",
@@ -147,7 +147,7 @@
     {
       "tort": "Chlorpyrifos",
       "status": "red",
-      "spend": 3752.91,
+      "spend": 3753.99,
       "revenue": null,
       "margin_pct": null,
       "cpl": null,
@@ -165,11 +165,11 @@
       "tort": "Hernia Mesh",
       "status": "green",
       "spend": 1351.4699999999998,
-      "revenue": 6000,
-      "margin_pct": 77.5,
-      "cpl": 27.0,
+      "revenue": 6120,
+      "margin_pct": 77.9,
+      "cpl": 26.0,
       "cost_per_sign": 676.0,
-      "payable_leads": 50,
+      "payable_leads": 51,
       "signed": 2,
       "spend_source": "bq",
       "spend_caveat": null,
@@ -275,25 +275,25 @@
           "tort": "ILM",
           "cap": 48,
           "cap_unit": "leads/wk",
-          "used": 127,
-          "pct": 265,
+          "used": 128,
+          "pct": 267,
           "est_days_left": 0
         },
         {
           "tort": "Hernia Mesh",
           "cap": 846,
           "cap_unit": "leads/wk",
-          "used": 50,
+          "used": 51,
           "pct": 6,
-          "est_days_left": 111.4
+          "est_days_left": 109.1
         },
         {
           "tort": "SMA",
           "cap": 1107,
           "cap_unit": "leads/wk",
-          "used": 308,
+          "used": 309,
           "pct": 28,
-          "est_days_left": 18.2
+          "est_days_left": 18.1
         },
         {
           "tort": "Paraquat",
