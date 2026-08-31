@@ -1,9 +1,9 @@
 {
   "contract_version": 1,
-  "generated_at": "2026-08-31T00:07:09-04:00",
+  "generated_at": "2026-08-31T01:07:16-04:00",
   "data_freshness": {
-    "leads_spend_sr": "2026-08-31T00:07:09-04:00",
-    "retainers": "2026-08-31T00:07:09-04:00",
+    "leads_spend_sr": "2026-08-31T01:07:16-04:00",
+    "retainers": "2026-08-31T01:07:16-04:00",
     "stale_warnings": [
       "ILM spend: stale (last Day 2026-08-29)",
       "Hernia Mesh spend: stale (last Day 2026-08-29)",
@@ -24,6 +24,12 @@
     "caveat": "WARNING spend missing/stale for one or more torts \u2014 company margin withheld (would be falsely healthy). Fix the spend source to restore it."
   },
   "needs_attention": [
+    {
+      "tort_or_buyer": "Chlorpyrifos",
+      "level": "red",
+      "reason": "Spend $9 with 0 payable leads \u2014 burning money",
+      "owner": null
+    },
     {
       "tort_or_buyer": "ILM",
       "level": "amber",
@@ -88,12 +94,29 @@
     {
       "tort": "WDC",
       "status": "green",
-      "spend": 3212.6031,
+      "spend": 3791.5696000000003,
       "revenue": null,
       "margin_pct": null,
-      "cpl": 535.0,
+      "cpl": 542.0,
       "cost_per_sign": null,
-      "payable_leads": 6,
+      "payable_leads": 7,
+      "signed": null,
+      "spend_source": "meta",
+      "spend_caveat": "Meta spend (BQ view 403); revenue n/a (non-BP)",
+      "data_ok": true,
+      "note": null,
+      "note_author": null,
+      "note_ts": null
+    },
+    {
+      "tort": "Chlorpyrifos",
+      "status": "red",
+      "spend": 8.58,
+      "revenue": null,
+      "margin_pct": null,
+      "cpl": null,
+      "cost_per_sign": null,
+      "payable_leads": 0,
       "signed": null,
       "spend_source": "meta",
       "spend_caveat": "Meta spend (BQ view 403); revenue n/a (non-BP)",
@@ -233,23 +256,6 @@
       "signed": 0,
       "spend_source": "meta_partial",
       "spend_caveat": "Meta-only spend (partial, no BQ view); Meta partial (35/40 accounts)",
-      "data_ok": true,
-      "note": null,
-      "note_author": null,
-      "note_ts": null
-    },
-    {
-      "tort": "Chlorpyrifos",
-      "status": "green",
-      "spend": 0.0,
-      "revenue": null,
-      "margin_pct": null,
-      "cpl": null,
-      "cost_per_sign": null,
-      "payable_leads": 0,
-      "signed": null,
-      "spend_source": "meta",
-      "spend_caveat": "Meta spend (BQ view 403); revenue n/a (non-BP)",
       "data_ok": true,
       "note": null,
       "note_author": null,
