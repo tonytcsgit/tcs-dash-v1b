@@ -33,5 +33,8 @@
 - Existing job `09b697bd79f7` now targets `tcs_bp_utm_delivery.py`, not legacy `tcs_dash_regen.sh`. No duplicate schedule created; origin failure routing preserved.
 - Reviewed runtime implementation lives in this release worktree: `refresh_bp_utm.py` + receipt-checking `cron_bp_utm.py`.
 - BP UTM ONLY. Never rebuild financial `data.json`. Main financial release gate above remains blocked.
-- Job stays paused until the production entry succeeds and its public-verification receipt is checked. Activation proof will follow.
+- Activation verified: 23 release tests passed. The exact scheduled entry completed a real build/push/Pages/hash cycle, receipt `0681cfc28e61bca9cd7194e70dcbda965514462b` at 2026-09-14T20:48:29Z. The existing job was resumed at `7 * * * *` (next scheduled 17:07 Eastern).
+- A separate run through the scheduler also completed: receipt `adc608787b82a7129a339bdd2ace1d6f28279e90`, public SHA-256 `0763c40c29cef7232017c7fd7e78b3278847d57a42af5b96cdbdf0429b569061`, verified 2026-09-14T20:50:04Z. Pages reported built for that commit. Six final live BP filter reconciliations passed against the refreshed 20:49:12Z dataset.
+- Successful ticks are silent only after validating the publisher receipt. Failures return nonzero to the existing origin alert channel. Current receipt/log: `/Users/andyoc/.cache/tcs-bp-utm-publisher/receipts/` (private).
+- Final source preview for Sep 7–13 remains financially incomplete: Meta 75 discovered accounts queried but 10 failed token discoveries; HM 89 payable with no verified billing-tier map; SMA generic spend $7,385.67 unallocated to BP, so reporting lag is not the sole issue. SR/retainers and other-buyer financial mappings remain unverified. No financial candidate was published.
 - Legacy worktree and financial wrapper remain preserved for investigation, not authorized production inputs.
