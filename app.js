@@ -125,18 +125,24 @@ function render(data) {
   renderHeader(data);
   showPage(_page);
   document.getElementById("footer").innerHTML =
-    `TCS Internal · auto-refresh hourly (LP/BP/Meta/SR) · retainers daily · ` +
-    `<span class="amber-text">shared-password access</span>` +
-    (data.generated_at ? ` · generated ${fmtTs(data.generated_at)}` : "");
+    `TCS Internal · BP UTM refreshed independently · Main financial refresh paused` +
+    (data.generated_at ? ` · historical snapshot built ${fmtTs(data.generated_at)}` : "");
 }
 
 /* ---------------- page routing (added Aug 11 2026) ---------------- */
 function renderDashboard(d) {
   const staleNames = (d.data_freshness && d.data_freshness.stale_warnings) || [];
-  return renderTopRow(d) +
+  return `<div id="financial-repair-notice" role="alert" style="border:2px solid #e4a431;background:#402b12;color:#fff;padding:16px;margin-bottom:16px;border-radius:8px">
+      <strong>Historical snapshot — not current financials.</strong>
+      Main financial refresh is paused while Meta coverage, HM billing tiers and SMA YouTube reporting are verified.
+      Snapshot built ${fmtTs(d.generated_at)}; underlying sources may be older.
+      Do not use these historical margins or status badges for current budget decisions.
+      <a href="bp-utm.html" style="color:#ffe09a;text-decoration:underline">Open refreshed BP UTM leads and conversion data →</a>
+    </div>` + renderTopRow(d) +
     /* renderKpis(d.company || {}) +  // HIDDEN by Andrew Aug 11 2026 */
     renderTorts(d.torts || [], staleNames) +
-    renderBuyers(d.buyers || []);
+    renderBuyers(d.buyers || []) +
+    renderAttention(d);
 }
 
 /* ------------------------------ Supabase notes ------------------------------ */
@@ -414,8 +420,8 @@ function renderHeader(data) {
   document.getElementById("fresh").innerHTML = html;
 }
 
-/* top row: needs attention + Andrew's priorities */
-function renderTopRow(data) {
+/* Needs Attention follows the tort and buyer boards. */
+function renderAttention(data) {
   const items = (data.needs_attention || []).slice()
     .sort((a, b) => (a.level === "red" ? 0 : 1) - (b.level === "red" ? 0 : 1));
   const attnRows = items.length
@@ -430,6 +436,12 @@ function renderTopRow(data) {
       }).join("")
     : `<div class="empty">Nothing needs attention right now.</div>`;
 
+  return `<div class="card"><h3><span class="dot"></span> Needs Attention</h3>
+    <div class="attn">${attnRows}</div></div>`;
+}
+
+/* Andrew's priorities remain at the top. */
+function renderTopRow(data) {
   const prios = data.andrew_priorities || [];
   const note = data.andrew_note || {};
   const prioHtml = prios.length
@@ -441,8 +453,8 @@ function renderTopRow(data) {
     : "";
 
   return `<div class="toprow">
-    <div class="card"><h3><span class="dot"></span> Needs Attention</h3>
-      <div class="attn">${attnRows}</div></div>
+    <div class="card"><h3><span class="dot p"></span> Company Tort priorities</h3>
+      <div class="empty">No company tort priorities set yet.</div></div>
     <div class="card"><h3><span class="dot p"></span> Andrew's Tort Priorities</h3>
       ${prioHtml}${noteHtml}</div>
   </div>`;
