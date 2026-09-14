@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Read-only TCS main dashboard preview",
+  "type": "object",
+  "required": ["contract_version", "generated_at", "window", "preview_only", "structurally_complete", "financial_complete", "build_status", "data_freshness", "company", "torts", "buyers", "needs_attention", "andrew_priorities", "andrew_note"],
+  "properties": {
+    "contract_version": {"const": 1},
+    "generated_at": {"type": "string", "format": "date-time"},
+    "preview_only": {"const": true},
+    "structurally_complete": {"const": true},
+    "financial_complete": {"type": "boolean"},
+    "build_status": {"enum": ["partial_sources", "complete"]},
+    "window": {"type": "object", "required": ["since", "until", "timezone"], "properties": {"since": {"type": "string", "format": "date"}, "until": {"type": "string", "format": "date"}, "timezone": {"const": "America/New_York"}}},
+    "data_freshness": {
+      "type": "object", "required": ["leads_spend_sr", "retainers", "sr", "stale_warnings", "sources"],
+      "properties": {
+        "leads_spend_sr": {"type": "null"}, "retainers": {"type": "null"}, "sr": {"type": "null"},
+        "stale_warnings": {"type": "array", "items": {"type": "string"}}, "sources": {"type": "object"}
+      }
+    },
+    "company": {
+      "type": "object", "required": ["scope", "window_label", "spend", "revenue", "gross_profit", "margin_pct", "cost_per_sign", "payable_leads", "deltas"],
+      "properties": {"spend": {"$ref": "#/$defs/money"}, "revenue": {"$ref": "#/$defs/money"}, "gross_profit": {"$ref": "#/$defs/number"}, "margin_pct": {"$ref": "#/$defs/number"}, "cost_per_sign": {"$ref": "#/$defs/money"}, "payable_leads": {"$ref": "#/$defs/count"}, "deltas": {"type": "object"}}
+    },
+    "torts": {
+      "type": "array", "minItems": 11, "maxItems": 11,
+      "items": {
+        "type": "object", "required": ["tort", "status", "spend", "revenue", "margin_pct", "cpl", "cost_per_sign", "payable_leads", "signed", "data_ok", "warnings", "spend_source", "spend_caveat", "note", "note_author", "note_ts"],
+        "properties": {
+          "tort": {"enum": ["ILM", "Hernia Mesh", "SMA", "Paraquat", "PowerPort", "Endoscopy", "TVM", "BM", "WDC", "Chlorpyrifos", "Depo"]},
+          "status": {"enum": ["red", "amber", "green"]}, "data_ok": {"type": "boolean"},
+          "spend": {"$ref": "#/$defs/money"}, "revenue": {"$ref": "#/$defs/money"}, "margin_pct": {"$ref": "#/$defs/number"}, "cpl": {"$ref": "#/$defs/money"}, "cost_per_sign": {"$ref": "#/$defs/money"}, "payable_leads": {"$ref": "#/$defs/count"}, "signed": {"$ref": "#/$defs/count"}, "total_leads": {"$ref": "#/$defs/count"},
+          "warnings": {"type": "array", "items": {"type": "string"}}, "spend_source": {"enum": ["meta", "bp_sma_youtube"]}
+        },
+        "allOf": [
+          {"if": {"properties": {"data_ok": {"const": false}}}, "then": {"properties": {"warnings": {"minItems": 1}, "status": {"enum": ["amber", "red"]}}}},
+          {"if": {"properties": {"spend": {"type": "null"}}}, "then": {"properties": {"margin_pct": {"type": "null"}, "cost_per_sign": {"type": "null"}}}}
+        ]
+      }
+    },
+    "buyers": {"type": "array", "minItems": 5, "maxItems": 5, "items": {"type": "object", "required": ["buyer", "status", "comment", "comment_ts", "runway", "active_torts", "upcoming_torts"], "properties": {"buyer": {"enum": ["Broughton", "Pulaski", "Bryan", "Wagstaff", "Parker"]}, "status": {"enum": ["red", "amber", "green"]}, "runway": {"type": "array"}, "active_torts": {"type": "array"}, "upcoming_torts": {"type": "array"}}}},
+    "needs_attention": {"type": "array"}, "andrew_priorities": {"type": "array"}, "andrew_note": {"type": "object"}
+  },
+  "$defs": {
+    "number": {"type": ["number", "null"]},
+    "money": {"type": ["number", "null"], "minimum": 0},
+    "count": {"type": ["integer", "null"], "minimum": 0}
+  }
+}

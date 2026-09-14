@@ -1,0 +1,62 @@
+# Repo-owned READ-ONLY preview policy. Never used by hourly production job yet.
+contract_version: 1
+# Explicit path preservation: relocating builder must not silently drop operator notes/targets.
+comments_path: /Users/andyoc/.hermes/profiles/data-analyst/skills/media-buying/tcs-dashboard/scripts/comments.json
+targets_path: /Users/andyoc/.hermes/profiles/data-analyst/skills/media-buying/tcs-dashboard/scripts/targets.json
+preview_path: /Users/andyoc/.hermes/reports/tcs-dashboard-repair/main-preview.json
+bp_sheet: 1rnqYRHwbDrgoWjztft__fRt-XGEtsfnDD2MtDt9Wcrw
+secrets_path: /Users/andyoc/.openclaw/secrets.json
+# User current-contract instruction, Sep 14 2026. No flat retroactive pricing.
+# Restrict to >= HM effective date; older windows require a separately documented dated policy.
+pricing_not_before: '2026-09-07'
+pricing_provenance: 'User confirmed current payouts; HM 90 non-HQ / 140 HQ effective 2026-09-07. Earlier windows blocked.'
+payouts: {SMA: 70, PowerPort: 170, Paraquat: 315, ILM: 670, Endoscopy: 70, TVM: 120, BM: 100}
+hm_tier_rates: {non_hq: 90, hq: 140}
+# Intentionally empty: source headers exist but their billing-tier semantics need evidence.
+# Never infer from marketing campaign names, nor default blank source tiers to non-HQ.
+hm_billing_tier_map: {}
+hm_billing_mapping_evidence: null
+bp_torts:
+  ILM: {tab: 'Juvenile Detention Center - IL', src: meta}
+  Hernia Mesh: {tab: 'Hernia Mesh', src: meta}
+  SMA: {tab: 'Social Media Addiction', src: bp_sma_youtube}
+  Paraquat: {tab: 'Paraquat', src: meta}
+  PowerPort: {tab: 'PowerPort', src: meta}
+  Endoscopy: {tab: 'Endoscopy', src: meta}
+  TVM: {tab: 'Transvaginal Mesh', src: meta}
+  BM: {tab: 'Breast Mesh', src: meta}
+nonbp_torts:
+  WDC: {buyer: Parker, lp: 35624, mapping_verified: false}
+  Chlorpyrifos: {buyer: Wagstaff, lp: 35726, mapping_verified: false}
+  Depo: {buyer: Bryan, lp: 23168, mapping_verified: false}
+buyers: [Broughton, Pulaski, Bryan, Wagstaff, Parker]
+# Historical values preserved for review, NOT current caps; no automatic cap alerts.
+quota_verified: '2026-08-01'
+quota_current_verified: false
+bp_quota: {SMA: 1107, Hernia Mesh: 846, PowerPort: 270, ILM: 48, Paraquat: 35, Talcum: 50, Endoscopy: null}
+# API account inventory can only establish coverage of the configured token pool.
+# Never mark spend complete when a token discovery/page/account/currency fails.
+meta_token_sheet: 1fF74nmgKWBl6CwyZOMjJlXUjsO7sgGO9t0_40Y6Vvz4
+meta_token_range: "'Sheet1'!A1:Z2000"
+# Historical access watchlist, NOT an exhaustive current account inventory or retirement list.
+# Evidence: meta-ads-media-buying/references/token-account-map.md (Jun/Jul 2026).
+# Preserve unknown coverage until restored access or dated retirement evidence exists.
+meta_expected_accounts:
+  - act_1961087388614841 # BM7103
+  - act_1755085232182925 # BM2968
+  - act_1574584140925575 # P68
+  - act_852457087359114  # P68
+  - act_1529841424694585 # P68
+  - act_595698656203709  # Surya
+meta_max_workers: 10
+meta_budget_seconds: 170
+fx_url: https://api.exchangerate-api.com/v4/latest/USD
+fx_max_age_days: 3
+# ONLY Google Ads raw daily SMA costs; never blended BQ views, leads, or Meta costs.
+youtube:
+  project: rapid-depot-472123-a1
+  dataset: akd_dataset
+  accounts: ['3941530791', '7686327497']
+  # Generic SMA names not proof of BP. Add reviewed campaign IDs with attribution evidence.
+  approved_bp_campaign_ids: []
+  attribution_evidence: null
