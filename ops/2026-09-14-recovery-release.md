@@ -22,5 +22,16 @@
 - Align BP SMA YouTube reporting with available completed-day coverage; no fabricated zero on missing dates.
 - Do not enable old legacy financial builder or replace financial timestamps with refresh time.
 
-## Publication status
-Pre-publish record. Remote/public/rendered checks must be recorded after deployment. The hourly job remains paused until the BP-only publishing chain is exercised and public hashes match.
+## Publication verification
+- Initial repair published in `7a62e338ce620f7275e9b030c8575223e528f5ef`; GitHub Pages reported `built` for that exact commit.
+- Public `bp_utm_data.json` SHA-256 matched release bytes: `7bb2d0fd5eab41c9291cd8d3fe99af6f370d018617eba3b4dad21c0cab510402`.
+- Public `app.js` matched release bytes. Live dashboard browser regression passed without JavaScript errors; six live BP filter reconciliations passed.
+- Live HM lifetime screenshot confirmed 4,305 payable / 358 signed / 8.3% CVR.
+- Follow-up `b14a1bd9657a6c9d4e86e3786d984d8000ca60fc` restored only current Andrew priorities from the read-only comments sidecar. All financial JSON values and original generated_at remain unchanged. Pages built this commit; public priorities and screenshot verified.
+
+## Hourly recovery scope
+- Existing job `09b697bd79f7` now targets `tcs_bp_utm_delivery.py`, not legacy `tcs_dash_regen.sh`. No duplicate schedule created; origin failure routing preserved.
+- Reviewed runtime implementation lives in this release worktree: `refresh_bp_utm.py` + receipt-checking `cron_bp_utm.py`.
+- BP UTM ONLY. Never rebuild financial `data.json`. Main financial release gate above remains blocked.
+- Job stays paused until the production entry succeeds and its public-verification receipt is checked. Activation proof will follow.
+- Legacy worktree and financial wrapper remain preserved for investigation, not authorized production inputs.
