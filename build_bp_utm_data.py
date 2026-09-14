@@ -13,6 +13,7 @@ sys.path.insert(0, "/Users/andyoc/Library/Python/3.9/lib/python/site-packages")
 
 from google.oauth2 import service_account
 from googleapiclient.discovery import build
+from bp_sheet_rows import RAW_RANGE, select_bp_rows
 
 SA_KEY = "/Users/andyoc/.hermes/gcp-service-account.json"
 SRC_SHEET = "1rnqYRHwbDrgoWjztft__fRt-XGEtsfnDD2MtDt9Wcrw"
@@ -280,7 +281,15 @@ def main():
     sheets = build("sheets", "v4", credentials=creds)
     
     torts_out = []
-    
+    raw_rows = None
+
+    def load_raw_rows():
+        nonlocal raw_rows
+        if raw_rows is None:
+            raw_rows = sheets.spreadsheets().values().get(
+                spreadsheetId=SRC_SHEET, range=RAW_RANGE).execute().get("values", [])
+        return raw_rows
+
     for tort in TORTS:
         print(f"Analyzing {tort['name']}...", file=sys.stderr)
         try:
@@ -288,10 +297,7 @@ def main():
                 spreadsheetId=SRC_SHEET,
                 range=f"'{tort['tab']}'!A1:AZ40000"
             ).execute()
-            rows = result.get("values", [])
-            if len(rows) < 2:
-                print(f"  {tort['name']}: empty", file=sys.stderr)
-                continue
+            rows = select_bp_rows(tort['tab'], result.get("values", []), load_raw_rows)
             
             analysis = analyze_tort(tort, rows)
             if analysis:
@@ -306,8 +312,11 @@ def main():
         except Exception as e:
             print(f"  {tort['name']}: ERROR {e}", file=sys.stderr)
     
+    if len(torts_out) != len(TORTS):
+        raise RuntimeError("BP UTM build incomplete; previous artifact left unchanged")
+
     out = {
-        "generated_at": datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=-4))).strftime("%Y-%m-%d %H:%M EST"),
+        "generated_at": datetime.datetime.now(datetime.timezone.utc).isoformat(timespec="seconds"),
         "torts": torts_out,
     }
     
