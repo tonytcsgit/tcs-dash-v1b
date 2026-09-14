@@ -13,7 +13,7 @@
     ]
   },
   "company": {
-    "window_label": "Week of Mon Aug 31 \u2014 Day 1 of 7",
+    "window_label": "Week of Mon Aug 31 — Day 1 of 7",
     "spend": 0.0,
     "revenue": 0.0,
     "gross_profit": 0.0,
@@ -21,13 +21,13 @@
     "cost_per_sign": null,
     "payable_leads": 0,
     "deltas": {},
-    "caveat": "WARNING spend missing/stale for one or more torts \u2014 company margin withheld (would be falsely healthy). Fix the spend source to restore it."
+    "caveat": "WARNING spend missing/stale for one or more torts — company margin withheld (would be falsely healthy). Fix the spend source to restore it."
   },
   "needs_attention": [
     {
       "tort_or_buyer": "Chlorpyrifos",
       "level": "red",
-      "reason": "Spend $9 with 0 payable leads \u2014 burning money",
+      "reason": "Spend $9 with 0 payable leads — burning money",
       "owner": null
     },
     {
@@ -70,23 +70,23 @@
   "andrew_priorities": [
     {
       "n": 1,
-      "text": "CAW \u2014 YT Shorts"
+      "text": "SMA"
     },
     {
       "n": 2,
-      "text": "Paraquat \u2014 higher converting ads needed"
+      "text": "Olympus — YouTube + Meta (Parker)"
     },
     {
       "n": 3,
-      "text": "SMA \u2014 Pulaski targeting"
+      "text": "Chlorpyrifos — Parker"
     },
     {
       "n": 4,
-      "text": "HM \u2014 YT Shorts"
+      "text": "Dupixent — Parker"
     },
     {
       "n": 5,
-      "text": "Rhode Island \u2014 Pulaski"
+      "text": "Rideshare — BP"
     }
   ],
   "andrew_note": {},
