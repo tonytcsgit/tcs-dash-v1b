@@ -1,5 +1,9 @@
 # Operations — synthetic design preview
 
+## September 12 priority context — demo remains a demo
+
+Andrew supplied the ranked lawsuit and upcoming-budget brief and explicitly requested its use as demo context, not live-data activation. The top list now preserves SMA BP/Parker equal importance with Pulaski lower, followed by WDC/Parker, IL JDC/BP, Chlorpyrifos/BP and Rideshare/BP. Upcoming budget cards show Parker Olympus first, Parker Chlorpyrifos second, and Parker Dupixent/Apple AirTag tied third. No amounts, dates, platforms or commitments were inferred for those upcoming budgets. Replaced generic upcoming launch cards rather than attaching their fictional dates to these budgets. Other metric/health examples remain fictional and isolated; updated banner distinguishes supplied priority context from synthetic metrics. Browser tests assert exact order, buyer assignments, equal ranks and unchanged demo isolation. No deletion of other sections was inferred from the unanswered screenshot question.
+
 ## Layout revision — remove top controls and KPI strip
 
 Andrew requested removal of the screenshot's Buyer/Platform/Stage/search/Reset bar and all four summary cards, on Operations only. Removed their markup and event bindings; the full example scenario is always shown. Priorities, launch board, program delivery, buyer health, prospects, Needs Attention and example-data warnings remain unchanged. Browser regression first failed with both sections present; revised acceptance checks require absent controls/cards, intact boards and drill-down, no JavaScript errors, mobile fit, navigation and synthetic-only requests. No data artifacts, metrics, source integrations or hourly publisher code changed.
