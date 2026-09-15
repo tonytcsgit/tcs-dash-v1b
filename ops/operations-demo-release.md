@@ -1,5 +1,9 @@
 # Operations — synthetic design preview
 
+## Layout revision — remove top controls and KPI strip
+
+Andrew requested removal of the screenshot's Buyer/Platform/Stage/search/Reset bar and all four summary cards, on Operations only. Removed their markup and event bindings; the full example scenario is always shown. Priorities, launch board, program delivery, buyer health, prospects, Needs Attention and example-data warnings remain unchanged. Browser regression first failed with both sections present; revised acceptance checks require absent controls/cards, intact boards and drill-down, no JavaScript errors, mobile fit, navigation and synthetic-only requests. No data artifacts, metrics, source integrations or hourly publisher code changed.
+
 ## User-approved scope
 
 A separate Operations page, linked from the existing dashboard navigation. Program grain: tort × buyer × platform. The unit is lead volume; buyer commitments and marketing forecasts remain separate. Andrew owns launch dates and targets for now.

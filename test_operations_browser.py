@@ -5,7 +5,7 @@ from playwright.sync_api import sync_playwright
 ROOT = Path(__file__).parent
 BASE = os.environ.get('TCS_OPS_URL','http://127.0.0.1:8878').rstrip('/')
 class OperationsBrowser(unittest.TestCase):
-    def test_demo_navigation_filters_metrics_and_no_live_requests(self):
+    def test_demo_layout_metrics_navigation_and_no_live_requests(self):
         self.assertTrue((ROOT/'operations.html').exists(), 'Operations page not implemented')
         with sync_playwright() as pw:
             browser=pw.chromium.launch(headless=True)
@@ -20,12 +20,10 @@ class OperationsBrowser(unittest.TestCase):
             self.assertIn('180',atlas.inner_text()); self.assertIn('300',atlas.inner_text()); self.assertIn('Behind',atlas.inner_text())
             self.assertIn('Data unavailable',page.locator('[data-program="cedar"]').inner_text())
             self.assertIn('No target',page.locator('[data-program="harbor"]').inner_text())
-            page.locator('#buyer-filter').select_option('Example East')
-            self.assertEqual(page.locator('#live-programs tbody tr').count(),1)
-            page.locator('#search-filter').fill('does-not-exist')
-            self.assertIn('No programs match',page.locator('#ops-results').inner_text())
-            page.locator('#reset-filters').click()
-            self.assertEqual(page.locator('#live-programs tbody tr').count(),5)
+            self.assertEqual(page.locator('.ops-controls, .ops-kpis').count(),0)
+            self.assertEqual(page.locator('#buyer-filter, #platform-filter, #phase-filter, #search-filter, #reset-filters').count(),0)
+            self.assertEqual(page.locator('#upcoming-launches .ops-launch').count(),2)
+            self.assertEqual(page.locator('#prospects .ops-prospect').count(),1)
             page.locator('[data-program="atlas"] summary').click()
             self.assertIn('225',page.locator('[data-program="atlas"] details').inner_text())
             page.locator('[data-program="atlas"] summary').click()

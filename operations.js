@@ -28,21 +28,13 @@ function launchCard(p,asOf) {
   return `<article class="ops-launch"><div class="ops-card-top"><span class="eyebrow">P${esc(p.priority)} · ${esc(p.platform)}</span>${badge(p.readiness)}</div><h3>${esc(p.tort)}</h3><p>${esc(p.buyer)}</p><div class="ops-launch-date">${dateLabel(p.go_live)} <small>example go-live</small></div><div class="ops-split"><div><small>Buyer commitment</small>${target(p.commitment)}</div><div><small>Marketing forecast</small>${target(p.forecast)}</div></div><p class="ops-next">${esc(p.blocker || p.next_action)}</p>${details(p,m)}</article>`;
 }
 function renderResults(data) {
-  const buyer=document.getElementById('buyer-filter').value;
-  const platform=document.getElementById('platform-filter').value;
-  const phase=document.getElementById('phase-filter').value;
-  const search=document.getElementById('search-filter').value.trim().toLowerCase();
-  const programs=data.programs.filter(p => (!buyer || p.buyer===buyer) && (!platform || p.platform===platform) && (!phase || p.phase===phase) && `${p.tort} ${p.buyer} ${p.platform}`.toLowerCase().includes(search)).sort((a,b)=>a.priority-b.priority || a.id.localeCompare(b.id));
+  const programs=[...data.programs].sort((a,b)=>a.priority-b.priority || a.id.localeCompare(b.id));
   const live=programs.filter(p=>p.phase==='live');
   const scheduled=programs.filter(p=>p.phase==='scheduled').sort((a,b)=>a.go_live.localeCompare(b.go_live));
   const prospects=programs.filter(p=>p.phase==='prospect');
-  const metrics=live.map(p=>OpsModel.metrics(p,data.as_of));
-  const available=metrics.filter(m=>m.actual!==null);
-  const known=available.reduce((n,m)=>n+m.actual,0);
   const attention=programs.flatMap(p=>issues(p,OpsModel.metrics(p,data.as_of)).map(issue=>({p,...issue})));
   const buyers=OpsModel.buyerRollup(programs,data.as_of);
-  document.getElementById('ops-results').innerHTML = `${programs.length ? '' : empty('No programs match these filters. Reset filters to restore the example scenario.')}
-  <div class="ops-kpis"><article><small>Live example programs</small><strong>${live.length}</strong><span>Visible filtered scope</span></article><article><small>Received · known subtotal</small><strong>${live.length ? fmt(known) : '—'}</strong><span>${available.length}/${live.length} example programs reporting</span></article><article><small>Behind commitment</small><strong>${metrics.filter(m=>m.status==='Behind').length}</strong><span>Unknown data is not scored</span></article><article><small>Upcoming launches</small><strong>${scheduled.length}</strong><span>Prospects excluded</span></article></div>
+  document.getElementById('ops-results').innerHTML = `
   <section id="upcoming-launches"><h2>Upcoming launches <span>Dates, commitments and readiness</span></h2><div class="ops-launch-grid">${scheduled.map(p=>launchCard(p,data.as_of)).join('') || empty('No scheduled example launches in this view.')}</div></section>
   <section id="live-programs"><h2>Program delivery <span>Tort × buyer × platform</span></h2><p class="ops-help">Buyer-received leads in each program’s target period through the fixed scenario date. All values are examples.</p>${live.length ? `<div class="tablecard"><div class="scroll"><table><thead><tr><th>Program / target period</th><th>Buyer<br>commitment</th><th>Marketing<br>forecast</th><th class="num">Received</th><th class="num">Expected<br>to date</th><th>Delivery health</th></tr></thead><tbody>${live.map(p=>{
     const m=OpsModel.metrics(p,data.as_of);
@@ -60,10 +52,7 @@ async function loadDemo() {
     const content=document.getElementById('ops-content');
     content.innerHTML=`<div class="ops-scenario"><span>${esc(data.clock_label)}</span><b>Read-only design preview</b></div>
       <div class="ops-priorities"><article><h2>Example priorities</h2><ol><li>Resolve Atlas delivery mismatch before scaling.</li><li>Unblock Delta’s routing test before go-live.</li><li>Check Grove’s launch-to-first-lead path.</li></ol><small>Illustrative priorities—not Andrew’s real task list.</small></article><article><h2>Planning ownership</h2><p><b>Andrew</b> owns launch dates, buyer commitments and marketing forecasts for now.</p><p>Separate promises from expectations. All numbers shown here are examples, not approved targets.</p><small>No editing, publishing or notification actions in this preview.</small></article></div>
-      <div class="ops-controls"><label>Buyer<select id="buyer-filter"><option value="">All example buyers</option>${[...new Set(data.programs.map(p=>p.buyer))].sort().map(b=>`<option>${esc(b)}</option>`).join('')}</select></label><label>Platform<select id="platform-filter"><option value="">All platforms</option><option>Meta</option><option>YouTube</option></select></label><label>Stage<select id="phase-filter"><option value="">All stages</option><option value="live">Live examples</option><option value="scheduled">Upcoming examples</option><option value="prospect">Prospects</option></select></label><label class="ops-search">Find a program<input type="search" id="search-filter" placeholder="Search example tort or buyer"></label><button id="reset-filters" type="button">Reset</button></div><div id="ops-results" aria-live="polite"></div>`;
-    ['buyer-filter','platform-filter','phase-filter'].forEach(id=>document.getElementById(id).addEventListener('change',()=>renderResults(data)));
-    document.getElementById('search-filter').addEventListener('input',()=>renderResults(data));
-    document.getElementById('reset-filters').addEventListener('click',()=>{['buyer-filter','platform-filter','phase-filter','search-filter'].forEach(id=>document.getElementById(id).value='');renderResults(data);});
+      <div id="ops-results" aria-live="polite"></div>`;
     renderResults(data); content.hidden=false; document.getElementById('ops-state').hidden=true;
   } catch (error) {
     document.getElementById('ops-state').textContent='Example scenario unavailable. No live data has been substituted. Reload to retry.';
